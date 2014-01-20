@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:gravity="center"  android:background="#95000000"
+    android:padding="20dp" >
+
+    <RelativeLayout 
+        android:id="@+id/note_popupmenu"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:background="#95000000"
+        android:orientation="vertical" >
+
+        <TextView  android:gravity="center" android:textSize="20sp"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Delete Note" android:id="@+id/txt_delete_note"
+            android:textColor="#fff" android:padding="10dp"
+            android:textStyle="bold" />
+       <View  android:layout_width="fill_parent"  android:layout_below="@+id/txt_delete_note" android:id="@+id/txt_view"
+            android:layout_height="0.5dp" android:background="#fff"/> 
+        <TextView android:id="@+id/txt_update_note" android:layout_below="@+id/txt_view" android:textSize="20sp"
+            android:layout_width="fill_parent"   android:gravity="center" android:padding="10dp"
+            android:layout_height="wrap_content"
+            android:text="Update Note"
+            android:textColor="#fff"
+            android:textStyle="bold" />
+        
+         <View  android:layout_width="fill_parent"  android:layout_below="@+id/txt_update_note" android:id="@+id/txt_view1"
+            android:layout_height="0.5dp" android:background="#fff"/> 
+        <TextView android:id="@+id/txt_cancel_note" android:layout_below="@+id/txt_view1" android:textSize="20sp"
+            android:layout_width="fill_parent"   android:gravity="center" android:padding="10dp"
+            android:layout_height="wrap_content"
+            android:text="Cancel"
+            android:textColor="#fff"
+            android:textStyle="bold" />
+        </RelativeLayout>
+    </RelativeLayout>

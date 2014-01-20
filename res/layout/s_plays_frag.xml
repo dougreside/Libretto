@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+<!-- 
+    <ImageView
+        android:id="@+id/s_background_img"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"  android:background="@drawable/list_base"/>
+ -->
+    <LinearLayout
+        android:id="@+id/s_main_title_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+   
+        android:orientation="vertical"  android:background="#FFFFFF"  >
+	
+        <TextView
+            android:id="@+id/s_main_title"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center"
+            android:padding="3dp"
+            android:textSize="32sp"
+            android:text="Libretto"
+           android:textColor="#7f2352"
+         />
+  
+    </LinearLayout>
+<!-- 
+    <LinearLayout
+        android:id="@+id/s_titlebar_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/s_main_title_layout"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/titlebar"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/titlebar_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="4dp"
+   
+            android:textColor="#ff9904"
+            android:textStyle="bold" />
+    </LinearLayout>
+ -->
+    <!-- LinearLayout
+        android:id="@+id/s_main_search_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/s_titlebar_layout"
+        android:layout_centerHorizontal="true"
+        android:orientation="vertical"
+        android:padding="10dp" >
+
+        <EditText
+            android:id="@+id/s_play_search_text"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="@drawable/s_home_search"
+            
+            android:hint="Search Scripts"
+            android:imeOptions="actionSearch" 
+            android:maxLength="20" android:paddingTop="6dp" android:paddingBottom="6dp"
+            android:maxLines="1"
+            android:paddingLeft="25dp"
+            android:paddingRight="5dp"
+            android:textColor="#000" android:inputType="textFilter" android:textCursorDrawable="@null" >
+        </EditText>
+    </LinearLayout>
+ -->
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/s_main_title_layout"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" >
+
+            <ExpandableListView
+                android:id="@+id/s_play_expendable_list"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:cacheColorHint="#00000000"
+                android:visibility="visible" />
+
+            <ListView
+                android:id="@+id/s_play_search_list"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:cacheColorHint="#00000000"
+                android:visibility="gone" />
+           
+<!-- 
+            <ProgressBar
+                android:id="@+id/progress1"
+                style="@android:style/Widget.ProgressBar.Large"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true" /> -->
+              <TextView
+                android:id="@+id/s_play_no_text" android:layout_above="@+id/progress" android:layout_centerInParent="true"
+                android:layout_width="wrap_content" android:textStyle="bold" android:textSize="18sp"
+                android:layout_height="wrap_content"   android:visibility="gone" android:textColor="#000"
+               android:text="none"/>
+              <LinearLayout
+        android:id="@+id/progress"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+     
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:orientation="vertical"
+          android:visibility="gone">
+
+       
+
+        <ProgressBar 
+            style="@android:style/Widget.ProgressBar.Large"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+         <TextView
+            android:id="@+id/s_plays_frag_detail_headind"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="Loading..."
+            android:textColor="#FFF"
+            android:textSize="18dp"
+            android:textStyle="bold" >
+        </TextView>
+    </LinearLayout> 
+              
+        </RelativeLayout>
+    </LinearLayout>
+
+</RelativeLayout>

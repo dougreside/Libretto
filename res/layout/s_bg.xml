@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <ImageView
+        android:id="@+id/s_home_background_img"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" />
+<RelativeLayout  android:layout_width="fill_parent" android:id="@+id/s_home_top_bg" android:layout_above="@+id/s_home_middle_bg"
+        android:layout_height="wrap_content" android:orientation="vertical" android:background="@drawable/bg_top">
+    <LinearLayout
+        android:id="@+id/s_home_main_title_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/main_title_bar"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/s_home_main_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="3dp"
+            android:text="NEW YORK PUBLIC LIBRARY"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/s_home_curtain_view"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/s_home_main_title_layout"
+        android:src="@drawable/s_home_curtain" />
+
+    <LinearLayout
+        android:id="@+id/s_home_main_search_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/s_home_curtain_view"
+        android:layout_centerHorizontal="true"
+        android:orientation="vertical" >
+
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="@drawable/s_home_search"
+            android:maxLines="1" android:hint="Search Scripts" android:ellipsize="end" android:paddingRight="5dp"
+            android:paddingLeft="25dp"  android:textColor="#fff" android:maxLength="20">
+        </EditText>
+    </LinearLayout>
+    
+       <LinearLayout
+        android:id="@+id/s_home_main_coverflow_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/s_home_main_search_layout"
+        android:layout_marginTop="10dp" >
+
+        <org.nypl.CoverFlow
+            android:id="@+id/coverflow"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+  </RelativeLayout>
+  
+<RelativeLayout  android:layout_width="fill_parent" android:id="@+id/s_home_middle_bg"  android:layout_above="@+id/s_home_base_bg"
+        android:layout_height="wrap_content"  android:background="@drawable/bg_middle">
+       <ImageView android:layout_centerHorizontal="true"
+        android:id="@+id/s_home_indicator_img"
+        android:layout_width="wrap_content" android:src="@drawable/arrow"
+        android:layout_height="wrap_content" />
+        <LinearLayout
+        android:id="@+id/s_home_coverflowtext_layout"
+        android:layout_below="@+id/s_home_indicator_img"
+       
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+      
+      
+        android:orientation="vertical"  android:paddingLeft="10dp" android:paddingRight="10dp">
+
+        <TextView
+            android:id="@+id/s_home_play_name"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="2dp"
+            android:paddingTop="2dp"
+            android:text="Play"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/s_home_author_name"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:padding="2dp"
+            android:text="Author" />
+
+        <TextView
+            android:id="@+id/s_home_coverflowtext"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            
+            android:text="" />
+        
+<LinearLayout  android:layout_width="fill_parent"  android:id="@+id/s_home_fulltext_layout"    android:gravity="right"
+            android:layout_height="wrap_content" android:orientation="horizontal"     android:paddingRight="5dp" >
+        <TextView
+            android:id="@+id/s_home_fulltext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:textColor="#ff9904"
+            android:text="Full Text"
+            android:textStyle="bold" />
+        <ImageView
+            android:id="@+id/s_home_fulltext_arrow_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+          android:gravity="right" android:layout_gravity="center"
+            android:src="@drawable/arrow_detail"
+            android:textStyle="bold" />
+        </LinearLayout>
+    </LinearLayout>
+       
+</RelativeLayout>
+
+<RelativeLayout
+    android:id="@+id/s_home_base_bg"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:layout_centerHorizontal="true"
+    android:background="@drawable/bg_base" >
+        
+    <LinearLayout
+        android:id="@+id/s_home_main_tab_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+       android:gravity="bottom" android:layout_marginTop="28dp"
+        android:orientation="vertical" android:paddingLeft="1dp">
+
+        <include
+           
+            layout="@layout/s_navigationbar" />
+    </LinearLayout>
+</RelativeLayout>
+
+    </RelativeLayout>

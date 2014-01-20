@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="webview_background"  >#00FFFFFF</color>
+     <color name="cursor_color"  >#000000</color>
+       <color name="dialog_transparent"  >#00000000</color>
+</resources>

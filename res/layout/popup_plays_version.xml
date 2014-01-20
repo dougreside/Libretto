@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+   android:gravity="center"
+    android:padding="20dp" >
+
+    <RelativeLayout android:layout_centerInParent="true"
+        android:id="@+id/play_version_popupmenu"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/popup_window"
+        android:orientation="vertical"
+       >
+
+        <TextView android:id="@+id/version_heading"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+           android:gravity="center"
+            android:text="Versions"
+            android:textColor="#7f2352"
+            android:textSize="20sp"
+             android:paddingLeft="3dp"
+			    android:paddingRight="3dp" 
+            />
+        <RelativeLayout  android:layout_below="@+id/version_heading" android:paddingTop="10dp" 
+			android:layout_width="fill_parent" android:layout_height="wrap_content"  android:layout_centerInParent="true" >
+
+			<ListView
+			    android:id="@+id/s_play_version_list"
+			    android:layout_width="fill_parent"
+			    android:layout_height="wrap_content"
+			    android:layout_centerVertical="true"
+			    android:addStatesFromChildren="true"
+			    android:cacheColorHint="#00000000"
+			    android:divider="@drawable/popup_divider"
+			    android:paddingLeft="3dp"
+			    android:paddingRight="3dp" />
+
+		</RelativeLayout>
+    </RelativeLayout>
+
+</RelativeLayout>

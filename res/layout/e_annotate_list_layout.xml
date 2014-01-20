@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<org.nypl.widget.CheckableLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="horizontal" >
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/background" >
+
+        <ImageView
+            android:id="@+id/e_list_layout_play_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:src="@drawable/index" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" android:id="@+id/linearlayout1"
+            android:layout_toRightOf="@+id/e_list_layout_play_image"
+            android:orientation="vertical" android:paddingRight="16dp" >
+
+            <TextView
+                android:id="@+id/e_list_layout_play_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:text="Dorothy" android:textColor="#9a0404"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/e_list_layout_author_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:textColor="#000"
+                android:text="B.C Stephenson and Alfred Cellier"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/e_list_layout_version_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Version" android:textColor="#000"
+                android:textSize="15sp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/annotate_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:textColor="#000"
+                android:text="FCSFasfasdfdfgdfhfgjhfjghjghjkukhjkghjmfjhtgyiyuikyuiytuitrtyi" android:maxLines="2" 
+                android:textSize="15sp" android:ellipsize="end"/>"
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
+            android:padding="5dp"
+            android:src="@drawable/arrow_detail" />
+    </RelativeLayout>
+
+</org.nypl.widget.CheckableLinearLayout>

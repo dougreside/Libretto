@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Home screen coverflow dimensions -->
+
+    <dimen name="carousel_image_spacing">-10dp</dimen>
+    <dimen name="carousel_image_height">170dp</dimen>
+    <dimen name="carousel_image_width">170dp</dimen>
+    <dimen name="cover_image_height">131dp</dimen>
+    <dimen name="cover_image_width">156dp</dimen>
+
+</resources>

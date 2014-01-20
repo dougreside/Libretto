@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Libretto</string>
+    <string name="full_text"><u>Full Text</u></string>
+    <string name="action_delete_desc">Click here to delete item.</string>
+    <string name="action_delete_title">Delete</string>
+    <color name="listcolor">#5c0005</color>
+    <string name="libraryURI">https://spreadsheets.google.com/feeds/list/0Ag7PrlWT3aWadFdoNFRGYnZmZlF1Vm1qT2o0Y3Q1SkE/od6/public/values?alt=json</string>
+
+</resources>

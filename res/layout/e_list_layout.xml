@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<org.nypl.widget.CheckableLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@drawable/background" >
+
+        <ImageView
+            android:id="@+id/e_list_layout_play_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:src="@drawable/index" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/e_list_layout_play_image"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/e_list_layout_play_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:text="The Black Crook"
+               android:textColor="#9a0404"
+                android:textSize="15sp"
+                android:textStyle="bold" 
+                />
+
+            <TextView
+                android:id="@+id/e_list_layout_author_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Charles Barras"
+                android:textColor="#000"
+                android:textSize="15sp" />
+
+            <!-- TextView
+                android:id="@+id/e_list_layout_delete_play"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Delete"
+                android:onClick="deletePlayClicked"
+                android:clickable="true"
+                android:textColor="#000"
+                android:textStyle="bold" 
+                android:textSize="24sp"
+              /-->
+        </LinearLayout>
+    </RelativeLayout>
+
+</org.nypl.widget.CheckableLinearLayout>

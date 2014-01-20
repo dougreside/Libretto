@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content" android:background="@drawable/popup_window2"  
+    android:layout_height="wrap_content"  android:orientation="vertical" android:layout_margin="20dp"
+     >
+
+
+    <TextView
+        android:id="@+id/version_heading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:gravity="center" android:textSize="20sp"
+        android:text="Add Notes"
+        android:textColor="#ff9904" />
+
+    <ImageView
+        android:id="@+id/divider"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/version_heading"
+        android:background="@drawable/divider"
+        android:layout_marginTop="5dp" />
+
+     
+            <EditText android:layout_below="@+id/divider"
+                android:id="@+id/popup_note_txt"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/note_box"
+                android:cursorVisible="true" android:padding="4dp"
+                android:ellipsize="end" android:layout_margin="10dp"
+                android:gravity="top"
+                android:maxLines="6" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/popup_note_txt"
+                android:layout_centerHorizontal="true" >
+
+                <Button android:layout_marginRight="3dp"
+                    android:id="@+id/btn_save"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/btn_yellow"
+                    android:gravity="center"
+                    android:text="Save"
+                    android:textColor="#000" />
+
+                <Button android:layout_marginLeft="3dp"
+                    android:id="@+id/btn_cancel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/btn_yellow"
+                    android:gravity="center"
+                    android:text="Cancel"
+                    android:textColor="#000" />
+            </LinearLayout>   
+    </RelativeLayout>
+   

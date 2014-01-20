@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+        <style name="app_theme" parent="@style/Theme.Sherlock.NoActionBar">
+    </style>
+    
+    <style name="home_theme" parent="app_theme">
+        <item name="android:windowBackground">@drawable/s_home_bg</item>
+    </style>
+</resources>
