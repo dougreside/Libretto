@@ -2,7 +2,7 @@ package org.nypl;
 
 import org.nypl.database.AnchorDOA;
 import org.nypl.database.AudioDAO;
-
+import org.nypl.database.ChaptersDAO;
 import org.nypl.database.MediaDOA;
 import org.nypl.database.PlayDAO;
 import org.nypl.database.PlayNoteDAO;
@@ -33,7 +33,7 @@ public class MoverContentProvider extends ContentProvider{
 	private static final int PLAYNOTEDETAIL = 30;
 	private static final int NOTES = 32;
 	private static final int AUDIO = 34;
-
+	private static final int CHAPTERS = 36;
 	
 	
 	
@@ -43,6 +43,7 @@ public class MoverContentProvider extends ContentProvider{
 	
 	public static final String PLAY_PATH = "plays";
 	public static final String VERSION_PATH = "versions";
+	public static final String CHAPTER_PATH = "chapters";
 	public static final String ANCHOR_PATH = "anchors";
 	public static final String VERSION_PLAY_PATH = "play_version";
 	public static final String PLAY_BOOKMARK_PATH = "bookmark_version";
@@ -71,6 +72,7 @@ public class MoverContentProvider extends ContentProvider{
 		sURIMatcher.addURI(AUTHORITY, PLAYNOTE_DETAIL_PATH, PLAYNOTEDETAIL);
 		sURIMatcher.addURI(AUTHORITY, PLAYNOTE_NOTEID, NOTES);
 		sURIMatcher.addURI(AUTHORITY, AUDIO_PATH, AUDIO);
+		sURIMatcher.addURI(AUTHORITY, CHAPTER_PATH, CHAPTERS);
 		
 	}	
 	@Override
@@ -83,6 +85,7 @@ public class MoverContentProvider extends ContentProvider{
 	@Override
 	public Cursor query(Uri uri, String[] projection, String selection,
 			String[] selectionArgs, String sortOrder) {
+		System.out.println("QUERY");
 		int uriType = sURIMatcher.match(uri);
 		Cursor cursor = null;
 		SQLiteDatabase db = mDbHelper.getReadableDatabase();
@@ -104,9 +107,9 @@ public class MoverContentProvider extends ContentProvider{
 		case ANCHORS:
 			cursor = db.query(AnchorDOA.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
 			break;
-		case VERSION_PLAY_NOTE:
+		/*case VERSION_PLAY_NOTE:
 			cursor = db.rawQuery("select  V.PLAY_ID,P.PLAY_NAME,V._id,V.HTML_FILE,V.VERSION_NAME from VERSION V inner join PLAY P on P._id=V.PLAY_ID   where  V._id ="+ " "+"'"+selection+"'", null);
-			break;
+			break;*/
 		case VERSION_PLAY: 
 			Log.v("selection",""+selection);
 			if(selection!=null){
@@ -135,6 +138,10 @@ public class MoverContentProvider extends ContentProvider{
 			Log.v("selection",""+selection);
 			cursor = db.rawQuery("select  PN.PLAY_ID,P.PLAY_NAME,P.AUTHORS,P.IMAGE,PN._id,PN.NOTE_ID,PN.NOTE_TEXT,PN.VERSION_ID,PN.VERSION_NAME,PN.NOTES from PLAY_NOTE PN inner join PLAY P on P._id=PN.PLAY_ID   where PN.NOTE_ID ="+ " "+"'"+selection+"'", null);
 			break;
+		case CHAPTERS:
+			Log.v("selection",""+selection);
+			cursor = db.query(ChaptersDAO.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
+			break;	
 		default:
 			throw new IllegalArgumentException("Unknown URI: " + uri);
 		}
@@ -157,6 +164,9 @@ public class MoverContentProvider extends ContentProvider{
 			break;
 		case VERSIONS:
 			rowsDeleted = sqlDB.delete(VersionDAO.TABLE_NAME,  selection,null);
+			break;
+		case CHAPTERS:
+			rowsDeleted = sqlDB.delete(ChaptersDAO.TABLE_NAME,  selection,null);
 			break;
 		case NOTES:
 			rowsDeleted = sqlDB.delete(PlayNoteDAO.TABLE_NAME,selection,null);
@@ -196,6 +206,9 @@ public class MoverContentProvider extends ContentProvider{
 		case AUDIO:
 			id = db.insert(AudioDAO.TABLE_NAME, null, values);
 			break;
+		case CHAPTERS:
+			id = db.insert(ChaptersDAO.TABLE_NAME, null, values);
+			break;
 		default:
 			throw new IllegalArgumentException("Unknown URI: " + uri);
 		}
@@ -227,6 +240,9 @@ public class MoverContentProvider extends ContentProvider{
 		case PLAYS:
 			Log.v("db.update:::::::::::::::::::::::::::::::::",""+selection);
 			rowsUpdated = db.update(PlayDAO.TABLE_NAME,values,selection,null);
+		case CHAPTERS:
+			Log.v("db.update:::::::::::::::::::::::::::::::::",""+selection);
+			rowsUpdated = db.update(ChaptersDAO.TABLE_NAME,values,selection,null);
 		break;	
 		default:
 			throw new IllegalArgumentException("Unknown URI: " + uri);

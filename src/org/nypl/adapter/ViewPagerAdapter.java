@@ -15,6 +15,7 @@ import org.nypl.PlaysDetailActivity;
 import org.nypl.R;
 import org.nypl.SelectionWebView;
 import org.nypl.database.AudioDAO;
+import org.nypl.database.ChaptersDAO;
 import org.nypl.database.PlayDAO;
 import org.nypl.database.PlayNoteDAO;
 import org.nypl.dataholder.AudioBean;
@@ -74,8 +75,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class ViewPagerAdapter extends PagerAdapter{
+	private int currentChapter=0;
 	 public class ScrollPosition {
 		    private String scrollposition= "";
+		    
 		    public ArrayList<ChaptersBean> Chapters = new ArrayList<ChaptersBean>();;
 		    @JavascriptInterface
 		    public void reportHeads(String heads){
@@ -91,7 +94,7 @@ public class ViewPagerAdapter extends PagerAdapter{
 					String chapterText = headobject.getString("text").trim();
 					ChaptersBean cb = new ChaptersBean();
 					cb.setChapterID(chapterId);
-					cb.setChapterText(chapterText);
+					cb.setChapterName(chapterText);
 					Chapters.add(cb);
 					
 				}	
@@ -130,6 +133,7 @@ public class ViewPagerAdapter extends PagerAdapter{
 	private static File FilePath = Environment.getExternalStorageDirectory();
 	public static String CONTENT_LOCATION ;
 	private static ArrayList<VersionBean> mVersionDetailList;
+	private static ArrayList<ChaptersBean> mChaptersList;
 	private static Context mContext;
 	private Dialog mVersionDialog;
 	public static SelectionWebView mPlayDetailView;
@@ -183,15 +187,12 @@ public class ViewPagerAdapter extends PagerAdapter{
 	public SelectionWebView getCurrentView(){
 		return mPlayDetailView;
 	}
-	public ViewPagerAdapter(ArrayList<VersionBean> versionDetailList,Context ctx,String VersionHtmlID,String Notes,String Version,String NoteID,String content_location) {
+	public ViewPagerAdapter(ArrayList<VersionBean> versionDetailList,Context ctx,String Version,String content_location) {
 		super();
 		this.mVersionDetailList = versionDetailList;
 		this.mContext=ctx;
-		this.VersionHtmlId=VersionHtmlID;
-		this.mNotes=Notes;
 		mChilds = new View[this.mVersionDetailList.size()];
 		this.Version=Version;
-		this.mNoteID=NoteID;
 		this.CONTENT_LOCATION=content_location;
 	}
 
@@ -208,7 +209,7 @@ public class ViewPagerAdapter extends PagerAdapter{
 
 	@Override
 	public Object instantiateItem(View collection,   int position) {
-	
+		
 		LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		View vg = (View) inflater.inflate(R.layout.e_play_fulltext, null);
 		Log.v("Test","switched");
@@ -231,8 +232,12 @@ public class ViewPagerAdapter extends PagerAdapter{
 			mPlayDetailView.setTag("web");
 		}
 		mPlaysId = mVersionDetailList.get(position).getVersionPlayID();
+		String versionId =  mVersionDetailList.get(position).getVersionUUID();
+		ArrayList<ChaptersBean> chaptersList = ChaptersDAO.getChaptersForVersion(mContext,versionId);  
+		ChaptersBean currentChapterBean= chaptersList.get(currentChapter);
+		
 	//	mPlaysId = mVersionDetailList.get(position).getVersionID();
-		String filePath = "file:///"+FilePath.getAbsolutePath() + File.separator+ CONTENT_LOCATION + File.separator +mVersionDetailList.get(position).getVersionHTMLFile();
+		String filePath = "file:///"+FilePath.getAbsolutePath() + File.separator+ CONTENT_LOCATION + File.separator +currentChapterBean.getHTMLFile();
 		mPlayDetailView.addJavascriptInterface(jsScrollPosition, "appScrollManager");
 		
 		mPlayDetailView.loadUrl(filePath);
@@ -275,9 +280,9 @@ public class ViewPagerAdapter extends PagerAdapter{
 				view.loadUrl("javascript:scrollToElement('" + VersionHtmlId.trim() + "')");
 				
 			}
-			Log.v("OnPageFinished","About to report chapters");
-			view.loadUrl("javascript:reportChapters()");
-			Log.v("OnPageFinished","Done reporting chapters");
+			//Log.v("OnPageFinished","About to report chapters");
+			//view.loadUrl("javascript:reportChapters()");
+			//Log.v("OnPageFinished","Done reporting chapters");
 			String s=	(String) view.getTag();
 			if(s!=null)
 				if(s.equals("web")){

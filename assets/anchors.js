@@ -1,4 +1,4 @@
-function reportChapters(){
+/*function reportChapters(){
 	if (appScrollManager){
 	ChapterHeads = [];
 	$(".NavDiv>.head").each(function(k){
@@ -8,7 +8,7 @@ function reportChapters(){
 	appScrollManager.reportHeads(stringHeads);
 	}
 	return;
-}
+}*/
 function scrollToElement(anch){
 console.log("ANCH "+anch);
 

@@ -16,7 +16,7 @@ public class ChapterListAdapter  extends BaseAdapter{
 
 	private ArrayList<ChaptersBean> ChapterList;
 
-	public ChapterListAdapter(ArrayList ChapterList) {
+	public ChapterListAdapter(ArrayList<ChaptersBean> ChapterList) {
 		super();
 		this.ChapterList = ChapterList;
 	}
@@ -44,7 +44,7 @@ public class ChapterListAdapter  extends BaseAdapter{
 		 if(convertView==null)
 				convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.e_popup_list, null);
 				ChaptersBean chapter = ChapterList.get(position);
-				((TextView)convertView.findViewById(R.id.version_name)).setText(chapter.getChapterText());
+				((TextView)convertView.findViewById(R.id.version_name)).setText(chapter.getChapterName());
 				return convertView;
 	}
 

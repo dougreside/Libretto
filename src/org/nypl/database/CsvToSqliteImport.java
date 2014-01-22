@@ -15,6 +15,7 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 
 import org.nypl.dataholder.AudioBean;
+import org.nypl.dataholder.ChaptersBean;
 import org.nypl.dataholder.PlaysBean;
 import org.nypl.dataholder.VersionBean;
 import org.nypl.parsing.AudioFileParser;
@@ -265,27 +266,29 @@ public class CsvToSqliteImport {
 		filePath = FilePath.getAbsolutePath() + File.separator+ CONTENT_LOCATION+ File.separator ;
 		String PlayId;
 		String VersionId;
-		String versionhtml;
+		String chapterhtml;
+
 		Log.v("Audio","Start read");
 		if (db==null){
 		ArrayList<VersionBean> vList = VersionDAO.getVersionOf(context,playId);
-		//Cursor cursor2 = db.rawQuery("select * from VERSION ",null);
-		
-		//Log.v("Audio",cursor2.getCount()+"");
-		for(int j=0 ; j<vList.size(); j++){
 	
+		for(int j=0 ; j<vList.size(); j++){
+			
 		    //PlayId = vList.get(j).getVersionPlayID();
-			VersionId = vList.get(j).getVersionID();
-			versionhtml = vList.get(j).getVersionHTMLFile();
-			System.out.println(versionhtml);
+			VersionId = vList.get(j).getVersionUUID();
+			ArrayList<ChaptersBean> cList = ChaptersDAO.getChaptersForVersion(context, VersionId);
+			for (int m=0;m<cList.size();m++){
+			chapterhtml = cList.get(m).getHTMLFile();
+
+			System.out.println(chapterhtml);
 		
 
 		try{
 		
 		Log.v("Audio","Audio Parsing sent");
-		String fp = FilePath.getAbsolutePath()+File.separator+CONTENT_LOCATION+File.separator+versionhtml;
+		String fp = FilePath.getAbsolutePath()+File.separator+CONTENT_LOCATION+File.separator+chapterhtml;
 
- 
+		
 	       
 
 		playAudioData = AudioFileParser.parseAudio(fp,VersionId);
@@ -300,7 +303,7 @@ public class CsvToSqliteImport {
 			e.printStackTrace();
 		}
 		}
-		
+		}
 		//System.out.println("playaudioData.get(i).getVersionPlayID()::::::::::::::::::::::"+playAudioData.get(0).getClipID());
 		
 		}
@@ -313,14 +316,19 @@ else{
 		cursor2.moveToPosition(j);
 		Log.v("Audio",j+"");
 		 VersionId = cursor2.getString(cursor2.getColumnIndex("VERSION_ID"));
-		 versionhtml = cursor2.getString(cursor2.getColumnIndex("HTML_FILE"));
-		System.out.println(versionhtml);
+		 Cursor cursor3 = db.rawQuery("select * from CHAPTERS where CHAPTER_VERSION_ID = \""+VersionId+"\"",null);
+			
+		 
+		 
+		 chapterhtml = cursor3.getString(cursor2.getColumnIndex("HTML_FILE"));
+			
+		System.out.println(chapterhtml);
 	
 
 	try{
 	
 	Log.v("Audio","Audio Parsing sent");
-	String fp = FilePath.getAbsolutePath()+File.separator+CONTENT_LOCATION+File.separator+versionhtml;
+	String fp = FilePath.getAbsolutePath()+File.separator+CONTENT_LOCATION+File.separator+chapterhtml;
 
 
        

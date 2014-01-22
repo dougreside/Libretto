@@ -13,17 +13,10 @@ public class VersionBean implements Serializable{
 	private String playName;
 	private String playImage;
 	private String author;
-	private String playaudioname;
+
 	private String versionUUID;
+
 	
-	
-	
-	public String getVersionAudioName() {
-		return playaudioname;
-	}
-	public void setVersionAudioName(String playaudioname) {
-		this.playaudioname = playaudioname;
-	} 
 	
 	public String getVersionPlayImage() {
 		return playImage;

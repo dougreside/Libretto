@@ -272,11 +272,10 @@ public class PlaysListActivity extends FragmentActivity   {
 			   			pd = ProgressDialog.show(ctx, "Downloading libretto", "please wait...");
 						
 			   			final DownloadFile df = new DownloadFile();
-			        df.execute(epuburl,FilePath.getAbsolutePath()+File.separator+CONTENT_LOCATION+File.separator+uuid+".epub",uuid,groupPosition+"",childPosition+"",mPlaysNameList.get(childPosition).getPlayName().toString(),mVersion);
+			   			df.execute(epuburl,FilePath.getAbsolutePath()+File.separator+CONTENT_LOCATION+File.separator+uuid+".epub",uuid,groupPosition+"",childPosition+"",mPlaysNameList.get(childPosition).getPlayName().toString(),mVersion);
 			   		}
 			   		else{
-			   			pd = ProgressDialog.show(ctx, "Installing libretto", "please wait...");
-						
+			   			pd = ProgressDialog.show(ctx, "Installing libretto", "please wait...");		
 			   			System.out.println("To the unzipper "+CONTENT_LOCATION);
 			   			final UnzipEPUB unzipper = new UnzipEPUB(); 
 			   		    unzipper.execute(childPosition+"",uuid,mPlaysNameList.get(childPosition).getPlayName().toString(),mVersion);

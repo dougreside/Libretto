@@ -44,7 +44,23 @@ public class CsvReader {
 		mDBHelper.close();
 	}*/
 	}
-	public static void insertVersionTable(SQLiteDatabase db, Context context ,String versionid, String play_id, String html_file,String version_name) {
+	public static void insertChapterTable(SQLiteDatabase db,Context context ,String html_file,String versionid,String chapter_name,String chapter_mapping,String playorder){
+		if(versionid!=null )
+		{	
+			
+			//	System.out.println("audioname:::::::::::::::22222::::::::::::::"+audioname);
+			ContentValues values = new ContentValues();
+
+			values.put(DatabaseTable.TABLE_CHAPTER_MAPPING_ID, chapter_mapping);
+			values.put(DatabaseTable.TABLE_CHAPTER_NAME, chapter_name);
+			values.put(DatabaseTable.TABLE_CHAPTER_PLAYORDER, playorder);
+			values.put(DatabaseTable.TABLE_CHAPTER_HTML_FILE, html_file);
+			values.put(DatabaseTable.TABLE_CHAPTER_VERSION_ID, versionid);
+			long result = db.insert(ChaptersDAO.TABLE_NAME , null, values);
+			Log.v("result","INSERTED: "+result);
+		}	
+	}
+	public static void insertVersionTable(SQLiteDatabase db, Context context ,String versionid, String play_id, String version_name) {
 		
 
 	
@@ -59,20 +75,13 @@ public class CsvReader {
 		{	
 			System.out.println("play_id:::::::::::::::2222::::::::::::::"+play_id);
 			System.out.println("versionid:::::::::::::::2222222::::::::::::::"+versionid);
-			System.out.println("html_file:::::::::::::::222::::::::::::::"+html_file);
-		
+			
 
 			//	System.out.println("audioname:::::::::::::::22222::::::::::::::"+audioname);
 			ContentValues values = new ContentValues();
 			values.put(DatabaseTable.TABLE_VERSION_ID, versionid);
 			values.put(DatabaseTable.TABLE_VERSION_PLAY_ID, play_id);
-			values.put(DatabaseTable.TABLE_VERSION_HTML_FILE, html_file);
 			values.put(DatabaseTable.TABLE_VERSION_NAME, version_name);
-
-			//values.put("initial", initial);
-			//db.insert(TABLE_NAME, null, values);
-			
-
 			long result = db.insert(VersionDAO.TABLE_NAME , null, values);
 			Log.v("result","INSERTED: "+result);
 		}

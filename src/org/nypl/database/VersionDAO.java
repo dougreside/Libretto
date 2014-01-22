@@ -27,18 +27,25 @@ public class VersionDAO {
 	public static final String COLUMN_NAME_VERSION_NAME = "VERSION_NAME"; 
 	public static final String COLUMN_NAME_HTML_FILE = "HTML_FILE"; 
 
+	
+		
+	
 	public static final String COLUMN_NAME_NOTE = "NOTE"; 
 	public static final String COLUMN_NAME_PLAY_NAME = "PLAY_NAME"; 
 	public static final String COLUMN_NAME_PLAY_AUTHOR_NAME = "AUTHORS"; 
 	public static final String COLUMN_NAME_PLAY_IMAGE = "IMAGE"; 
 
+	
 
+	
 	private static int COLUMN_INDEX_VERSION_ID = -1; 
 	private static int COLUMN_INDEX_VERSION_PLAY_ID = -1;
 	private static int COLUMN_INDEX_VERSION_UUID = -1;
 	private static int COLUMN_INDEX_VERSION_NAME = -1;
 	private static int COLUMN_INDEX_HTML_FILE = -1;
 
+	
+	
 	private static int COLUMN_INDEX_NOTE = -1;
 	private static int COLUMN_INDEX_VERSION_PLAY_NAME =-1;
 	private static int COLUMN_INDEX_VERSION_PLAY_AUHTOR_NAME =-1;
@@ -54,6 +61,10 @@ public class VersionDAO {
 		COLUMN_INDEX_VERSION_NAME = cursor.getColumnIndex(COLUMN_NAME_VERSION_NAME);
 		COLUMN_INDEX_HTML_FILE = cursor.getColumnIndex(COLUMN_NAME_HTML_FILE);
 	
+		//COLUMN_INDEX_CHAPTER_NAME = cursor.getColumnIndex(COLUMN_NAME_CHAPTER_NAME);; 
+		//COLUMN_INDEX_CHAPTER_ID = cursor.getColumnIndex(COLUMN_NAME_CHAPTER_ID);; 
+		//COLUMN_INDEX_CHAPTER_PLAYORDER = cursor.getColumnIndex(COLUMN_NAME_CHAPTER_PLAYORDER); 
+		
 		COLUMN_INDEX_NOTE = cursor.getColumnIndex(COLUMN_NAME_NOTE);
 		COLUMN_INDEX_VERSION_PLAY_NAME = cursor.getColumnIndex(COLUMN_NAME_PLAY_NAME);
 		COLUMN_INDEX_VERSION_PLAY_AUHTOR_NAME = cursor.getColumnIndex(COLUMN_NAME_PLAY_AUTHOR_NAME);
@@ -62,6 +73,7 @@ public class VersionDAO {
 	public static ArrayList<VersionBean> getVersionOf(Context ctx,String PlayId){
 		ArrayList<VersionBean> list = new ArrayList<VersionBean>();
 		System.out.println("All versions for: "+PlayId);
+		
 		Cursor cursor =ctx.getContentResolver().query(Uri.withAppendedPath(MoverContentProvider.CONTENT_URI,
 				MoverContentProvider.VERSION_PATH), null,  COLUMN_NAME_VERSION_PLAY_ID +" =\""+PlayId+"\"", null, null);
 		///.query(MoverContentProvider.CONTENT_URI+"/"+MoverContentProvider.PLAY_PATH, null, null, null, null);
@@ -75,8 +87,7 @@ public class VersionDAO {
 				version.setVersionUUID(cursor.getString(COLUMN_INDEX_VERSION_UUID));
 				version.setVersionPlayID(cursor.getString(COLUMN_INDEX_VERSION_PLAY_ID));
 				version.setVersionName(cursor.getString(COLUMN_INDEX_VERSION_NAME));
-				version.setVersionHTMLFile(cursor.getString(COLUMN_INDEX_HTML_FILE));
-
+				
 				list.add(version);
 			}
 		}
@@ -84,6 +95,10 @@ public class VersionDAO {
 
 		return list;
 
+	}
+	public static ArrayList<VersionBean> getChaptersForVersion(Context ctx,String VersionID){
+		ArrayList<VersionBean> list = new ArrayList<VersionBean>();
+		return list; 
 	}
 
 

@@ -15,19 +15,20 @@ public class AnchorDOA {
 	private static final String COLUMN_NAME_ANCHOR_PLAY_ID = "PLAY_ID"; 
 	private static final String COLUMN_NAME_ANCHOR_PLAY_VERSION_ID = "PLAY_VERSION_ID"; 
 	private static final String COLUMN_NAME_ANCHOR_HTML_ID = "ANCHOR_HTML_ID"; 
+	private static final String COLUMN_NAME_ANCHOR_HTML_FILE = "ANCHOR_HTML_FILE"; 
 	
 	private static int COLUMN_INDEX_ANCHOR_ID = -1; 
 	private static int COLUMN_INDEX_ANCHOR_PLAY_ID = -1;
 	private static int COLUMN_INDEX_ANCHOR_PLAY_VERSION_ID = -1;
 	private static int COLUMN_INDEX_ANCHOR_HTML_ID = -1;
-	
+	private static int COLUMN_INDEX_ANCHOR_HTML_FILE = -1;
 	private static void setColumns(Cursor cursor){
 
 		COLUMN_INDEX_ANCHOR_ID = cursor.getColumnIndex(COLUMN_NAME_ANCHOR_ID);
 		COLUMN_INDEX_ANCHOR_PLAY_ID = cursor.getColumnIndex(COLUMN_NAME_ANCHOR_PLAY_ID);
 		COLUMN_INDEX_ANCHOR_PLAY_VERSION_ID = cursor.getColumnIndex(COLUMN_NAME_ANCHOR_PLAY_VERSION_ID);
 		COLUMN_INDEX_ANCHOR_HTML_ID = cursor.getColumnIndex(COLUMN_NAME_ANCHOR_HTML_ID);
-		
+		COLUMN_INDEX_ANCHOR_HTML_FILE = cursor.getColumnIndex(COLUMN_NAME_ANCHOR_HTML_FILE);
 	}
 	public static ArrayList<AnchorBean> getVersions(Context ctx,String PlayId,String htmlId){
 		ArrayList<AnchorBean> list = new ArrayList<AnchorBean>();

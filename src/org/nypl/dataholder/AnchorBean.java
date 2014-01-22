@@ -9,7 +9,7 @@ public class AnchorBean implements Serializable{
 	private String playId;
 	private String playVersionId;
 	private String htmlId;
-	
+	private String htmlFile;
 	
 	public String getAnchorID() {
 		return anchorID;
@@ -34,5 +34,11 @@ public class AnchorBean implements Serializable{
 	}
 	public void setAnchorHTML_Id(String htmlId) {
 		this.htmlId = htmlId;
+	}
+	public String getAnchorHTMLFile() {
+		return htmlFile;
+	}
+	public void setAnchorHTMLFile(String htmlfile) {
+		this.htmlFile = htmlfile;
 	}
 }
