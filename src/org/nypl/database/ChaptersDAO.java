@@ -47,7 +47,7 @@ public class ChaptersDAO {
 		System.out.println(ctx.getContentResolver());
 		System.out.println(MoverContentProvider.CONTENT_URI+" "+MoverContentProvider.CHAPTER_PATH);
 		Cursor cursor =ctx.getContentResolver().query(Uri.withAppendedPath(MoverContentProvider.CONTENT_URI,
-				MoverContentProvider.CHAPTER_PATH), null,  COLUMN_NAME_VERSION_ID +" =\""+VersionId+"\"", null, null);
+				MoverContentProvider.CHAPTER_PATH), null,  COLUMN_NAME_VERSION_ID +" =\""+VersionId+"\"", null, "CHAPTER_PLAYORDER");
 		///.query(MoverContentProvider.CONTENT_URI+"/"+MoverContentProvider.PLAY_PATH, null, null, null, null);
 		System.out.println("CURSOR COUNT "+cursor.getCount());
 		if(cursor != null && cursor.getCount()>0){

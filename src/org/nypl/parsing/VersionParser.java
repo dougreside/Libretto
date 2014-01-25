@@ -141,8 +141,12 @@ public class VersionParser {
 							Uri.parse(MoverContentProvider.CONTENT_URI + "/"
 									+ MoverContentProvider.VERSION_PATH), cv);
 
-				}}
-
+				}
+				chapterName = "Front Matter";
+				chapterHTML=version_html_name;
+				playOrder = 0;
+				}
+					
 					if (db1 != null) {
 						System.out.println("db1 not null");
 						CsvReader.insertChapterTable(db1, context1, version_id,

@@ -136,7 +136,7 @@ public class DatabaseTable {
 			+ TABLE_CHAPTER_VERSION_ID + " text not null ," 
 			+ TABLE_CHAPTER_NAME + " text  ," 
 			+ TABLE_CHAPTER_MAPPING_ID + " text ," 
-			+ TABLE_CHAPTER_PLAYORDER + " text  " 
+			+ TABLE_CHAPTER_PLAYORDER + " integer not null  " 
 		//+ TABLE_VERSION_AUDIO_NAME + " text  " 
 			+ ");";
 	

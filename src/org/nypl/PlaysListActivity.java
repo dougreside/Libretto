@@ -268,24 +268,19 @@ public class PlaysListActivity extends FragmentActivity   {
 				File epubFile = new File(FilePath.getAbsolutePath()+File.separator+CONTENT_LOCATION+File.separator+uuid+".epub");
 				
 			   	if ((haveNetworkConnection())&&(!epubDir.exists()))	{
-			   		if (!epubFile.exists()){
+			   
 			   			pd = ProgressDialog.show(ctx, "Downloading libretto", "please wait...");
 						
 			   			final DownloadFile df = new DownloadFile();
 			   			df.execute(epuburl,FilePath.getAbsolutePath()+File.separator+CONTENT_LOCATION+File.separator+uuid+".epub",uuid,groupPosition+"",childPosition+"",mPlaysNameList.get(childPosition).getPlayName().toString(),mVersion);
-			   		}
-			   		else{
-			   			pd = ProgressDialog.show(ctx, "Installing libretto", "please wait...");		
-			   			System.out.println("To the unzipper "+CONTENT_LOCATION);
-			   			final UnzipEPUB unzipper = new UnzipEPUB(); 
-			   		    unzipper.execute(childPosition+"",uuid,mPlaysNameList.get(childPosition).getPlayName().toString(),mVersion);
-			   		}
+			   		
+			   		
 			        return false;
 			   	}
 			   	else {
 			   		
 				//---------
-		   	   	
+		   	   	if (epubDir.exists()){
 				Intent i = new Intent(PlaysListActivity.this,PlaysDetailActivity.class);
 
 
@@ -295,10 +290,21 @@ public class PlaysListActivity extends FragmentActivity   {
 				i.putExtra("mNote","Home" );
 				i.putExtra("position",childPosition);
 				i.putExtra("mVersion",mVersion );
+				i.putExtra("mChapter","0");
 				System.out.println(i.getExtras().toString());
 				startActivity(i);
 				
-				return false;
+				
+		   	   	}
+		   	   	else{
+		   	   	pd = ProgressDialog.show(ctx, "Installing libretto", "please wait...");		
+	   			System.out.println("To the unzipper "+CONTENT_LOCATION);
+	   			final UnzipEPUB unzipper = new UnzipEPUB(); 
+	   		    unzipper.execute(childPosition+"",uuid,mPlaysNameList.get(childPosition).getPlayName().toString(),mVersion);
+
+		   	   	}
+		   	   	
+		   	 return false;
 				}
 			   	
 			}}
@@ -327,7 +333,7 @@ public class PlaysListActivity extends FragmentActivity   {
 			i.putExtra("playsId",playId);
 			i.putExtra("mNote","Home" );
 			i.putExtra("mVersion",mVersion);
-			
+			i.putExtra("mChapter","0");
 			startActivity(i);
 			System.out.println("Download Complete");
 			System.out.println(i.getExtras().toString());
@@ -579,6 +585,7 @@ public class PlaysListActivity extends FragmentActivity   {
 				i.putExtra("mNote","Home" );
 				i.putExtra("position",0);
 				i.putExtra("mVersion",mVersion );
+				i.putExtra("mChapter","0");
 				startActivity(i);
 
 			}

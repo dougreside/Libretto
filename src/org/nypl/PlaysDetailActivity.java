@@ -1,14 +1,11 @@
 package org.nypl;
 
 import java.io.File;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 
-import org.nypl.R.drawable;
 import org.nypl.adapter.ChapterListAdapter;
 import org.nypl.adapter.VersionListAdapter;
 import org.nypl.adapter.ViewPagerAdapter;
-import org.nypl.database.AudioDAO;
 import org.nypl.database.ChaptersDAO;
 import org.nypl.database.VersionDAO;
 import org.nypl.dataholder.ChaptersBean;
@@ -18,15 +15,12 @@ import org.nypl.utils.CustomTypefaceSpan;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -52,6 +46,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -73,6 +68,7 @@ public class PlaysDetailActivity extends FragmentActivity {
 	private Button mSaveBtn;
 	private Button mCancelBtn;
 	private LinearLayout mPlayversionDropDown;
+	private RelativeLayout mChapterControls;
 	private WebView mFocusedPage;
 	
     public static LinearLayout mAudiolayout;
@@ -110,7 +106,7 @@ public class PlaysDetailActivity extends FragmentActivity {
 	//public static String mNoteID;
 	public static String CONTENT_LOCATION ;
 	public static String URLID;
-	
+	public static String currentChapter;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -137,6 +133,9 @@ public class PlaysDetailActivity extends FragmentActivity {
 		PlaysName = extras.getString("playsName");
 		mPosition  = extras.getInt("position");
 		Version  = extras.getString("mVersion");
+		
+		 currentChapter = extras.getString("mChapter");
+
 		//mNotes  = extras.getString("mNote");
 		//VersionHtmlID =extras.getString("VersionHtmlID");
 		//mNoteID=extras.getString("mNoteID");
@@ -146,12 +145,20 @@ public class PlaysDetailActivity extends FragmentActivity {
 		///mSearchNote  = extras.getString("mSearchNote");
 		///	if(mNotes!=null || mSearchNote!=null){
 		TextView titleBar = (TextView) findViewById(R.id.s_main_title);
-		
+		TextView leftText = (TextView) findViewById(R.id.s_plays_chapter_left_text);
+		TextView rightText = (TextView) findViewById(R.id.s_plays_chapter_right_text);
+		leftText.setTypeface(lato);
+		rightText.setTypeface(lato);
 		//String titleLogo ="&#xe012;";
 		String titleText = "&#xe014; "+PlaysName+" &#xe015;";
 		titleBar.setTypeface(lato);
 		titleBar.setMovementMethod(LinkMovementMethod.getInstance());
 		titleBar.setText(titleText);
+		String previousText="&#xe604; Previous Chapter";
+		String nextText = "Next Chapter &#xe605;";
+		Spannable prevArrow = new SpannableString(Html.fromHtml(previousText));
+		Spannable nextArrow = new SpannableString(Html.fromHtml(nextText));
+		
 		Spannable s = new SpannableString(Html.fromHtml(titleText));
 		NonUnderlineLink clickHome = new NonUnderlineLink() {
 		    @Override
@@ -168,7 +175,8 @@ public class PlaysDetailActivity extends FragmentActivity {
 		    	getChapters();
 		    }
 		};
-		
+
+	
 		s.setSpan (new CustomTypefaceSpan("", icomoon ), 0, 1,Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 		s.setSpan (new CustomTypefaceSpan("", lato ), 2, PlaysName.length(),Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 		s.setSpan (new CustomTypefaceSpan("", icomoon ), PlaysName.length()+2,PlaysName.length()+4,Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -176,6 +184,47 @@ public class PlaysDetailActivity extends FragmentActivity {
 		s.setSpan (clickNav,PlaysName.length()+3,PlaysName.length()+4,Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 	    s.setSpan(new ForegroundColorSpan(Color.parseColor("#7f2352")),0,PlaysName.length()+4,Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 	    
+	    prevArrow.setSpan(new CustomTypefaceSpan("", icomoon ), 0, 1,Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+	    prevArrow.setSpan (new CustomTypefaceSpan("", lato ), 2, previousText.length()-8,Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+	    prevArrow.setSpan(new ForegroundColorSpan(Color.parseColor("#7f2352")),0,previousText.length()-7,Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+		   
+	    
+	    
+	    nextArrow.setSpan(new CustomTypefaceSpan("", icomoon ), nextText.length()-8,nextText.length()-7,Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+	    nextArrow.setSpan (new CustomTypefaceSpan("", lato ), 0, nextText.length()-8,Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+	    nextArrow.setSpan(new ForegroundColorSpan(Color.parseColor("#7f2352")),0,nextText.length()-7,Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+		
+	    leftText.setText(prevArrow);
+	    rightText.setText(nextArrow);
+	    
+	    leftText.setOnClickListener(new View.OnClickListener() {
+	        @Override
+	        public void onClick(View v) {
+	        	System.out.println("PREVIOUS");
+		      	int curChap = mPlayPagerAdapter.getCurrentChapterPos();
+		      	Version=versionDetailList.get(mPosition).getVersionUUID();
+		    	final ArrayList<ChaptersBean> cList = ChaptersDAO.getChaptersForVersion(getApplicationContext(), Version);
+				System.out.println("CURRENT CHAPTER = "+curChap);
+		    	if (curChap>0){
+		    		curChap--;
+		    		goToChapter(curChap,cList);
+		    	}
+	        }
+	    });
+	    rightText.setOnClickListener(new View.OnClickListener() {
+	        @Override
+	        public void onClick(View v) {
+	        	System.out.println("NEXT!");
+		    	int curChap = mPlayPagerAdapter.getCurrentChapterPos();
+		    	Version=versionDetailList.get(mPosition).getVersionUUID();
+		    	final ArrayList<ChaptersBean> cList = ChaptersDAO.getChaptersForVersion(getApplicationContext(), Version);
+		    	System.out.println("CURRENT CHAPTER = "+curChap);
+		    	if (curChap<cList.size()){
+					curChap++;
+					goToChapter(curChap,cList);
+				}
+	        }
+	    });
 		titleBar.setText(s);
 		System.out.println("mNotes::::::::::::::::::::::::::::::::"+mNotes);
 
@@ -187,7 +236,7 @@ public class PlaysDetailActivity extends FragmentActivity {
 	
 		//mPlayNote = (ImageView) findViewById(R.id.s_plays_detial_img_note);
 		mPlayversionDropDown=(LinearLayout) findViewById(R.id.play_version_drop_down_layout);
-      
+		mChapterControls=(RelativeLayout) findViewById(R.id.s_playsdetail_chapterControls_layout);
 		mAudiolayout= (LinearLayout) findViewById(R.id.s_playsdetail_audio_layout);
 		btnPlay = (ImageButton) findViewById(R.id.btnPlay);
 		songProgressBar = (SeekBar) findViewById(R.id.songProgressBar);
@@ -204,7 +253,7 @@ public class PlaysDetailActivity extends FragmentActivity {
 			Version=versionDetailList.get(mPosition).getVersionUUID();
 		}
 		System.out.println("Before ViewPageAdapter");
-		mPlayPagerAdapter = new ViewPagerAdapter(versionDetailList,PlaysDetailActivity.this,Version,CONTENT_LOCATION);
+		mPlayPagerAdapter = new ViewPagerAdapter(versionDetailList,PlaysDetailActivity.this,Version,CONTENT_LOCATION,currentChapter);
 		System.out.println("After ViewPageAdapter");
 		mPlayDetailPager.setAdapter(mPlayPagerAdapter);
 		/*if(mNotes!=null){
@@ -402,11 +451,30 @@ public class PlaysDetailActivity extends FragmentActivity {
 		}.sendEmptyMessageDelayed(1, 500);
 		super.onResume();
 	}
+	private void goToChapter(int chapNum, ArrayList<ChaptersBean> cList){
+		
+		String chapId = cList.get(chapNum).getChapterMappingID();
+	//	chapId = chapId.substring(0,chapId.indexOf("-"));
+		String chapUrl = cList.get(chapNum).getHTMLFile();
+		System.out.println("Setting chapter id in go to chapter "+chapId+" "+chapNum);
+		mPlayPagerAdapter.setCurrentChapter(chapId);
+		mPlayPagerAdapter.setCurrentChapterPos(chapNum);
+		mFocusedPage.loadUrl("file:///"+Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator+ CONTENT_LOCATION + File.separator+chapUrl);
+
+		
+		String nextVersionId = mPlayPagerAdapter.getVersionID();
+		ArrayList<ChaptersBean> chaptersList = ChaptersDAO.getChaptersForVersion(getApplicationContext(),nextVersionId);  
+		int nextChapPos = mPlayPagerAdapter.getChapterPosFromId(chapId,nextVersionId);
+		ChaptersBean nextChapterBean= chaptersList.get(nextChapPos);
+		String filePath = "file:///"+Environment.getExternalStorageDirectory().getAbsolutePath()  + File.separator+ CONTENT_LOCATION + File.separator +nextChapterBean.getHTMLFile();
+		mPlayPagerAdapter.mPlayDetailView.loadUrl(filePath);
+	
+	}
 	private void getChapters(){
 		//final ArrayList<ChaptersBean> chapterList = mPlayPagerAdapter.jsScrollPosition.Chapters;
-		if(Version==null){
+	
 			Version=versionDetailList.get(mPosition).getVersionUUID();
-		}
+		
 		
 		final ArrayList<ChaptersBean> chapterList = ChaptersDAO.getChaptersForVersion(getApplicationContext(), Version);
 		
@@ -425,12 +493,11 @@ public class PlaysDetailActivity extends FragmentActivity {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
 				
-				mChapterDialog.cancel();
-				String chapId = chapterList.get(arg2).getChapterID();
-				String chapUrl = chapterList.get(arg2).getHTMLFile();
-				System.out.println(chapId);
-				mFocusedPage.loadUrl("file:///"+Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator+ CONTENT_LOCATION + File.separator+chapUrl);
+				Version=versionDetailList.get(mPosition).getVersionUUID();
+		    	final ArrayList<ChaptersBean> cList = ChaptersDAO.getChaptersForVersion(getApplicationContext(), Version);
 				
+				mChapterDialog.cancel();
+				goToChapter(arg2,cList);
 				/*versionDetailList = VersionDAO.getVersionOf(PlaysDetailActivity.this, mPlaysId);
 				finish();
 				Intent i = new Intent(PlaysDetailActivity.this,PlaysDetailActivity.class);
@@ -477,6 +544,7 @@ public class PlaysDetailActivity extends FragmentActivity {
 				i.putExtra("mVersion",mVersion);
 				i.putExtra("VersionHtmlID",mVersion);
 				i.putExtra("mNote","Home");
+				i.putExtra("mChapter",mPlayPagerAdapter.getCurrentChapter()+"");
 				startActivity(i);
 
 

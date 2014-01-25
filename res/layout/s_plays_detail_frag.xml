@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
+    android:layout_width="wrap_content"
     android:layout_height="fill_parent" >
 
     <!-- ImageView
@@ -147,7 +147,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/s_titlebar_layout"
         android:orientation="vertical" 
-        android:background="#FFFFFF">
+        android:background="#FFFFFF"
+        android:layout_marginBottom="30dp">
 
         <android.support.v4.view.ViewPager
             android:id="@+id/viewpager"
@@ -165,6 +166,49 @@
 
     </LinearLayout>
 
+    <RelativeLayout
+        android:id="@+id/s_playsdetail_chapterControls_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="30dp"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical"
+        android:background="#FFFFFF"
+     >
+ <TextView
+                       android:id="@+id/s_plays_chapter_left_text"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_alignParentTop="true"
+                       
+                      
+                       
+                       android:text="&#xe604; Previous Chapter"
+                       android:textColor="#7f2352"
+                       android:textSize="16sp" />
+               
+
+                 
+   <TextView
+                      android:id="@+id/s_plays_chapter_middlebar_text"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:text=" | "
+                         android:layout_toRightOf="@+id/s_plays_chapter_left_text"
+                      android:textColor="#7f2352"
+                      android:textSize="16sp" />
+                   <TextView
+                       android:id="@+id/s_plays_chapter_right_text"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_alignParentTop="true"
+                       android:layout_toRightOf="@+id/s_plays_chapter_middlebar_text"
+                       android:text="Next Chapter &#xe605;"
+                       android:textColor="#7f2352"
+                       android:textSize="16sp" />
+
+
+  
+        </RelativeLayout>
     <LinearLayout
         android:id="@+id/s_playsdetail_audio_layout"
         android:layout_width="fill_parent"

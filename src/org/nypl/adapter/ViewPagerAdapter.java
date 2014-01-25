@@ -75,7 +75,42 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class ViewPagerAdapter extends PagerAdapter{
-	private int currentChapter=0;
+	
+	private int currentChapterPos=0;
+	private String currentChapterId;
+	public String getVersionID(){
+		return Version;
+	}
+	public void setCurrentChapter(String chapterId){
+		this.currentChapterId = chapterId;
+		System.out.println("Just set chapter to "+ this.currentChapterPos);
+	}
+	public void setCurrentChapterPos(int pos){
+		this.currentChapterPos=pos;
+		System.out.println("Just set chapter to "+ this.currentChapterPos);
+	}
+	public String getCurrentChapter(){
+		return this.currentChapterId;
+	}
+	public int getChapterPosFromId(String chapterId,String versionId){
+		ArrayList<ChaptersBean> chaps = ChaptersDAO.getChaptersForVersion(mContext, versionId);
+		int i=0;
+		while ((i<chaps.size())&&
+				(!(chaps.get(i).getChapterMappingID().equalsIgnoreCase(chapterId)))){
+			System.out.println("Too bad that "+chaps.get(i).getChapterMappingID()+ " isnt "+chapterId);
+			i++;
+		}
+		if (i==chaps.size()){
+			i=0;
+		}
+		System.out.println("I think the position is "+i);
+		return i;
+	
+	}
+	public int getCurrentChapterPos(){
+		return currentChapterPos;
+	}
+	
 	 public class ScrollPosition {
 		    private String scrollposition= "";
 		    
@@ -187,8 +222,9 @@ public class ViewPagerAdapter extends PagerAdapter{
 	public SelectionWebView getCurrentView(){
 		return mPlayDetailView;
 	}
-	public ViewPagerAdapter(ArrayList<VersionBean> versionDetailList,Context ctx,String Version,String content_location) {
+	public ViewPagerAdapter(ArrayList<VersionBean> versionDetailList,Context ctx,String Version,String content_location,String currentChapter) {
 		super();
+		this.currentChapterId=currentChapter;
 		this.mVersionDetailList = versionDetailList;
 		this.mContext=ctx;
 		mChilds = new View[this.mVersionDetailList.size()];
@@ -208,7 +244,7 @@ public class ViewPagerAdapter extends PagerAdapter{
 	}
 
 	@Override
-	public Object instantiateItem(View collection,   int position) {
+	public Object instantiateItem(ViewGroup collection,   int position) {
 		
 		LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		View vg = (View) inflater.inflate(R.layout.e_play_fulltext, null);
@@ -233,13 +269,15 @@ public class ViewPagerAdapter extends PagerAdapter{
 		}
 		mPlaysId = mVersionDetailList.get(position).getVersionPlayID();
 		String versionId =  mVersionDetailList.get(position).getVersionUUID();
+		Version = versionId;
 		ArrayList<ChaptersBean> chaptersList = ChaptersDAO.getChaptersForVersion(mContext,versionId);  
-		ChaptersBean currentChapterBean= chaptersList.get(currentChapter);
+
+		ChaptersBean currentChapterBean= chaptersList.get(currentChapterPos);
 		
 	//	mPlaysId = mVersionDetailList.get(position).getVersionID();
 		String filePath = "file:///"+FilePath.getAbsolutePath() + File.separator+ CONTENT_LOCATION + File.separator +currentChapterBean.getHTMLFile();
 		mPlayDetailView.addJavascriptInterface(jsScrollPosition, "appScrollManager");
-		
+		System.out.println("after swipe, loading "+filePath);
 		mPlayDetailView.loadUrl(filePath);
 		
 		mPlayDetailView.setWebChromeClient(new WebChromeClient() {
@@ -283,15 +321,16 @@ public class ViewPagerAdapter extends PagerAdapter{
 			//Log.v("OnPageFinished","About to report chapters");
 			//view.loadUrl("javascript:reportChapters()");
 			//Log.v("OnPageFinished","Done reporting chapters");
+		
 			String s=	(String) view.getTag();
 			if(s!=null)
 				if(s.equals("web")){
 					new Handler(){
 						public void handleMessage(android.os.Message msg) {
 							pd.dismiss();
-							if(mNotes!=null&&  !mNotes.equals("Home")){
-								saveNote(mNoteID);
-							}
+							//if(mNotes!=null&&  !mNotes.equals("Home")){
+							//	saveNote(mNoteID);
+							//}
 						};
 					}.sendEmptyMessageDelayed(1, 2000);
 
@@ -407,72 +446,6 @@ public class ViewPagerAdapter extends PagerAdapter{
 
 	
 	
-	public class MyJavaScriptInterface   
-	{  
-
-		@SuppressWarnings("unused")  
-		public void showHTML(String html)  
-		{  
-			File cacheDir;
-
-			cacheDir=new File(android.os.Environment.getExternalStorageDirectory(), "HTMLContent");
-			xml_file_path = new File(cacheDir,PlaysDetailActivity.HTMLFileName);
-
-			FileOutputStream fos;
-			byte[] data = new String(html).getBytes();
-			try {
-				System.out.println("data:::::::"+data);
-				fos = new FileOutputStream(xml_file_path);
-				fos.write(data);
-				fos.flush();
-				fos.close();
-
-
-			} catch (FileNotFoundException e) {
-				// handle exception
-			} catch (IOException e) {
-				// handle exception
-			}
-
-
-		}  
-
-
-		@SuppressWarnings("unused")  
-		public void showHTML1(String html)  
-		{  
-			File cacheDir;
-
-			cacheDir=new File(android.os.Environment.getExternalStorageDirectory(), "HTMLContent");
-			xml_file_path = new File(cacheDir,PlaysDetailActivity.HTMLFileName);
-
-			FileOutputStream fos;
-			byte[] data = new String(html).getBytes();
-			try {
-				fos = new FileOutputStream(xml_file_path);
-				fos.write(data);
-				fos.flush();
-				fos.close();
-
-
-			} catch (FileNotFoundException e) {
-				// handle exception
-			} catch (IOException e) {
-				// handle exception
-			}
-			/*	System.out.println("xml_file_path:::::::"+xml_file_path);
-			new AlertDialog.Builder(mContext)  
-			.setTitle("HTML")  
-			.setMessage(html)  
-			.setPositiveButton(android.R.string.ok, null)  
-			.setCancelable(false)  
-			.create()  
-			.show(); */
-
-		}  
-
-	} 
-
 
 
 	public static Animation setLayoutAnim_slideup() {
@@ -1176,6 +1149,72 @@ public class ViewPagerAdapter extends PagerAdapter{
 		mEditAudioDialog.show();
 	}
      
+
+	public class MyJavaScriptInterface   
+	{  
+
+		@SuppressWarnings("unused")  
+		public void showHTML(String html)  
+		{  
+			File cacheDir;
+
+			cacheDir=new File(android.os.Environment.getExternalStorageDirectory(), "HTMLContent");
+			xml_file_path = new File(cacheDir,PlaysDetailActivity.HTMLFileName);
+
+			FileOutputStream fos;
+			byte[] data = new String(html).getBytes();
+			try {
+				System.out.println("data:::::::"+data);
+				fos = new FileOutputStream(xml_file_path);
+				fos.write(data);
+				fos.flush();
+				fos.close();
+
+
+			} catch (FileNotFoundException e) {
+				// handle exception
+			} catch (IOException e) {
+				// handle exception
+			}
+
+
+		}  
+
+
+		@SuppressWarnings("unused")  
+		public void showHTML1(String html)  
+		{  
+			File cacheDir;
+
+			cacheDir=new File(android.os.Environment.getExternalStorageDirectory(), "HTMLContent");
+			xml_file_path = new File(cacheDir,PlaysDetailActivity.HTMLFileName);
+
+			FileOutputStream fos;
+			byte[] data = new String(html).getBytes();
+			try {
+				fos = new FileOutputStream(xml_file_path);
+				fos.write(data);
+				fos.flush();
+				fos.close();
+
+
+			} catch (FileNotFoundException e) {
+				// handle exception
+			} catch (IOException e) {
+				// handle exception
+			}
+			/*	System.out.println("xml_file_path:::::::"+xml_file_path);
+			new AlertDialog.Builder(mContext)  
+			.setTitle("HTML")  
+			.setMessage(html)  
+			.setPositiveButton(android.R.string.ok, null)  
+			.setCancelable(false)  
+			.create()  
+			.show(); */
+
+		}  
+
+	} 
 
 
 
