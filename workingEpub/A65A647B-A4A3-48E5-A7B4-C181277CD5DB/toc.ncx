@@ -1,0 +1,588 @@
+<?xml version='1.0' encoding='utf-8'?>
+<ncx xmlns="http://www.daisy.org/z3986/2005/ncx/" version="2005-1"
+	xml:lang="eng">
+
+	<meta content="A65A647B-A4A3-48E5-A7B4-C181277CD5DB" name="dtb:uid"/>
+		<meta content="2" name="dtb:depth"/>
+			<meta content="0" name="dtb:totalPageCount"/>
+				<meta content="0" name="dtb:maxPageNumber"/>
+
+					<doctitle>
+						<text>The Black Crook</text>
+					</doctitle>
+					<creator>
+						<text>Charles M. Barras</text>
+					</creator>
+					<navmap>
+						<navpoint id="429F70B5-5A32-42D2-BFA5-0B137879687B"
+							playorder="1">
+							<navlabel>
+								<text>Library of Congress (Rare Books Room) - 1867 Chicago
+									Edition</text>
+							</navlabel>
+							<content src="BlackCrook-LOC-01.html"></content>
+							<navpoint id="02-BlackCrook-LOC" playorder="2">
+								<navlabel>
+									<text>Act One: Scene One</text>
+								</navlabel>
+								<content src="BlackCrook-LOC-02.html"></content>
+							</navpoint>
+							<navpoint id="03-BlackCrook-LOC" playorder="3">
+								<navlabel>
+									<text>Act One: Scene Two</text>
+								</navlabel>
+								<content src="BlackCrook-LOC-03.html"></content>
+							</navpoint>
+							<navpoint id="04-BlackCrook-LOC" playorder="4">
+								<navlabel>
+									<text>Act One: Scene Three</text>
+								</navlabel>
+								<content src="BlackCrook-LOC-04.html"></content>
+							</navpoint>
+							<navpoint id="05-BlackCrook-LOC" playorder="5">
+								<navlabel>
+									<text>Act One: Scene Four</text>
+								</navlabel>
+								<content src="BlackCrook-LOC-05.html"></content>
+							</navpoint>
+							<navpoint id="06-BlackCrook-LOC" playorder="6">
+								<navlabel>
+									<text>Act One: Scene Five</text>
+								</navlabel>
+								<content src="BlackCrook-LOC-06.html"></content>
+							</navpoint>
+							<navpoint id="07-BlackCrook-LOC" playorder="7">
+								<navlabel>
+									<text>Act Two: Scene One</text>
+								</navlabel>
+								<content src="BlackCrook-LOC-07.html"></content>
+							</navpoint>
+							<navpoint id="08-BlackCrook-LOC" playorder="8">
+								<navlabel>
+									<text>Act Two: Scene Two</text>
+								</navlabel>
+								<content src="BlackCrook-LOC-08.html"></content>
+							</navpoint>
+							<navpoint id="09-BlackCrook-LOC" playorder="9">
+								<navlabel>
+									<text>Act Two: Scene Three</text>
+								</navlabel>
+								<content src="BlackCrook-LOC-09.html"></content>
+							</navpoint>
+							<navpoint id="10-BlackCrook-LOC" playorder="10">
+								<navlabel>
+									<text>Act Two: Scene Four</text>
+								</navlabel>
+								<content src="BlackCrook-LOC-10.html"></content>
+							</navpoint>
+							<navpoint id="11-BlackCrook-LOC" playorder="11">
+								<navlabel>
+									<text>Act Three: Scene One</text>
+								</navlabel>
+								<content src="BlackCrook-LOC-11.html"></content>
+							</navpoint>
+							<navpoint id="12-BlackCrook-LOC" playorder="12">
+								<navlabel>
+									<text>Act Four: Scene One</text>
+								</navlabel>
+								<content src="BlackCrook-LOC-12.html"></content>
+							</navpoint>
+							<navpoint id="13-BlackCrook-LOC" playorder="13">
+								<navlabel>
+									<text>Act Four: Scene Two</text>
+								</navlabel>
+								<content src="BlackCrook-LOC-13.html"></content>
+							</navpoint>
+							<navpoint id="14-BlackCrook-LOC" playorder="14">
+								<navlabel>
+									<text>Act Four: Scene Three</text>
+								</navlabel>
+								<content src="BlackCrook-LOC-14.html"></content>
+							</navpoint>
+							<navpoint id="15-BlackCrook-LOC" playorder="15">
+								<navlabel>
+									<text>Act Four: Scene Four</text>
+								</navlabel>
+								<content src="BlackCrook-LOC-15.html"></content>
+							</navpoint>
+							<navpoint id="16-BlackCrook-LOC" playorder="16">
+								<navlabel>
+									<text>Act Four: Scene Five</text>
+								</navlabel>
+								<content src="BlackCrook-LOC-16.html"></content>
+							</navpoint>
+							<navpoint id="17-BlackCrook-LOC" playorder="17">
+								<navlabel>
+									<text>Act Four: Scene Six</text>
+								</navlabel>
+								<content src="BlackCrook-LOC-17.html"></content>
+							</navpoint>
+							<navpoint id="19-BlackCrook-LOC" playorder="18">
+								<navlabel>
+									<text>Act Four: Scene Eight</text>
+								</navlabel>
+								<content src="BlackCrook-LOC-18.html"></content>
+							</navpoint>
+						</navpoint>
+						<navpoint id="9275E96B-AA36-4103-859B-6F89E56C3BFC"
+							playorder="19">
+							<navlabel>
+								<text>New York Public Library - 1866 Prompt Book</text>
+							</navlabel>
+							<content src="BlackCrook-NYPL-01.html"></content>
+							<navpoint id="02-BlackCrook-NYPL" playorder="20">
+								<navlabel>
+									<text>Act One: Scene One</text>
+								</navlabel>
+								<content src="BlackCrook-NYPL-02.html"></content>
+							</navpoint>
+							<navpoint id="03-BlackCrook-NYPL" playorder="21">
+								<navlabel>
+									<text>Act One: Scene Two</text>
+								</navlabel>
+								<content src="BlackCrook-NYPL-03.html"></content>
+							</navpoint>
+							<navpoint id="04-BlackCrook-NYPL" playorder="22">
+								<navlabel>
+									<text>Act One: Scene Three</text>
+								</navlabel>
+								<content src="BlackCrook-NYPL-04.html"></content>
+							</navpoint>
+							<navpoint id="05-BlackCrook-NYPL" playorder="23">
+								<navlabel>
+									<text>Act One: Scene Four</text>
+								</navlabel>
+								<content src="BlackCrook-NYPL-05.html"></content>
+							</navpoint>
+							<navpoint id="06-BlackCrook-NYPL" playorder="24">
+								<navlabel>
+									<text>Act One: Scene Five</text>
+								</navlabel>
+								<content src="BlackCrook-NYPL-06.html"></content>
+							</navpoint>
+							<navpoint id="07-BlackCrook-NYPL" playorder="25">
+								<navlabel>
+									<text>Act Two: Scene One</text>
+								</navlabel>
+								<content src="BlackCrook-NYPL-07.html"></content>
+							</navpoint>
+							<navpoint id="08-BlackCrook-NYPL" playorder="26">
+								<navlabel>
+									<text>Act Two: Scene Two</text>
+								</navlabel>
+								<content src="BlackCrook-NYPL-08.html"></content>
+							</navpoint>
+							<navpoint id="09-BlackCrook-NYPL" playorder="27">
+								<navlabel>
+									<text>Act Two: Scene Three</text>
+								</navlabel>
+								<content src="BlackCrook-NYPL-09.html"></content>
+							</navpoint>
+							<navpoint id="10-BlackCrook-NYPL" playorder="28">
+								<navlabel>
+									<text>Act Two: Scene Four</text>
+								</navlabel>
+								<content src="BlackCrook-NYPL-10.html"></content>
+							</navpoint>
+							<navpoint id="11-BlackCrook-NYPL" playorder="29">
+								<navlabel>
+									<text>Act Three: Scene One</text>
+								</navlabel>
+								<content src="BlackCrook-NYPL-11.html"></content>
+							</navpoint>
+							<navpoint id="12-BlackCrook-NYPL" playorder="30">
+								<navlabel>
+									<text>Act Four: Scene One</text>
+								</navlabel>
+								<content src="BlackCrook-NYPL-12.html"></content>
+							</navpoint>
+							<navpoint id="13-BlackCrook-NYPL" playorder="31">
+								<navlabel>
+									<text>Act Four: Scene Two</text>
+								</navlabel>
+								<content src="BlackCrook-NYPL-13.html"></content>
+							</navpoint>
+							<navpoint id="14-BlackCrook-NYPL" playorder="32">
+								<navlabel>
+									<text>Act Four: Scene Three</text>
+								</navlabel>
+								<content src="BlackCrook-NYPL-14.html"></content>
+							</navpoint>
+							<navpoint id="15-BlackCrook-NYPL" playorder="33">
+								<navlabel>
+									<text>Act Four: Scene Four</text>
+								</navlabel>
+								<content src="BlackCrook-NYPL-15.html"></content>
+							</navpoint>
+							<navpoint id="16-BlackCrook-NYPL" playorder="34">
+								<navlabel>
+									<text>Act Four: Scene Five</text>
+								</navlabel>
+								<content src="BlackCrook-NYPL-16.html"></content>
+							</navpoint>
+							<navpoint id="17-BlackCrook-NYPL" playorder="35">
+								<navlabel>
+									<text>Act Four: Scene Six</text>
+								</navlabel>
+								<content src="BlackCrook-NYPL-17.html"></content>
+							</navpoint>
+							<navpoint id="18-BlackCrook-NYPL" playorder="36">
+								<navlabel>
+									<text>Act Four: Scene Seven</text>
+								</navlabel>
+								<content src="BlackCrook-NYPL-18.html"></content>
+							</navpoint>
+							<navpoint id="19-BlackCrook-NYPL" playorder="37">
+								<navlabel>
+									<text>Act Four: Scene Eight</text>
+								</navlabel>
+								<content src="BlackCrook-NYPL-19.html"></content>
+							</navpoint>
+						</navpoint>
+						<navpoint id="6DD137F3-9740-42F8-A62C-534897A939A8"
+							playorder="38">
+							<navlabel>
+								<text>Hampden-Booth Theater Library - Tour Prompt Book</text>
+							</navlabel>
+							<content src="BlackCrook-PlayersClub-01.html"></content>
+							<navpoint id="02-BlackCrook-PlayersClub" playorder="39">
+								<navlabel>
+									<text>Act One: Scene One</text>
+								</navlabel>
+								<content src="BlackCrook-PlayersClub-02.html"></content>
+							</navpoint>
+							<navpoint id="03-BlackCrook-PlayersClub" playorder="40">
+								<navlabel>
+									<text>Act One: Scene Two</text>
+								</navlabel>
+								<content src="BlackCrook-PlayersClub-03.html"></content>
+							</navpoint>
+							<navpoint id="04-BlackCrook-PlayersClub" playorder="41">
+								<navlabel>
+									<text>Act One: Scene Three</text>
+								</navlabel>
+								<content src="BlackCrook-PlayersClub-04.html"></content>
+							</navpoint>
+							<navpoint id="05-BlackCrook-PlayersClub" playorder="42">
+								<navlabel>
+									<text>Act One: Scene Four</text>
+								</navlabel>
+								<content src="BlackCrook-PlayersClub-05.html"></content>
+							</navpoint>
+							<navpoint id="06-BlackCrook-PlayersClub" playorder="43">
+								<navlabel>
+									<text>Act One: Scene Five</text>
+								</navlabel>
+								<content src="BlackCrook-PlayersClub-06.html"></content>
+							</navpoint>
+							<navpoint id="07-BlackCrook-PlayersClub" playorder="44">
+								<navlabel>
+									<text>Act Two: Scene One</text>
+								</navlabel>
+								<content src="BlackCrook-PlayersClub-07.html"></content>
+							</navpoint>
+							<navpoint id="08-BlackCrook-PlayersClub" playorder="45">
+								<navlabel>
+									<text>Act Two: Scene Two</text>
+								</navlabel>
+								<content src="BlackCrook-PlayersClub-08.html"></content>
+							</navpoint>
+							<navpoint id="09-BlackCrook-PlayersClub" playorder="46">
+								<navlabel>
+									<text>Act Two: Scene Three</text>
+								</navlabel>
+								<content src="BlackCrook-PlayersClub-09.html"></content>
+							</navpoint>
+							<navpoint id="10-BlackCrook-PlayersClub" playorder="47">
+								<navlabel>
+									<text>Act Two: Scene Four</text>
+								</navlabel>
+								<content src="BlackCrook-PlayersClub-10.html"></content>
+							</navpoint>
+							<navpoint id="11-BlackCrook-PlayersClub" playorder="48">
+								<navlabel>
+									<text>Act Three: Scene One</text>
+								</navlabel>
+								<content src="BlackCrook-PlayersClub-11.html"></content>
+							</navpoint>
+							<navpoint id="12-BlackCrook-PlayersClub" playorder="49">
+								<navlabel>
+									<text>Act Four: Scene One</text>
+								</navlabel>
+								<content src="BlackCrook-PlayersClub-12.html"></content>
+							</navpoint>
+							<navpoint id="13-BlackCrook-PlayersClub" playorder="50">
+								<navlabel>
+									<text>Act Four: Scene Two</text>
+								</navlabel>
+								<content src="BlackCrook-PlayersClub-13.html"></content>
+							</navpoint>
+							<navpoint id="14-BlackCrook-PlayersClub" playorder="51">
+								<navlabel>
+									<text>Act Four: Scene Three</text>
+								</navlabel>
+								<content src="BlackCrook-PlayersClub-14.html"></content>
+							</navpoint>
+							<navpoint id="15-BlackCrook-PlayersClub" playorder="52">
+								<navlabel>
+									<text>Act Four: Scene Four</text>
+								</navlabel>
+								<content src="BlackCrook-PlayersClub-15.html"></content>
+							</navpoint>
+							<navpoint id="16-BlackCrook-PlayersClub" playorder="53">
+								<navlabel>
+									<text>Act Four: Scene Five</text>
+								</navlabel>
+								<content src="BlackCrook-PlayersClub-16.html"></content>
+							</navpoint>
+							<navpoint id="17-BlackCrook-PlayersClub" playorder="54">
+								<navlabel>
+									<text>Act Four: Scene Six</text>
+								</navlabel>
+								<content src="BlackCrook-PlayersClub-17.html"></content>
+							</navpoint>
+							<navpoint id="18-BlackCrook-PlayersClub" playorder="55">
+								<navlabel>
+									<text>Act Four: Scene Seven</text>
+								</navlabel>
+								<content src="BlackCrook-PlayersClub-18.html"></content>
+							</navpoint>
+							<navpoint id="19-BlackCrook-PlayersClub" playorder="56">
+								<navlabel>
+									<text>Act Four: Scene Eight</text>
+								</navlabel>
+								<content src="BlackCrook-PlayersClub-19.html"></content>
+							</navpoint>
+						</navpoint>
+						<navpoint id="523350CF-511B-4CDF-A051-4E1E7844E246"
+							playorder="57">
+							<navlabel>
+								<text>Harvard Theater Collection - Prompt Book</text>
+							</navlabel>
+							<content src="BlackCrook-Harvard-01.html"></content>
+							<navpoint id="02-BlackCrook-Harvard" playorder="58">
+								<navlabel>
+									<text>Act One: Scene One</text>
+								</navlabel>
+								<content src="BlackCrook-Harvard-02.html"></content>
+							</navpoint>
+							<navpoint id="03-BlackCrook-Harvard" playorder="59">
+								<navlabel>
+									<text>Act One: Scene Two</text>
+								</navlabel>
+								<content src="BlackCrook-Harvard-03.html"></content>
+							</navpoint>
+							<navpoint id="04-BlackCrook-Harvard" playorder="60">
+								<navlabel>
+									<text>Act One: Scene Three</text>
+								</navlabel>
+								<content src="BlackCrook-Harvard-04.html"></content>
+							</navpoint>
+							<navpoint id="05-BlackCrook-Harvard" playorder="61">
+								<navlabel>
+									<text>Act One: Scene Four</text>
+								</navlabel>
+								<content src="BlackCrook-Harvard-05.html"></content>
+							</navpoint>
+							<navpoint id="06-BlackCrook-Harvard" playorder="62">
+								<navlabel>
+									<text>Act One: Scene Five</text>
+								</navlabel>
+								<content src="BlackCrook-Harvard-06.html"></content>
+							</navpoint>
+							<navpoint id="07-BlackCrook-Harvard" playorder="63">
+								<navlabel>
+									<text>Act Two: Scene One</text>
+								</navlabel>
+								<content src="BlackCrook-Harvard-07.html"></content>
+							</navpoint>
+							<navpoint id="08-BlackCrook-Harvard" playorder="64">
+								<navlabel>
+									<text>Act Two: Scene Two</text>
+								</navlabel>
+								<content src="BlackCrook-Harvard-08.html"></content>
+							</navpoint>
+							<navpoint id="09-BlackCrook-Harvard" playorder="65">
+								<navlabel>
+									<text>Act Two: Scene Three</text>
+								</navlabel>
+								<content src="BlackCrook-Harvard-09.html"></content>
+							</navpoint>
+							<navpoint id="10-BlackCrook-Harvard" playorder="66">
+								<navlabel>
+									<text>Act Two: Scene Four</text>
+								</navlabel>
+								<content src="BlackCrook-Harvard-10.html"></content>
+							</navpoint>
+							<navpoint id="11-BlackCrook-Harvard" playorder="67">
+								<navlabel>
+									<text>Act Three: Scene One</text>
+								</navlabel>
+								<content src="BlackCrook-Harvard-11.html"></content>
+							</navpoint>
+							<navpoint id="12-BlackCrook-Harvard" playorder="68">
+								<navlabel>
+									<text>Act Four: Scene One</text>
+								</navlabel>
+								<content src="BlackCrook-Harvard-12.html"></content>
+							</navpoint>
+							<navpoint id="13-BlackCrook-Harvard" playorder="69">
+								<navlabel>
+									<text>Act Four: Scene Two</text>
+								</navlabel>
+								<content src="BlackCrook-Harvard-13.html"></content>
+							</navpoint>
+							<navpoint id="14-BlackCrook-Harvard" playorder="70">
+								<navlabel>
+									<text>Act Four: Scene Three</text>
+								</navlabel>
+								<content src="BlackCrook-Harvard-14.html"></content>
+							</navpoint>
+							<navpoint id="15-BlackCrook-Harvard" playorder="71">
+								<navlabel>
+									<text>Act Four: Scene Four</text>
+								</navlabel>
+								<content src="BlackCrook-Harvard-15.html"></content>
+							</navpoint>
+							<navpoint id="16-BlackCrook-Harvard" playorder="72">
+								<navlabel>
+									<text>Act Four: Scene Five</text>
+								</navlabel>
+								<content src="BlackCrook-Harvard-16.html"></content>
+							</navpoint>
+							<navpoint id="17-BlackCrook-Harvard" playorder="73">
+								<navlabel>
+									<text>Act Four: Scene Six</text>
+								</navlabel>
+								<content src="BlackCrook-Harvard-17.html"></content>
+							</navpoint>
+							<navpoint id="18-BlackCrook-Harvard" playorder="74">
+								<navlabel>
+									<text>Act Four: Scene Seven</text>
+								</navlabel>
+								<content src="BlackCrook-Harvard-18.html"></content>
+							</navpoint>
+							<navpoint id="19-BlackCrook-Harvard" playorder="75">
+								<navlabel>
+									<text>Act Four: Scene Eight</text>
+								</navlabel>
+								<content src="BlackCrook-Harvard-19.html"></content>
+							</navpoint>
+							</navpoint>
+							<navpoint id="5C1E3D25-7409-4E63-8453-227C28EBDF21"
+							playorder="76">
+							<navlabel>
+								<text>Harvard Theater Collection - 1862 Draft</text>
+							</navlabel>
+							<content src="BlackCrook-HarvardMSS-01.html"></content>
+							<navpoint id="02-BlackCrook-HarvardMSS" playorder="77">
+								<navlabel>
+									<text>Act One: Scene One</text>
+								</navlabel>
+								<content src="BlackCrook-HarvardMSS-02.html"></content>
+							</navpoint>
+							<navpoint id="03-BlackCrook-HarvardMSS" playorder="78">
+								<navlabel>
+									<text>Act One: Scene Two</text>
+								</navlabel>
+								<content src="BlackCrook-HarvardMSS-03.html"></content>
+							</navpoint>
+							<navpoint id="04-BlackCrook-HarvardMSS" playorder="79">
+								<navlabel>
+									<text>Act One: Scene Three</text>
+								</navlabel>
+								<content src="BlackCrook-HarvardMSS-04.html"></content>
+							</navpoint>
+							<navpoint id="05-BlackCrook-HarvardMSS" playorder="80">
+								<navlabel>
+									<text>Act One: Scene Four</text>
+								</navlabel>
+								<content src="BlackCrook-HarvardMSS-05.html"></content>
+							</navpoint>
+							<navpoint id="06-BlackCrook-HarvardMSS" playorder="81">
+								<navlabel>
+									<text>Act One: Scene Five</text>
+								</navlabel>
+								<content src="BlackCrook-HarvardMSS-06.html"></content>
+							</navpoint>
+							<navpoint id="07-BlackCrook-HarvardMSS" playorder="82">
+								<navlabel>
+									<text>Act Two: Scene One</text>
+								</navlabel>
+								<content src="BlackCrook-HarvardMSS-07.html"></content>
+							</navpoint>
+							<navpoint id="08-BlackCrook-HarvardMSS" playorder="83">
+								<navlabel>
+									<text>Act Two: Scene Two</text>
+								</navlabel>
+								<content src="BlackCrook-HarvardMSS-08.html"></content>
+							</navpoint>
+							<navpoint id="09-BlackCrook-HarvardMSS" playorder="84">
+								<navlabel>
+									<text>Act Two: Scene Three</text>
+								</navlabel>
+								<content src="BlackCrook-HarvardMSS-09.html"></content>
+							</navpoint>
+							<navpoint id="10-BlackCrook-HarvardMSS" playorder="85">
+								<navlabel>
+									<text>Act Two: Scene Four</text>
+								</navlabel>
+								<content src="BlackCrook-HarvardMSS-10.html"></content>
+							</navpoint>
+							<navpoint id="11-BlackCrook-HarvardMSS" playorder="86">
+								<navlabel>
+									<text>Act Three: Scene One</text>
+								</navlabel>
+								<content src="BlackCrook-HarvardMSS-11.html"></content>
+							</navpoint>
+							<navpoint id="12-BlackCrook-HarvardMSS" playorder="87">
+								<navlabel>
+									<text>Act Four: Scene One</text>
+								</navlabel>
+								<content src="BlackCrook-HarvardMSS-12.html"></content>
+							</navpoint>
+							<navpoint id="13-BlackCrook-HarvardMSS" playorder="88">
+								<navlabel>
+									<text>Act Four: Scene Two</text>
+								</navlabel>
+								<content src="BlackCrook-HarvardMSS-13.html"></content>
+							</navpoint>
+							<navpoint id="14-BlackCrook-HarvardMSS" playorder="89">
+								<navlabel>
+									<text>Act Four: Scene Three</text>
+								</navlabel>
+								<content src="BlackCrook-HarvardMSS-14.html"></content>
+							</navpoint>
+							<navpoint id="15-BlackCrook-HarvardMSS" playorder="90">
+								<navlabel>
+									<text>Act Four: Scene Four</text>
+								</navlabel>
+								<content src="BlackCrook-HarvardMSS-15.html"></content>
+							</navpoint>
+							<navpoint id="16-BlackCrook-HarvardMSS" playorder="91">
+								<navlabel>
+									<text>Act Four: Scene Five</text>
+								</navlabel>
+								<content src="BlackCrook-HarvardMSS-16.html"></content>
+							</navpoint>
+							<navpoint id="17-BlackCrook-HarvardMSS" playorder="92">
+								<navlabel>
+									<text>Act Four: Scene Six</text>
+								</navlabel>
+								<content src="BlackCrook-HarvardMSS-17.html"></content>
+							</navpoint>
+							<navpoint id="18-BlackCrook-HarvardMSS" playorder="93">
+								<navlabel>
+									<text>Act Four: Scene Seven</text>
+								</navlabel>
+								<content src="BlackCrook-HarvardMSS-18.html"></content>
+							</navpoint>
+							<navpoint id="19-BlackCrook-HarvardMSS" playorder="94">
+								<navlabel>
+									<text>Act Four: Scene Eight</text>
+								</navlabel>
+								<content src="BlackCrook-HarvardMSS-19.html"></content>
+							</navpoint>
+						</navpoint>
+					</navmap>
+</ncx>

@@ -2,7 +2,7 @@ package org.nypl.database;
 
 import java.util.ArrayList;
 
-import org.nypl.MoverContentProvider;
+import org.nypl.LibrettoContentProvider;
 import org.nypl.dataholder.AnchorBean;
 
 import android.content.Context;
@@ -32,8 +32,8 @@ public class AnchorDOA {
 	}
 	public static ArrayList<AnchorBean> getVersions(Context ctx,String PlayId,String htmlId){
 		ArrayList<AnchorBean> list = new ArrayList<AnchorBean>();
-	Cursor cursor =ctx.getContentResolver().query(Uri.withAppendedPath(MoverContentProvider.CONTENT_URI,
-			MoverContentProvider.ANCHOR_PATH), null, null, null, null);
+	Cursor cursor =ctx.getContentResolver().query(Uri.withAppendedPath(LibrettoContentProvider.CONTENT_URI,
+			LibrettoContentProvider.ANCHOR_PATH), null, null, null, null);
 	///.query(MoverContentProvider.CONTENT_URI+"/"+MoverContentProvider.PLAY_PATH, null, null, null, null);
 		if(cursor != null && cursor.getCount()>0){
 			setColumns(cursor);

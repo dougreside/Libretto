@@ -2,7 +2,7 @@ package org.nypl.database;
 
 import java.util.ArrayList;
 
-import org.nypl.MoverContentProvider;
+import org.nypl.LibrettoContentProvider;
 import org.nypl.dataholder.AnchorBean;
 import org.nypl.dataholder.PlayNoteBean;
 import org.nypl.dataholder.PlaysBean;
@@ -58,8 +58,8 @@ public class PlayNoteDAO {
 	}
 	public static ArrayList<PlayNoteBean> getAllNotes(Context ctx,String search,String NoteId,String VersionId){
 		ArrayList<PlayNoteBean> list = new ArrayList<PlayNoteBean>();
-		Cursor cursor =ctx.getContentResolver().query(Uri.withAppendedPath(MoverContentProvider.CONTENT_URI,
-				MoverContentProvider.PLAYNOTE_PATH), null, search, null, null);
+		Cursor cursor =ctx.getContentResolver().query(Uri.withAppendedPath(LibrettoContentProvider.CONTENT_URI,
+				LibrettoContentProvider.PLAYNOTE_PATH), null, search, null, null);
 		///.query(MoverContentProvider.CONTENT_URI+"/"+MoverContentProvider.PLAY_PATH, null, null, null, null);
 		if(cursor != null && cursor.getCount()>0){
 			setColumns(cursor);
@@ -90,7 +90,7 @@ public class PlayNoteDAO {
 		ArrayList<PlayNoteBean> list = new ArrayList<PlayNoteBean>();
 
 
-		Cursor cursor =ctx.getContentResolver().query(Uri.parse(MoverContentProvider.CONTENT_URI+"/"+MoverContentProvider.PLAYNOTE_DETAIL_PATH), null,NoteId,null, null);
+		Cursor cursor =ctx.getContentResolver().query(Uri.parse(LibrettoContentProvider.CONTENT_URI+"/"+LibrettoContentProvider.PLAYNOTE_DETAIL_PATH), null,NoteId,null, null);
 		///.query(MoverContentProvider.CONTENT_URI+"/"+MoverContentProvider.PLAY_PATH, null, null, null, null);
 		Log.v("in playdiao cursor",""+cursor.getCount());
 		if(cursor != null && cursor.getCount()>0){

@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.nypl.MoverContentProvider;
+import org.nypl.LibrettoContentProvider;
 import org.nypl.PlaysDetailActivity;
 import org.nypl.R;
 import org.nypl.SelectionWebView;
@@ -346,11 +346,12 @@ public class ViewPagerAdapter extends PagerAdapter{
 
 		@Override
 		public boolean shouldOverrideUrlLoading(final WebView view, String url) { 
-			audioid= url.substring(url.indexOf("nypl_audio-")+11);
-			System.out.println("URL in URL OVERRIDE: "+url);
-			System.out.println("AUDIO ID in URL OVERRIDE: "+audioid);
+			
 			aflag= 0;
 			if(url.contains("nypl_audio")){
+				audioid= url.substring(url.indexOf("nypl_audio-")+11);
+				System.out.println("URL in URL OVERRIDE: "+url);
+				System.out.println("AUDIO ID in URL OVERRIDE: "+audioid);
 			Log.v("ViewPageAdapter",mContext+" "+audioid+" "+mPlaysId);
 			AudioDatalist = AudioDAO.getAudioData(mContext, audioid,mPlaysId);
 
@@ -416,7 +417,7 @@ public class ViewPagerAdapter extends PagerAdapter{
 					public void onClick(View v) {
 
 						mNoteSelectDialog.dismiss();
-						int rowUpdated=mContext.getContentResolver().delete(Uri.parse(MoverContentProvider.CONTENT_URI+"/"+MoverContentProvider.PLAYNOTE_NOTEID), PlayNoteDAO.COLUMN_NAME_NOTE_ID+ "=" + mNoteId, null);
+						int rowUpdated=mContext.getContentResolver().delete(Uri.parse(LibrettoContentProvider.CONTENT_URI+"/"+LibrettoContentProvider.PLAYNOTE_NOTEID), PlayNoteDAO.COLUMN_NAME_NOTE_ID+ "=" + mNoteId, null);
 						view.loadUrl("javascript:deletetagValue("+mNoteId+");");
 						view.loadUrl("javascript:window.HTMLOUT.showHTML('<head>'+document.getElementsByTagName('html')[0].innerHTML+'</head>');");
 						Toast.makeText(mContext, "Note deleted successfully.", Toast.LENGTH_LONG).show();
@@ -433,6 +434,10 @@ public class ViewPagerAdapter extends PagerAdapter{
 				});
 				mNoteSelectDialog.show();
 			}
+		    else if (url.contains("SheetMusic")){
+		    	String SheetMusicID = url.substring(url.lastIndexOf("/")+1,url.indexOf(".html"));
+		    	System.out.println(SheetMusicID);
+		    }
 			 else{
 				getVersion(url);
 			}
@@ -930,7 +935,7 @@ public class ViewPagerAdapter extends PagerAdapter{
 		ContentValues cv =new ContentValues();
 		cv.put(AudioDAO.COLUMN_NAME_AUDIO_PATH, URLID);
 		//int rowUpdated=mContext.getContentResolver().update(Uri.parse(MoverContentProvider.CONTENT_URI+"/"+MoverContentProvider.AUDIO_PATH), cv, AudioDAO.COLUMN_NAME_AUDIO_CLIP_ID+"='"+clip_id+"' and ("+ AudioDAO.COLUMN_NAME_AUDIO_VERSION_ID + "='" + Version +"' and "+ AudioDAO.COLUMN_NAME_AUDIO_PLAY_ID + "='" + mPlaysId+"')" , null);
-		int rowUpdated=mContext.getContentResolver().update(Uri.parse(MoverContentProvider.CONTENT_URI+"/"+MoverContentProvider.AUDIO_PATH), cv, AudioDAO.COLUMN_NAME_AUDIO_CLIP_ID+"='"+clip_id+"' and "+ AudioDAO.COLUMN_NAME_AUDIO_PLAY_ID + "='" + mPlaysId+"'" , null);
+		int rowUpdated=mContext.getContentResolver().update(Uri.parse(LibrettoContentProvider.CONTENT_URI+"/"+LibrettoContentProvider.AUDIO_PATH), cv, AudioDAO.COLUMN_NAME_AUDIO_CLIP_ID+"='"+clip_id+"' and "+ AudioDAO.COLUMN_NAME_AUDIO_PLAY_ID + "='" + mPlaysId+"'" , null);
 		
 		System.out.println("rowUpdated::::::::::::::::::::::::::::::::::"+rowUpdated);
 		
@@ -1072,7 +1077,7 @@ public class ViewPagerAdapter extends PagerAdapter{
 					ContentValues cv =new ContentValues();
 					cv.put(PlayNoteDAO.COLUMN_NAME_NOTE_PLAY_NOTE, textString.trim());
 
-					int rowUpdated=mContext.getContentResolver().update(Uri.parse(MoverContentProvider.CONTENT_URI+"/"+MoverContentProvider.PLAYNOTE_NOTEID), cv, PlayNoteDAO.COLUMN_NAME_NOTE_PLAY_ID + "=" + playNoteList.get(0).getPlayID()+" "+ "and"+ " " + PlayNoteDAO.COLUMN_NAME_NOTE_ID+ "=" + mNoteId, null);
+					int rowUpdated=mContext.getContentResolver().update(Uri.parse(LibrettoContentProvider.CONTENT_URI+"/"+LibrettoContentProvider.PLAYNOTE_NOTEID), cv, PlayNoteDAO.COLUMN_NAME_NOTE_PLAY_ID + "=" + playNoteList.get(0).getPlayID()+" "+ "and"+ " " + PlayNoteDAO.COLUMN_NAME_NOTE_ID+ "=" + mNoteId, null);
 					Log.v("UPDATE::::::::","::"+rowUpdated);
 					mPlayNoteDialog.cancel();
 					if(rowUpdated>0){

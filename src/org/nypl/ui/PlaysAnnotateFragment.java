@@ -6,7 +6,7 @@ import java.util.Comparator;
 import java.util.Set;
 import java.util.TreeSet;
 
-import org.nypl.MoverContentProvider;
+import org.nypl.LibrettoContentProvider;
 import org.nypl.PlaysDetailActivity;
 import org.nypl.R;
 import org.nypl.adapter.AnnotateListAdapter;
@@ -323,7 +323,7 @@ public class PlaysAnnotateFragment extends ActionModeBaseFragment implements Tex
 				
 				ContentValues cv =new ContentValues();
 				cv.put(VersionDAO.COLUMN_NAME_NOTE, "");
-				int rowUpdated=sActivityInstance.getContentResolver().update(Uri.parse(MoverContentProvider.CONTENT_URI+"/"+MoverContentProvider.VERSION_PATH), cv, VersionDAO.COLUMN_NAME_VERSION_ID+ "=" + mPlaysAnnotateList.get(position.intValue()).getVersionID(), null);
+				int rowUpdated=sActivityInstance.getContentResolver().update(Uri.parse(LibrettoContentProvider.CONTENT_URI+"/"+LibrettoContentProvider.VERSION_PATH), cv, VersionDAO.COLUMN_NAME_VERSION_ID+ "=" + mPlaysAnnotateList.get(position.intValue()).getVersionID(), null);
 			    Log.v("UPDATE::::::::","::"+rowUpdated);
 			    Toast.makeText(sActivityInstance, "Successfully deleted.", Toast.LENGTH_LONG).show();
 				mPlaysAnnotateList.remove(position.intValue());

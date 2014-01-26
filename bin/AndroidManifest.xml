@@ -30,7 +30,7 @@
             </intent-filter>
         </activity> 
                 <provider
-            android:name=".MoverContentProvider"
+            android:name=".LibrettoContentProvider"
             android:authorities="com.nypl.database" />
         <!-- activity
             android:name=".HomeActivity"

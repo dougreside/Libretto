@@ -378,7 +378,7 @@ public class PlaysListActivity extends FragmentActivity   {
 						inputStream.close();
 						
 						
-						 File mVersionFile = new File(output+File.separator+"toc.ncx");
+						 File mVersionFile = new File(output+File.separator+"nav.xhtml");
 
 					     	
 					 		try {
@@ -605,9 +605,9 @@ public class PlaysListActivity extends FragmentActivity   {
 		System.out.println(contentFolder);
 		ContentResolver cr = v.getContext().getContentResolver();
 		Log.v("PlayListActivity","Delete CHILD POSITION: "+index);
-		cr.delete(Uri.parse(MoverContentProvider.CONTENT_URI+"/"+MoverContentProvider.PLAY_PATH), "PLAY_LONG_ID=\""+delID+"\"", null);
-		cr.delete(Uri.parse(MoverContentProvider.CONTENT_URI+"/"+MoverContentProvider.VERSION_PATH),"PLAY_ID=\""+delID+"\"",null);
-		cr.delete(Uri.parse(MoverContentProvider.CONTENT_URI+"/"+MoverContentProvider.AUDIO_PATH),"PLAY_ID=\""+delID+"\"",null);
+		cr.delete(Uri.parse(LibrettoContentProvider.CONTENT_URI+"/"+LibrettoContentProvider.PLAY_PATH), "PLAY_LONG_ID=\""+delID+"\"", null);
+		cr.delete(Uri.parse(LibrettoContentProvider.CONTENT_URI+"/"+LibrettoContentProvider.VERSION_PATH),"PLAY_ID=\""+delID+"\"",null);
+		cr.delete(Uri.parse(LibrettoContentProvider.CONTENT_URI+"/"+LibrettoContentProvider.AUDIO_PATH),"PLAY_ID=\""+delID+"\"",null);
 		recursiveDelete(new File(contentFolder));
 		getPlays();
 	

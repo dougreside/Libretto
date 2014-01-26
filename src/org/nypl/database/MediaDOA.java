@@ -2,7 +2,7 @@ package org.nypl.database;
 
 import java.util.ArrayList;
 
-import org.nypl.MoverContentProvider;
+import org.nypl.LibrettoContentProvider;
 import org.nypl.dataholder.AnchorBean;
 import org.nypl.dataholder.MediaBean;
 
@@ -25,8 +25,8 @@ public class MediaDOA {
 	}
 	public static ArrayList<MediaBean> getVersions(Context ctx,String PlayId,String htmlId){
 		ArrayList<MediaBean> list = new ArrayList<MediaBean>();
-	Cursor cursor =ctx.getContentResolver().query(Uri.withAppendedPath(MoverContentProvider.CONTENT_URI,
-			MoverContentProvider.MEDIA_PATH), null, null, null, null);
+	Cursor cursor =ctx.getContentResolver().query(Uri.withAppendedPath(LibrettoContentProvider.CONTENT_URI,
+			LibrettoContentProvider.MEDIA_PATH), null, null, null, null);
 	///.query(MoverContentProvider.CONTENT_URI+"/"+MoverContentProvider.PLAY_PATH, null, null, null, null);
 		if(cursor != null && cursor.getCount()>0){
 			setColumns(cursor);

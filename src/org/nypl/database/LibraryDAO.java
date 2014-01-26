@@ -3,7 +3,7 @@ package org.nypl.database;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import org.nypl.MoverContentProvider;
+import org.nypl.LibrettoContentProvider;
 import org.nypl.dataholder.PlaysBean;
 import org.nypl.dataholder.VersionBean;
 

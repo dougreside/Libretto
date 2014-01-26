@@ -2,7 +2,7 @@ package org.nypl.database;
 
 import java.util.ArrayList;
 
-import org.nypl.MoverContentProvider;
+import org.nypl.LibrettoContentProvider;
 import org.nypl.dataholder.ChaptersBean;
 import android.content.Context;
 import android.database.Cursor;
@@ -45,9 +45,9 @@ public class ChaptersDAO {
 		System.out.println("All versions for: "+VersionId);
 		System.out.println( COLUMN_NAME_VERSION_ID +" =\""+VersionId+"\"");
 		System.out.println(ctx.getContentResolver());
-		System.out.println(MoverContentProvider.CONTENT_URI+" "+MoverContentProvider.CHAPTER_PATH);
-		Cursor cursor =ctx.getContentResolver().query(Uri.withAppendedPath(MoverContentProvider.CONTENT_URI,
-				MoverContentProvider.CHAPTER_PATH), null,  COLUMN_NAME_VERSION_ID +" =\""+VersionId+"\"", null, "CHAPTER_PLAYORDER");
+		System.out.println(LibrettoContentProvider.CONTENT_URI+" "+LibrettoContentProvider.CHAPTER_PATH);
+		Cursor cursor =ctx.getContentResolver().query(Uri.withAppendedPath(LibrettoContentProvider.CONTENT_URI,
+				LibrettoContentProvider.CHAPTER_PATH), null,  COLUMN_NAME_VERSION_ID +" =\""+VersionId+"\"", null, "CHAPTER_PLAYORDER");
 		///.query(MoverContentProvider.CONTENT_URI+"/"+MoverContentProvider.PLAY_PATH, null, null, null, null);
 		System.out.println("CURSOR COUNT "+cursor.getCount());
 		if(cursor != null && cursor.getCount()>0){

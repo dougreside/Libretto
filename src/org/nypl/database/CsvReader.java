@@ -1,18 +1,16 @@
 package org.nypl.database;
 
 
-import org.nypl.MoverContentProvider;
+import org.nypl.LibrettoContentProvider;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.util.Log;
 
 public class CsvReader {
-	private static String TAG = "CSVReader";
-	private static String AUDIO_TABLE_NAME="AUDIO";
+
 	public static void insertPlayTable(SQLiteDatabase db, Context context ,String playid, String play_name, String image, String authors, String url) {
 
 	/*	SqliteDBHelper mDBHelper = new SqliteDBHelper(context);
@@ -44,7 +42,7 @@ public class CsvReader {
 		mDBHelper.close();
 	}*/
 	}
-	public static void insertChapterTable(SQLiteDatabase db,Context context ,String html_file,String versionid,String chapter_name,String chapter_mapping,String playorder){
+	public static void insertChapterTable(SQLiteDatabase db,Context context ,String html_file,String versionid,String chapter_name,String chapter_mapping,int playorder){
 		if(versionid!=null )
 		{	
 			
@@ -59,6 +57,21 @@ public class CsvReader {
 			long result = db.insert(ChaptersDAO.TABLE_NAME , null, values);
 			Log.v("result","INSERTED: "+result);
 		}	
+	}
+	public static void insertSheetMusicTable(SQLiteDatabase db,Context context ,String HTML,String SheetMusicID,String SheetMusicName,int PlayOrder){
+			
+			
+			//	System.out.println("audioname:::::::::::::::22222::::::::::::::"+audioname);
+			ContentValues values = new ContentValues();
+
+			values.put(DatabaseTable.TABLE_SHEETMUSIC_ID, SheetMusicID);
+			values.put(DatabaseTable.TABLE_SHEETMUSIC_NAME, SheetMusicName);
+			values.put(DatabaseTable.TABLE_SHEETMUSIC_PLAYORDER, PlayOrder);
+			values.put(DatabaseTable.TABLE_CHAPTER_HTML_FILE, HTML);
+			
+			long result = db.insert(SheetMusicDAO.TABLE_NAME , null, values);
+			Log.v("result","INSERTED: "+result);
+			
 	}
 	public static void insertVersionTable(SQLiteDatabase db, Context context ,String versionid, String play_id, String version_name) {
 		
@@ -152,7 +165,7 @@ public class CsvReader {
 		System.out.println(values);
 	
 		System.out.println(AudioDAO.TABLE_NAME);
-		context.getContentResolver().insert(Uri.parse(MoverContentProvider.CONTENT_URI+"/"+MoverContentProvider.AUDIO_PATH), values);
+		context.getContentResolver().insert(Uri.parse(LibrettoContentProvider.CONTENT_URI+"/"+LibrettoContentProvider.AUDIO_PATH), values);
 		//long result = db.insert(AudioDAO.TABLE_NAME, null, values);
 		//Log.v("result",""+result);
 		

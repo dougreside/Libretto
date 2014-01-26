@@ -2,7 +2,7 @@ package org.nypl.database;
 
 import java.util.ArrayList;
 
-import org.nypl.MoverContentProvider;
+import org.nypl.LibrettoContentProvider;
 import org.nypl.dataholder.AudioBean;
 import org.nypl.dataholder.VersionBean;
 
@@ -42,8 +42,8 @@ public class AudioDAO {
 		ArrayList<AudioBean> list = new ArrayList<AudioBean>();
 		String selectionargs = COLUMN_NAME_AUDIO_CLIP_ID +" =\""+Audio_clipId+"\" "+ " and "+" "+ COLUMN_NAME_AUDIO_PLAY_ID +" = \""+mPlaysId+"\"";
 		System.out.println("selectionargs:::" +selectionargs);
-		Cursor cursor =ctx.getContentResolver().query(Uri.withAppendedPath(MoverContentProvider.CONTENT_URI,
-				MoverContentProvider.AUDIO_PATH), null,  selectionargs , null, null);
+		Cursor cursor =ctx.getContentResolver().query(Uri.withAppendedPath(LibrettoContentProvider.CONTENT_URI,
+				LibrettoContentProvider.AUDIO_PATH), null,  selectionargs , null, null);
 		///.query(MoverContentProvider.CONTENT_URI+"/"+MoverContentProvider.PLAY_PATH, null, null, null, null);
 		if(cursor != null && cursor.getCount()>0){
 			setColumns(cursor);

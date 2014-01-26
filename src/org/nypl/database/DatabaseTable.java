@@ -26,7 +26,10 @@ public class DatabaseTable {
 	public static final String TABLE_NAME5 ="PLAY_NOTE";
 	public static final String TABLE_NAME6="AUDIO";
 	public static final String TABLE_NAME7="CHAPTERS";
-	/*Column Related to Play Table
+	public static final String TABLE_NAME8="SHEETMUSIC";
+	
+	
+	/*Column Related to Sheet Music Table
 	 * 
 	 */
 	public static final  String TABLE_PLAY_ID = "_id";
@@ -36,6 +39,18 @@ public class DatabaseTable {
 	public static final String TABLE_PLAY_SCROLL_POSITION = "SCROLL_POSITION";
 	public static final String TABLE_PLAY_AUTHORS = "AUTHORS";
 	public static final String TABLE_PLAY_URL = "PLAY_URL";
+	
+	
+	
+	/*Column Related to Play Table
+	 * 
+	 */
+
+	public static final String TABLE_SHEETMUSIC_ID = "SHEETMUSIC_ID";
+	public static final String TABLE_SHEETMUSIC_NAME = "NAME";
+	public static final String TABLE_SHEETMUSIC_HTML = "HTML";
+	public static final String TABLE_SHEETMUSIC_PLAYORDER = "PLAYORDER";
+
 	/*Column Related to Version Table
 	 * 	
 	 */
@@ -101,18 +116,29 @@ public class DatabaseTable {
 	/**
 	 * Database creation SQL statement
 	 */
-	private static final String DATABASE_CREATE = "create table " 
-		+ TABLE_NAME
+	private static final String DATABASE_CREATE8 = "create table " 
+		+ TABLE_NAME8
 		+ "(" 
-		+ TABLE_PLAY_ID + " integer primary key autoincrement, " 
-		+ TABLE_PLAY_LONG_ID + " text not null, " 
-		+ TABLE_PLAY_NAME + " text not null ,"
-		+ TABLE_PLAY_IMAGE + " text not null ,"
-		+ TABLE_PLAY_AUTHORS + " text,  " 
-		+ TABLE_PLAY_SCROLL_POSITION + " text,  "
-		+ TABLE_PLAY_URL+ " text "
+		+ TABLE_ID + " integer primary key autoincrement, " 
+		+ TABLE_SHEETMUSIC_ID + " text not null, " 
+		+ TABLE_SHEETMUSIC_NAME + " text not null ,"
+		+ TABLE_SHEETMUSIC_HTML + " text not null ,"
+		+ TABLE_SHEETMUSIC_PLAYORDER + " integer not null  " 
 		+ ");";
 
+	
+	private static final String DATABASE_CREATE = "create table " 
+			+ TABLE_NAME
+			+ "(" 
+			+ TABLE_PLAY_ID + " integer primary key autoincrement, " 
+			+ TABLE_PLAY_LONG_ID + " text not null, " 
+			+ TABLE_PLAY_NAME + " text not null ,"
+			+ TABLE_PLAY_IMAGE + " text not null ,"
+			+ TABLE_PLAY_AUTHORS + " text,  " 
+			+ TABLE_PLAY_SCROLL_POSITION + " text,  "
+			+ TABLE_PLAY_URL+ " text "
+			+ ");";
+	
 	private static final String DATABASE_CREATE2 = "create table " 
 		+ TABLE_NAME2
 		+ "("
@@ -199,6 +225,7 @@ public class DatabaseTable {
 		database.execSQL(DATABASE_CREATE4);
 		database.execSQL(DATABASE_CREATE5);
 		database.execSQL(DATABASE_CREATE7);
+		database.execSQL(DATABASE_CREATE8);
 	}
 
 	//		public static void onUpgrade(SQLiteDatabase database, int oldVersion,

@@ -191,7 +191,7 @@ public class AboutActivity extends FragmentActivity {
 			ContentValues cv =new ContentValues();
 			cv.put(AudioDAO.COLUMN_NAME_AUDIO_PATH, URLID);
 
-			int rowUpdated=getContentResolver().update(Uri.parse(MoverContentProvider.CONTENT_URI+"/"+MoverContentProvider.AUDIO_PATH), cv, AudioDAO.COLUMN_NAME_AUDIO_VERSION_ID + "=\"" + Version +"\" and "+ AudioDAO.COLUMN_NAME_AUDIO_PLAY_ID + "=\"" + mPlaysId+"\"" , null);
+			int rowUpdated=getContentResolver().update(Uri.parse(LibrettoContentProvider.CONTENT_URI+"/"+LibrettoContentProvider.AUDIO_PATH), cv, AudioDAO.COLUMN_NAME_AUDIO_VERSION_ID + "=\"" + Version +"\" and "+ AudioDAO.COLUMN_NAME_AUDIO_PLAY_ID + "=\"" + mPlaysId+"\"" , null);
 			System.out.println("rowUpdated::::::::::::::::::::::::::::::::::"+rowUpdated);
 			 //HTMLFileName=versionDetailList.get(mPosition).getVersionHTMlFile();
 			//((SelectionWebView) mFocusedPage).SetAudio(savedUri,HTMLFileName);

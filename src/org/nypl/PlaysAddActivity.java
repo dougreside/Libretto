@@ -80,7 +80,7 @@ public class PlaysAddActivity extends SherlockFragmentActivity{
              }
 	         new File(output).mkdirs();
 	         ZipExtracter.extract(inputStream, output+File.separator);
-	         File mVersionFile = new File(output+File.separator+"toc.ncx");
+	         File mVersionFile = new File(output+File.separator+"nav.xhtml");
 
 	     	
 	 		try {

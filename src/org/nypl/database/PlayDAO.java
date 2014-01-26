@@ -3,7 +3,7 @@ package org.nypl.database;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import org.nypl.MoverContentProvider;
+import org.nypl.LibrettoContentProvider;
 import org.nypl.dataholder.PlaysBean;
 import org.nypl.dataholder.VersionBean;
 
@@ -71,8 +71,8 @@ public class PlayDAO {
 
 	public static ArrayList<PlaysBean> getFeaturedPlays(Context ctx){
 		ArrayList<PlaysBean> list = new ArrayList<PlaysBean>();
-	Cursor cursor =ctx.getContentResolver().query(Uri.withAppendedPath(MoverContentProvider.CONTENT_URI,
-			MoverContentProvider.PLAY_PATH), null, null, null, null);
+	Cursor cursor =ctx.getContentResolver().query(Uri.withAppendedPath(LibrettoContentProvider.CONTENT_URI,
+			LibrettoContentProvider.PLAY_PATH), null, null, null, null);
 	///.query(MoverContentProvider.CONTENT_URI+"/"+MoverContentProvider.PLAY_PATH, null, null, null, null);
 		if(cursor != null && cursor.getCount()>0){
 			setColumns(cursor);
@@ -108,7 +108,7 @@ public class PlayDAO {
 		{
 			char c = (char)j;
 			alphabet=Character.toString(c);
-			Cursor cursor =ctx.getContentResolver().query(Uri.parse(MoverContentProvider.CONTENT_URI+"/"+MoverContentProvider.PLAY_BOOKMARK_PATH), null, COLUMN_NAME_PLAY_NAME +" LIKE "+"'"+alphabet + "%"+"'"  ,null , null);
+			Cursor cursor =ctx.getContentResolver().query(Uri.parse(LibrettoContentProvider.CONTENT_URI+"/"+LibrettoContentProvider.PLAY_BOOKMARK_PATH), null, COLUMN_NAME_PLAY_NAME +" LIKE "+"'"+alphabet + "%"+"'"  ,null , null);
 			///.query(MoverContentProvider.CONTENT_URI+"/"+MoverContentProvider.PLAY_PATH, null, null, null, null);
 			Log.v("in playdiao cursor",""+cursor.getCount());
 			if(cursor != null && cursor.getCount()>0){
@@ -149,7 +149,7 @@ public class PlayDAO {
 
 
 	
-			Cursor cursor =ctx.getContentResolver().query(Uri.parse(MoverContentProvider.CONTENT_URI+"/"+MoverContentProvider.PLAY_ALLBOOKMARK_PATH), null, null  ,null , null);
+			Cursor cursor =ctx.getContentResolver().query(Uri.parse(LibrettoContentProvider.CONTENT_URI+"/"+LibrettoContentProvider.PLAY_ALLBOOKMARK_PATH), null, null  ,null , null);
 			
 			if(cursor != null && cursor.getCount()>0){
 			
@@ -187,7 +187,7 @@ public class PlayDAO {
 
 		ArrayList<PlaysBean> list = new ArrayList<PlaysBean>();
 	
-			Cursor cursor =ctx.getContentResolver().query(Uri.parse(MoverContentProvider.CONTENT_URI+"/"+MoverContentProvider.SET_BOOKMARK_PATH), null, VersionId  ,null , null);
+			Cursor cursor =ctx.getContentResolver().query(Uri.parse(LibrettoContentProvider.CONTENT_URI+"/"+LibrettoContentProvider.SET_BOOKMARK_PATH), null, VersionId  ,null , null);
 			///.query(MoverContentProvider.CONTENT_URI+"/"+MoverContentProvider.PLAY_PATH, null, null, null, null);
 			Log.v("in playdiao cursor",""+cursor.getCount());
 			if(cursor != null && cursor.getCount()>0){
@@ -234,7 +234,7 @@ public class PlayDAO {
 		{
 			char c = (char)j;
 			alphabet=Character.toString(c);
-	Cursor cursor =ctx.getContentResolver().query(Uri.parse(MoverContentProvider.CONTENT_URI+"/"+MoverContentProvider.PLAY_PATH), null, COLUMN_NAME_PLAY_NAME +" LIKE ?" , new String[]{alphabet + "%"}, null);
+	Cursor cursor =ctx.getContentResolver().query(Uri.parse(LibrettoContentProvider.CONTENT_URI+"/"+LibrettoContentProvider.PLAY_PATH), null, COLUMN_NAME_PLAY_NAME +" LIKE ?" , new String[]{alphabet + "%"}, null);
 	///.query(MoverContentProvider.CONTENT_URI+"/"+MoverContentProvider.PLAY_PATH, null, null, null, null);
 	Log.v("in playdiao cursor",""+cursor.getCount());
 		if(cursor != null && cursor.getCount()>0){
@@ -281,7 +281,7 @@ public class PlayDAO {
 		ArrayList<PlaysBean> list = new ArrayList<PlaysBean>();
 		
 			alphabet=search.toString();
-	Cursor cursor =ctx.getContentResolver().query(Uri.parse(MoverContentProvider.CONTENT_URI+"/"+MoverContentProvider.PLAY_PATH), null, COLUMN_NAME_PLAY_NAME +" LIKE ?" , new String[]{"%"+alphabet + "%"}, null);
+	Cursor cursor =ctx.getContentResolver().query(Uri.parse(LibrettoContentProvider.CONTENT_URI+"/"+LibrettoContentProvider.PLAY_PATH), null, COLUMN_NAME_PLAY_NAME +" LIKE ?" , new String[]{"%"+alphabet + "%"}, null);
 	///.query(MoverContentProvider.CONTENT_URI+"/"+MoverContentProvider.PLAY_PATH, null, null, null, null);
 	Log.v("in playdiao cursor",""+cursor.getCount());
 		if(cursor != null && cursor.getCount()>0){
@@ -316,7 +316,7 @@ public class PlayDAO {
 		ArrayList<PlaysBean> list = new ArrayList<PlaysBean>();
 		
 			
-	Cursor cursor =ctx.getContentResolver().query(Uri.parse(MoverContentProvider.CONTENT_URI+"/"+MoverContentProvider.PLAY_PATH), null, COLUMN_NAME_PLAY_ID +"=\""+PlayId+"\"",null, null);
+	Cursor cursor =ctx.getContentResolver().query(Uri.parse(LibrettoContentProvider.CONTENT_URI+"/"+LibrettoContentProvider.PLAY_PATH), null, COLUMN_NAME_PLAY_ID +"=\""+PlayId+"\"",null, null);
 	///.query(MoverContentProvider.CONTENT_URI+"/"+MoverContentProvider.PLAY_PATH, null, null, null, null);
 	Log.v("in playdiao cursor",""+cursor.getCount());
 		if(cursor != null && cursor.getCount()>0){
@@ -357,9 +357,9 @@ public class PlayDAO {
 		ArrayList<PlaysBean> list = new ArrayList<PlaysBean>();
 		
 		System.out.println("CHECKING FOR PLAY BY ID "+PlayId);	
-		System.out.println(MoverContentProvider.CONTENT_URI+"/"+MoverContentProvider.PLAY_PATH);
-		Uri uri = Uri.withAppendedPath(MoverContentProvider.CONTENT_URI,
-				MoverContentProvider.PLAY_PATH);
+		System.out.println(LibrettoContentProvider.CONTENT_URI+"/"+LibrettoContentProvider.PLAY_PATH);
+		Uri uri = Uri.withAppendedPath(LibrettoContentProvider.CONTENT_URI,
+				LibrettoContentProvider.PLAY_PATH);
 		ContentResolver cr = ctx.getContentResolver();
 		Cursor cursor =cr.query(uri, null, COLUMN_NAME_PLAY_LONG_ID +"=\""+PlayId+"\"",null, null);
 	///.query(MoverContentProvider.CONTENT_URI+"/"+MoverContentProvider.PLAY_PATH, null, null, null, null);
@@ -396,7 +396,7 @@ public class PlayDAO {
 		ContentResolver cr = ctx.getContentResolver();
 		ContentValues cv =new ContentValues();
 		cv.put(PlayDAO.COLUMN_NAME_SCROLL_POSITION, sp);
-		int rowUpdated = cr.update(Uri.parse(MoverContentProvider.CONTENT_URI+"/"+MoverContentProvider.PLAY_PATH), cv, COLUMN_NAME_PLAY_LONG_ID + "=\"" + playid+"\"" , null);
+		int rowUpdated = cr.update(Uri.parse(LibrettoContentProvider.CONTENT_URI+"/"+LibrettoContentProvider.PLAY_PATH), cv, COLUMN_NAME_PLAY_LONG_ID + "=\"" + playid+"\"" , null);
 		System.out.println("UP UP UP IPDATE: "+rowUpdated);
 	
 	    	 

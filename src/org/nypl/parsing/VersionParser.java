@@ -7,10 +7,11 @@ import java.util.ArrayList;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
-import org.nypl.MoverContentProvider;
+import org.nypl.LibrettoContentProvider;
 import org.nypl.database.ChaptersDAO;
 import org.nypl.database.CsvReader;
 import org.nypl.database.PlayDAO;
+import org.nypl.database.SheetMusicDAO;
 import org.nypl.database.VersionDAO;
 import org.nypl.dataholder.ChaptersBean;
 import org.nypl.dataholder.PlaysBean;
@@ -69,9 +70,13 @@ public class VersionParser {
 		private String versionName;
 	//	private String version_audio_name;
 		private String playidfinal;
-		private Boolean titleActive = false;
-		private Boolean authorActive = false;
-		private Boolean navlabelActive = false;
+		private Boolean IsMusic = false;
+
+		private String songId;
+		private String songPageHTML;
+		private String songTitle;
+		
+		
 		private int versionDepth = 0;
 		
 		private int playOrder = 0;
@@ -95,14 +100,16 @@ public class VersionParser {
 			System.out.println("end: " + localName);
 			// if (this.currentItem != null){
 			System.out.println("Do do do " + localName);
-			if ((localName.equalsIgnoreCase(NAVPOINT))
+			if ((localName.equalsIgnoreCase(LI))
 					&& (this.currentVersion != null)) {
 				//String versionname = builder.toString().trim();
 				System.out.println("*******" + version_id);
 				System.out.println("*******" + versionName);
 				System.out.println("*******" + version_html_name);
+				System.out.println("*******" + chapterHTML);
+				if (!(IsMusic)){
 				// Same for all chapters
-				
+			
 				currentVersion.setVersionPlayID(playidfinal);
 				currentVersion.setVersionUUID(version_id);
 				currentVersion.setVersionName(versionName);
@@ -115,7 +122,7 @@ public class VersionParser {
 				currentChapter.setChapterMappingID(chapterID);
 				currentChapter.setChapterName(chapterName);
 				currentChapter.setChapterPlayOrder(playOrder+"");	
-				
+				currentChapter.setHTMLFile(chapterHTML);
 				
 				versionItemList.add(currentVersion);
 				chaptersItemList.add(currentChapter);
@@ -138,19 +145,19 @@ public class VersionParser {
 				//	cv.put(VersionDAO.COLUMN_NAME_CHAPTER_NAME, chapterName);
 				//	cv.put(VersionDAO.COLUMN_NAME_CHAPTER_PLAYORDER, playOrder+"");
 					context1.getContentResolver().insert(
-							Uri.parse(MoverContentProvider.CONTENT_URI + "/"
-									+ MoverContentProvider.VERSION_PATH), cv);
+							Uri.parse(LibrettoContentProvider.CONTENT_URI + "/"
+									+ LibrettoContentProvider.VERSION_PATH), cv);
+					
 
 				}
-				chapterName = "Front Matter";
-				chapterHTML=version_html_name;
+				
 				playOrder = 0;
 				}
-					
+				else{	
 					if (db1 != null) {
 						System.out.println("db1 not null");
 						CsvReader.insertChapterTable(db1, context1, version_id,
-								 chapterHTML, chapterName, chapterID, playOrder+"");
+								 chapterHTML, chapterName, chapterID, playOrder);
 					} else {
 						System.out.println("DB1 null but playidfinal is "
 								+ playidfinal);
@@ -159,39 +166,52 @@ public class VersionParser {
 						cv.put(ChaptersDAO.COLUMN_NAME_HTML_FILE, chapterHTML);
 						cv.put(ChaptersDAO.COLUMN_NAME_CHAPTER_NAME, chapterName);
 						cv.put(ChaptersDAO.COLUMN_NAME_CHAPTER_MAPPING_ID, chapterID);
-						cv.put(ChaptersDAO.COLUMN_NAME_CHAPTER_PLAYORDER, playOrder+"");
+						cv.put(ChaptersDAO.COLUMN_NAME_CHAPTER_PLAYORDER, playOrder);
 						
 					
 						context1.getContentResolver().insert(
-								Uri.parse(MoverContentProvider.CONTENT_URI + "/"
-										+ MoverContentProvider.CHAPTER_PATH), cv);
-
+								Uri.parse(LibrettoContentProvider.CONTENT_URI + "/"
+										+ LibrettoContentProvider.CHAPTER_PATH), cv);
+					playOrder++;
 					}	
-				
+				}
+				}
+				else{
+					if (db1 != null) {
+						System.out.println("db1 not null");
+						CsvReader.insertSheetMusicTable(db1, context1, chapterHTML,version_id,versionName,playOrder);
+					} else {
+					// CREATE SHEET MUSIC BEAN AND INSERT IT INTO SHEETMUSIC TABLE
+					ContentValues cv = new ContentValues();
+					cv.put(SheetMusicDAO.COLUMN_NAME_SHEETMUSIC_ID, version_id);
+					cv.put(SheetMusicDAO.COLUMN_NAME_SHEETMUSIC_HTML, chapterHTML);
+					cv.put(SheetMusicDAO.COLUMN_NAME_SHEETMUSIC_NAME, versionName);
+					cv.put(SheetMusicDAO.COLUMN_NAME_SHEETMUSIC_PLAYORDER, playOrder+"");
+					context1.getContentResolver().insert(
+							Uri.parse(LibrettoContentProvider.CONTENT_URI + "/"
+									+ LibrettoContentProvider.SHEETMUSIC_PATH), cv);
+					}
+					IsMusic=false;
+				}
 				versionDepth--;
+				
 			}
 
-			else if (localName.equalsIgnoreCase("text")) {
-				if (titleActive) {
-					System.out.println("Setting title");
+			else if (localName.equalsIgnoreCase(TITLE)) {
+				
 					currentPlay.setPlayName(builder.toString().trim());
-					titleActive = false;
-				} else if (authorActive) {
-					System.out.println("Setting author");
-					currentPlay.setPlayAuthors(builder.toString().trim());
-					authorActive = false;
-				}
-				else if (navlabelActive){
-					if (versionDepth>1){
-					chapterName = builder.toString().trim();
-					}
-					else{
+					
+			} 
+			else if (localName.equalsIgnoreCase(SPAN)){
 					versionName = builder.toString().trim();
-					chapterName = versionName;
-					}
-					navlabelActive = false;
-				}
+					
 			}
+			else if (localName.equalsIgnoreCase(A)){
+			
+				chapterName = builder.toString().trim();
+			}
+					
+			
 			// }
 			// }
 			// builder.setLength(0);
@@ -214,7 +234,7 @@ public class VersionParser {
 					CONTENT_LOCATION.lastIndexOf("/"));
 			File PlayFolder = new File(CONTENT_LOCATION);
 
-			if (localName.equalsIgnoreCase(NAVMAP)) {
+			if (localName.equalsIgnoreCase(NAV)) {
 
 				if (db1 != null) {
 					cursor2 = db1.rawQuery(
@@ -222,8 +242,8 @@ public class VersionParser {
 									+ playidfinal + "\"", null);
 				} else {
 					cursor2 = context1.getContentResolver().query(
-							Uri.parse(MoverContentProvider.CONTENT_URI + "/"
-									+ MoverContentProvider.PLAY_PATH),
+							Uri.parse(LibrettoContentProvider.CONTENT_URI + "/"
+									+ LibrettoContentProvider.PLAY_PATH),
 							null,
 							PlayDAO.COLUMN_NAME_PLAY_LONG_ID + "=\""
 									+ playidfinal + "\"", null, null);
@@ -233,7 +253,7 @@ public class VersionParser {
 
 					if (db1 != null) {
 						CsvReader.insertPlayTable(db1, context1, playidfinal,
-								currentPlay.getPlayName(), "cover.jpeg",
+								currentPlay.getPlayName(), ProjectFolder + File.separator+"cover.jpeg",
 								currentPlay.getPlayAuthors(),
 								currentPlay.getPlayUrl());
 					} else {
@@ -241,21 +261,21 @@ public class VersionParser {
 						cv.put(PlayDAO.COLUMN_NAME_PLAY_LONG_ID, playidfinal);
 						cv.put(PlayDAO.COLUMN_NAME_PLAY_NAME,
 								currentPlay.getPlayName());
-						cv.put(PlayDAO.COLUMN_NAME_PLAY_IMAGE, "cover.jpeg");
+						cv.put(PlayDAO.COLUMN_NAME_PLAY_IMAGE, ProjectFolder + File.separator+"cover.jpeg");
 						cv.put(PlayDAO.COLUMN_NAME_PLAY_AUTHORS,
 								currentPlay.getPlayAuthors());
 						context1.getContentResolver()
 								.insert(Uri
-										.parse(MoverContentProvider.CONTENT_URI
+										.parse(LibrettoContentProvider.CONTENT_URI
 												+ "/"
-												+ MoverContentProvider.PLAY_PATH),
+												+ LibrettoContentProvider.PLAY_PATH),
 										cv);
 
 					}
 					System.out.println("Inserted");
 					PlayJsonParser.addPlayToJson(ProjectFolder + File.separator
 							+ "playjsonformat.json", playidfinal,
-							currentPlay.getPlayName(), "cover.jpeg", "",
+							currentPlay.getPlayName(), ProjectFolder + File.separator+"cover.jpeg", "",
 							currentPlay.getPlayAuthors(), "");
 				}
 				System.out.println("IS PLAY FOLDER NAMED RIGHT?");
@@ -270,47 +290,53 @@ public class VersionParser {
 				this.currentChapter = new ChaptersBean();
 
 			} else if (localName.equalsIgnoreCase("meta")) {
+				if (attributes.getValue("name")!=null){
 				if (attributes.getValue("name").equalsIgnoreCase("dtb:uid")) {
 					playidfinal = attributes.getValue("content");
 				}
-			}  else if (localName.equalsIgnoreCase(NAVPOINT)) {
+				}
+			}  else if (localName.equalsIgnoreCase(LI)) {
 				
 				if (versionDepth<1){
+					if (attributes.getValue("epub:type").equalsIgnoreCase("SheetMusic")){
+						IsMusic=true;
+					}
+					else{
+						IsMusic=false;
+					}
 					playOrder=1;
 					if (attributes.getValue(ID)!=null){
 						version_id = attributes.getValue(ID);
 					}
+					
 				}
 				else{
 					if (attributes.getValue(ID)!=null){
 						chapterID = attributes.getValue(ID);
 						chapterID = chapterID.substring(0,chapterID.indexOf("-"));
 					}
-					playOrder++;
+				
 				}
 				versionDepth++;
-			} else if (localName.equalsIgnoreCase(CONTENT)) {
-				if (versionDepth<2){
-				version_html_name = attributes.getValue("src");
-				}
-				else{
-					chapterHTML = attributes.getValue("src");
-				}
-			} else if (localName.equalsIgnoreCase(TEXT)) {
+			} else if (localName.equalsIgnoreCase(A)) {
+					builder.delete(0, builder.length());
+					chapterHTML = attributes.getValue("href");
+				
+			} else if (localName.equalsIgnoreCase(SPAN)) {
 				builder.delete(0, builder.length());
-			} else if (localName.equalsIgnoreCase("docTitle")) {
-				titleActive = true;
+			} else if (localName.equalsIgnoreCase("TITLE")) {
+				builder.delete(0, builder.length());
 			}
-			else if (localName.equalsIgnoreCase("navlabel")) {
-				navlabelActive = true;
-			}
+		
 		}
 
-		private static final String NAVMAP = "navMap";
-		private static final String NAVPOINT = "navPoint";
-		private static final String TEXT = "text";
-		private static final String CONTENT = "content";
+		private static final String NAV = "nav";
+		private static final String SPAN = "span";
+		private static final String LI = "li";
+		private static final String OL = "ol";
 		private static final String ID = "id";
+		private static final String A = "a";
+		private static final String TITLE = "title";
 
 	}
 
