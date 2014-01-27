@@ -77,6 +77,8 @@ public class AudioFileParser{
 					
 					System.out.println(dHead);
 					Elements auds = doc.select("audio");
+					Elements sheetmusics = doc.select("div[class=sheetmusic]");
+					
 					Log.v("audio","starting");
 					if (auds.size()>0){
 					ListIterator<Element> eli = auds.listIterator();
@@ -113,7 +115,7 @@ public class AudioFileParser{
 						
 						Attributes aAttributes = new Attributes();
 						aAttributes.put("href", "nypl_audio-"+clip_id);
-
+						
 						Element aElement = new Element(Tag.valueOf("a"), "", aAttributes);
 					
 						el.replaceWith(aElement);
@@ -134,6 +136,20 @@ public class AudioFileParser{
 						
 					}
 
+					Log.v("sheetmusics","starting");
+					if (sheetmusics.size()>0){
+					ListIterator<Element> eli = sheetmusics.listIterator();
+					
+					//Element el = auds.first();
+					Element el;
+					while (eli.hasNext()){
+						el = (Element)eli.next();
+						System.out.println("");
+						el.prepend("<span class='musicicon'>&#xf001;</span> ");
+
+					}
+					}
+					
 
 
 FileOutputStream fooStream = new FileOutputStream(mAudioFile, false); // true to append

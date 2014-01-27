@@ -61,5 +61,11 @@
 	#MOVER-CONTENT-WRAPPER{
 	
 	}
-	
+    @font-face{
+    font-family: icomoon;
+	src: url("./fonts/icomoon.ttf") format("truetype");
+    }
+	.musicicon{
+	font-family: icomoon;
+	}
 	</style>

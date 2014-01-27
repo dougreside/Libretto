@@ -940,13 +940,13 @@ containing a value of this type.
         public static final int btnPlay=0x7f050030;
         public static final int btn_cancel=0x7f05006f;
         public static final int btn_save=0x7f05006e;
-        public static final int cab_action_delete=0x7f0500a5;
+        public static final int cab_action_delete=0x7f0500a8;
         public static final int chapter_heading=0x7f050071;
         public static final int coverflow=0x7f050055;
         public static final int disableHome=0x7f050009;
         public static final int divider=0x7f05006c;
         public static final int download_text=0x7f05008e;
-        public static final int dragLayer=0x7f0500a2;
+        public static final int dragLayer=0x7f0500a4;
         public static final int e_alpha_header_layout=0x7f05003b;
         public static final int e_alpha_header_text=0x7f05003c;
         public static final int e_coverflow_img=0x7f050043;
@@ -954,7 +954,7 @@ containing a value of this type.
         public static final int e_list_layout_play_image=0x7f05003d;
         public static final int e_list_layout_play_name=0x7f05003f;
         public static final int e_list_layout_version_name=0x7f050041;
-        public static final int endHandle=0x7f0500a4;
+        public static final int endHandle=0x7f0500a6;
         public static final int homeAsUp=0x7f050006;
         public static final int iv_icon=0x7f050027;
         public static final int linearlayout1=0x7f05003e;
@@ -1034,8 +1034,11 @@ containing a value of this type.
         public static final int s_plays_version_name=0x7f050095;
         public static final int s_playsdetail_audio_layout=0x7f05009e;
         public static final int s_playsdetail_chapterControls_layout=0x7f05009a;
+        public static final int s_sheetmusic_fragment=0x7f0500a7;
+        public static final int s_sheetmusic_webview_layout=0x7f0500a2;
         public static final int s_titlebar_layout=0x7f050046;
         public static final int scroller=0x7f050067;
+        public static final int sheetmusicpager=0x7f0500a3;
         public static final int showCustom=0x7f050008;
         public static final int showHome=0x7f050005;
         public static final int showTitle=0x7f050007;
@@ -1043,7 +1046,7 @@ containing a value of this type.
         public static final int songProgressBar=0x7f05002b;
         public static final int songTitle=0x7f050031;
         public static final int songTotalDurationLabel=0x7f05002f;
-        public static final int startHandle=0x7f0500a3;
+        public static final int startHandle=0x7f0500a5;
         public static final int tabMode=0x7f050003;
         public static final int textView1=0x7f05005e;
         public static final int timerDisplay=0x7f05002d;
@@ -1134,11 +1137,13 @@ containing a value of this type.
         public static final int s_plays_detail_frag=0x7f03003a;
         public static final int s_plays_frag=0x7f03003b;
         public static final int s_plays_frag_old=0x7f03003c;
-        public static final int s_splash=0x7f03003d;
-        public static final int selection_drag_layer=0x7f03003e;
-        public static final int sherlock_spinner_dropdown_item=0x7f03003f;
-        public static final int sherlock_spinner_item=0x7f030040;
-        public static final int test=0x7f030041;
+        public static final int s_sheetmusic_frag=0x7f03003d;
+        public static final int s_splash=0x7f03003e;
+        public static final int selection_drag_layer=0x7f03003f;
+        public static final int sheetmusic_activity=0x7f030040;
+        public static final int sherlock_spinner_dropdown_item=0x7f030041;
+        public static final int sherlock_spinner_item=0x7f030042;
+        public static final int test=0x7f030043;
     }
     public static final class menu {
         public static final int action_mode_menu=0x7f0c0000;

@@ -77,7 +77,12 @@
             android:screenOrientation="portrait"
             android:theme="@style/app_theme"
             android:windowSoftInputMode="adjustUnspecified|adjustResize|adjustPan" />
-     
+     	<activity
+            android:name=".SheetMusicActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@style/app_theme"
+            android:windowSoftInputMode="adjustUnspecified|adjustResize|adjustPan" />
        
       <!-- <activity
             android:name=".BookmarkActivity"

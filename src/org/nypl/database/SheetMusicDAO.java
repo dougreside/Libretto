@@ -41,7 +41,7 @@ public class SheetMusicDAO {
 	public static ArrayList<SheetMusicBean> getPagesForID(Context ctx,String SheetMusicId){
 		ArrayList<SheetMusicBean> list = new ArrayList<SheetMusicBean>();
 			Cursor cursor =ctx.getContentResolver().query(Uri.withAppendedPath(LibrettoContentProvider.CONTENT_URI,
-				LibrettoContentProvider.CHAPTER_PATH), null,  COLUMN_NAME_SHEETMUSIC_ID +" =\""+SheetMusicId+"\"", null, "PLAYORDER");
+				LibrettoContentProvider.SHEETMUSIC_PATH), null,  COLUMN_NAME_SHEETMUSIC_ID +" =\""+SheetMusicId+"\"", null, "PLAYORDER");
 		///.query(MoverContentProvider.CONTENT_URI+"/"+MoverContentProvider.PLAY_PATH, null, null, null, null);
 		System.out.println("SHEETMUSIC CURSOR COUNT "+cursor.getCount());
 		if(cursor != null && cursor.getCount()>0){

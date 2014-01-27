@@ -454,6 +454,8 @@ public class PlaysDetailActivity extends FragmentActivity {
 	private void goToChapter(int chapNum, ArrayList<ChaptersBean> cList){
 		
 		String chapId = cList.get(chapNum).getChapterMappingID();
+		if (!(chapId.equals(-1))){
+			
 	//	chapId = chapId.substring(0,chapId.indexOf("-"));
 		String chapUrl = cList.get(chapNum).getHTMLFile();
 		System.out.println("Setting chapter id in go to chapter "+chapId+" "+chapNum);
@@ -468,7 +470,7 @@ public class PlaysDetailActivity extends FragmentActivity {
 		ChaptersBean nextChapterBean= chaptersList.get(nextChapPos);
 		String filePath = "file:///"+Environment.getExternalStorageDirectory().getAbsolutePath()  + File.separator+ CONTENT_LOCATION + File.separator +nextChapterBean.getHTMLFile();
 		mPlayPagerAdapter.mPlayDetailView.loadUrl(filePath);
-	
+		}
 	}
 	private void getChapters(){
 		//final ArrayList<ChaptersBean> chapterList = mPlayPagerAdapter.jsScrollPosition.Chapters;

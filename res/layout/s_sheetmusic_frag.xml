@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="fill_parent" >
+
+    <!-- ImageView
+        android:id="@+id/s_background_img"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" / -->
+
+    <LinearLayout
+        android:id="@+id/s_main_title_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/s_main_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="3dp"
+            android:textColor="#7f2352"
+            
+             android:textSize="24sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+   
+
+    <LinearLayout
+        android:id="@+id/progress"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/s_titlebar_layout"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone" >
+
+        <ProgressBar
+            style="@android:style/Widget.ProgressBar.Large"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/s_plays_frag_detail_headind"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="Loading..."
+            android:textColor="#FFF"
+            android:textSize="18dp"
+            android:textStyle="bold" >
+        </TextView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/s_sheetmusic_webview_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/s_main_title_layout"
+        android:orientation="vertical" 
+        android:background="#FFFFFF"
+       >
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/sheetmusicpager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clickable="true" >
+        </android.support.v4.view.ViewPager>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/s_playsdetail_audio_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical"
+        android:visibility="gone" >
+
+        <include
+            android:layout_gravity="center"
+            layout="@layout/audio_player" />
+    </LinearLayout>
+
+</RelativeLayout>

@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 
 import org.json.JSONArray;
@@ -14,6 +13,7 @@ import org.nypl.LibrettoContentProvider;
 import org.nypl.PlaysDetailActivity;
 import org.nypl.R;
 import org.nypl.SelectionWebView;
+import org.nypl.SheetMusicActivity;
 import org.nypl.database.AudioDAO;
 import org.nypl.database.ChaptersDAO;
 import org.nypl.database.PlayDAO;
@@ -38,7 +38,6 @@ import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.net.Uri;
-import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Parcelable;
@@ -271,11 +270,18 @@ public class ViewPagerAdapter extends PagerAdapter{
 		String versionId =  mVersionDetailList.get(position).getVersionUUID();
 		Version = versionId;
 		ArrayList<ChaptersBean> chaptersList = ChaptersDAO.getChaptersForVersion(mContext,versionId);  
-
-		ChaptersBean currentChapterBean= chaptersList.get(currentChapterPos);
-		
+		ChaptersBean currentChapterBean;
+		if (chaptersList.size()>=currentChapterPos){
+		 currentChapterBean= chaptersList.get(currentChapterPos);
+		}
+		else{
+		 currentChapterBean= chaptersList.get(0);
+				
+		}
 	//	mPlaysId = mVersionDetailList.get(position).getVersionID();
 		String filePath = "file:///"+FilePath.getAbsolutePath() + File.separator+ CONTENT_LOCATION + File.separator +currentChapterBean.getHTMLFile();
+	
+		
 		mPlayDetailView.addJavascriptInterface(jsScrollPosition, "appScrollManager");
 		System.out.println("after swipe, loading "+filePath);
 		mPlayDetailView.loadUrl(filePath);
@@ -435,8 +441,12 @@ public class ViewPagerAdapter extends PagerAdapter{
 				mNoteSelectDialog.show();
 			}
 		    else if (url.contains("SheetMusic")){
-		    	String SheetMusicID = url.substring(url.lastIndexOf("/")+1,url.indexOf(".html"));
-		    	System.out.println(SheetMusicID);
+		    	String SheetMusicID = url.substring(url.lastIndexOf("/")+1,url.lastIndexOf("-"));
+		    	Intent i = new Intent(mContext,SheetMusicActivity.class);
+				i.putExtra("SheetMusicID",SheetMusicID);
+				i.putExtra("position",0);
+				i.putExtra("content_location", CONTENT_LOCATION);
+				mContext.startActivity(i);
 		    }
 			 else{
 				getVersion(url);

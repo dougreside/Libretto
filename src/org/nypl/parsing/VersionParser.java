@@ -177,12 +177,18 @@ public class VersionParser {
 				}
 				}
 				else{
+					if (versionDepth<2){
+						IsMusic=false;
+						}
+					else{
 					if (db1 != null) {
+						System.out.println("Inserting ID: "+version_id);
 						System.out.println("db1 not null");
 						CsvReader.insertSheetMusicTable(db1, context1, chapterHTML,version_id,versionName,playOrder);
 					} else {
 					// CREATE SHEET MUSIC BEAN AND INSERT IT INTO SHEETMUSIC TABLE
 					ContentValues cv = new ContentValues();
+
 					cv.put(SheetMusicDAO.COLUMN_NAME_SHEETMUSIC_ID, version_id);
 					cv.put(SheetMusicDAO.COLUMN_NAME_SHEETMUSIC_HTML, chapterHTML);
 					cv.put(SheetMusicDAO.COLUMN_NAME_SHEETMUSIC_NAME, versionName);
@@ -191,7 +197,7 @@ public class VersionParser {
 							Uri.parse(LibrettoContentProvider.CONTENT_URI + "/"
 									+ LibrettoContentProvider.SHEETMUSIC_PATH), cv);
 					}
-					IsMusic=false;
+					}
 				}
 				versionDepth--;
 				
