@@ -49,6 +49,7 @@ public class AudioDAO {
 			setColumns(cursor);
 			for(int i=0;i<cursor.getCount();i++){
 				cursor.moveToPosition(i);
+				System.out.println("START AT: "+cursor.getString(COLUMN_INDEX_AUDIO_CLIP_FROM));
 				AudioBean audio = new AudioBean();
 				audio.setClipID(cursor.getString(COLUMN_INDEX_AUDIO_CLIP_ID));
 				audio.setClipVesrsionId(cursor.getString(COLUMN_INDEX_AUDIO_VERSION_ID));

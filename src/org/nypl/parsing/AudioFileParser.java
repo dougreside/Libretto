@@ -144,7 +144,6 @@ public class AudioFileParser{
 					Element el;
 					while (eli.hasNext()){
 						el = (Element)eli.next();
-						System.out.println("");
 						el.prepend("<span class='musicicon'>&#xf001;</span> ");
 
 					}

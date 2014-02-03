@@ -107,7 +107,7 @@ public class SplashActivity extends Activity{
    	   	}
 		if(!samplePlay.exists()){
 			copyFromAssets("A65A647B-A4A3-48E5-A7B4-C181277CD5DB.epub");
-			
+			copyFromAssets("A65A647B-A4A3-48E5-A7B4-C181277CD5DB.jpeg");
 		}
 
     

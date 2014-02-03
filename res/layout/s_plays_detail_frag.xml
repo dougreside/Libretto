@@ -173,6 +173,7 @@
         android:layout_alignParentBottom="true"
         android:orientation="vertical"
         android:background="#FFFFFF"
+        android:gravity="center_horizontal"
      >
  <TextView
                        android:id="@+id/s_plays_chapter_left_text"
@@ -182,7 +183,7 @@
                        
                       
                        
-                       android:text="&#xe604; Previous Chapter"
+                       android:text="&#xe604; Previous "
                        android:textColor="#7f2352"
                        android:textSize="16sp" />
                
@@ -202,7 +203,7 @@
                        android:layout_height="wrap_content"
                        android:layout_alignParentTop="true"
                        android:layout_toRightOf="@+id/s_plays_chapter_middlebar_text"
-                       android:text="Next Chapter &#xe605;"
+                       android:text="Next &#xe605;"
                        android:textColor="#7f2352"
                        android:textSize="16sp" />
 

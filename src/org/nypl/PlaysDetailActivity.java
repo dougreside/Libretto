@@ -49,6 +49,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class PlaysDetailActivity extends FragmentActivity {
 
@@ -154,8 +155,8 @@ public class PlaysDetailActivity extends FragmentActivity {
 		titleBar.setTypeface(lato);
 		titleBar.setMovementMethod(LinkMovementMethod.getInstance());
 		titleBar.setText(titleText);
-		String previousText="&#xe604; Previous Chapter";
-		String nextText = "Next Chapter &#xe605;";
+		String previousText="&#xe604; Previous ";
+		String nextText = "Next &#xe605;";
 		Spannable prevArrow = new SpannableString(Html.fromHtml(previousText));
 		Spannable nextArrow = new SpannableString(Html.fromHtml(nextText));
 		
@@ -205,9 +206,13 @@ public class PlaysDetailActivity extends FragmentActivity {
 		      	Version=versionDetailList.get(mPosition).getVersionUUID();
 		    	final ArrayList<ChaptersBean> cList = ChaptersDAO.getChaptersForVersion(getApplicationContext(), Version);
 				System.out.println("CURRENT CHAPTER = "+curChap);
-		    	if (curChap>0){
+		    	if (curChap>1){
 		    		curChap--;
 		    		goToChapter(curChap,cList);
+		    	}
+		    	else{
+		    		Toast.makeText(getApplicationContext(), "This version only has one chapter.  Swipe right or left to switch versions.", Toast.LENGTH_SHORT).show();
+					
 		    	}
 	        }
 	    });
@@ -219,10 +224,14 @@ public class PlaysDetailActivity extends FragmentActivity {
 		    	Version=versionDetailList.get(mPosition).getVersionUUID();
 		    	final ArrayList<ChaptersBean> cList = ChaptersDAO.getChaptersForVersion(getApplicationContext(), Version);
 		    	System.out.println("CURRENT CHAPTER = "+curChap);
-		    	if (curChap<cList.size()){
+		    	if (curChap<cList.size()-1){
 					curChap++;
 					goToChapter(curChap,cList);
 				}
+		    	else{
+		    		Toast.makeText(getApplicationContext(), "This version only has one chapter.  Swipe right or left to switch versions.", Toast.LENGTH_SHORT).show();
+					
+		    	}
 	        }
 	    });
 		titleBar.setText(s);
