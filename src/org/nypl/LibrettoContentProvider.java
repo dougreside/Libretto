@@ -16,7 +16,6 @@ import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
-import android.util.Log;
 
 public class LibrettoContentProvider extends ContentProvider{
 	
@@ -87,20 +86,15 @@ public class LibrettoContentProvider extends ContentProvider{
 	@Override
 	public Cursor query(Uri uri, String[] projection, String selection,
 			String[] selectionArgs, String sortOrder) {
-		System.out.println("QUERY");
 		int uriType = sURIMatcher.match(uri);
 		Cursor cursor = null;
 		SQLiteDatabase db = mDbHelper.getReadableDatabase();
 		switch (uriType) {
 		case AUDIO:
-			Log.v("selection","Audio "+selection);
 			cursor = db.query(AudioDAO.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
-			Log.v("cursor",""+cursor);
 			break;
 		case PLAYS:
-			Log.v("selection","Play "+selection);
 			cursor = db.query(PlayDAO.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
-			Log.v("cursor",""+cursor);
 			break;
 		case VERSIONS:
 			cursor = db.query(VersionDAO.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
@@ -112,8 +106,7 @@ public class LibrettoContentProvider extends ContentProvider{
 		/*case VERSION_PLAY_NOTE:
 			cursor = db.rawQuery("select  V.PLAY_ID,P.PLAY_NAME,V._id,V.HTML_FILE,V.VERSION_NAME from VERSION V inner join PLAY P on P._id=V.PLAY_ID   where  V._id ="+ " "+"'"+selection+"'", null);
 			break;*/
-		case VERSION_PLAY: 
-			Log.v("selection",""+selection);
+		case VERSION_PLAY:
 			if(selection!=null){
 			cursor = db.rawQuery("select  V.PLAY_ID,P.PLAY_NAME,P.AUTHORS,P.IMAGE,V._id,V.HTML_FILE,V.VERSION_NAME from VERSION V inner join PLAY P on P._id=V.PLAY_ID   where V.NOTE !='' and P.PLAY_NAME like"+ " "+"'"+"%"+selection + "%"+"'", null);
 			}
@@ -126,8 +119,6 @@ public class LibrettoContentProvider extends ContentProvider{
 			break;
 		case PLAYNOTE:
 		//	cursor = db.query(PlayNoteDAO.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
-			
-			Log.v("selection",""+selection);
 			if(selection!=null){
 			cursor = db.rawQuery("select  PN.PLAY_ID,P.PLAY_NAME,P.AUTHORS,P.IMAGE,PN._id,PN.NOTE_ID,PN.NOTE_TEXT,PN.VERSION_ID,PN.VERSION_NAME,PN.NOTES from PLAY_NOTE PN inner join PLAY P on P._id=PN.PLAY_ID   where  P.PLAY_NAME like"+ " "+"'"+"%"+selection + "%"+"'", null);
 			}
@@ -137,15 +128,12 @@ public class LibrettoContentProvider extends ContentProvider{
 			
 			break;
 		case PLAYNOTEDETAIL:
-			Log.v("selection",""+selection);
 			cursor = db.rawQuery("select  PN.PLAY_ID,P.PLAY_NAME,P.AUTHORS,P.IMAGE,PN._id,PN.NOTE_ID,PN.NOTE_TEXT,PN.VERSION_ID,PN.VERSION_NAME,PN.NOTES from PLAY_NOTE PN inner join PLAY P on P._id=PN.PLAY_ID   where PN.NOTE_ID ="+ " "+"'"+selection+"'", null);
 			break;
 		case CHAPTERS:
-			Log.v("selection",""+selection);
 			cursor = db.query(ChaptersDAO.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
 			break;	
 		case SHEETMUSIC:
-			Log.v("selection",""+selection);
 			cursor = db.query(SheetMusicDAO.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
 			break;	
 		default:
@@ -239,26 +227,20 @@ public class LibrettoContentProvider extends ContentProvider{
 		SQLiteDatabase db = mDbHelper.getWritableDatabase();
 		switch (uriType) {
 		case VERSIONS:
-			Log.v("db.update:::::::::::::::::::::::::::::::::",""+selection);
 			rowsUpdated = db.update(VersionDAO.TABLE_NAME,values,selection,null);
 			break;
 		case NOTES:
-			Log.v("db.update:::::::::::::::::::::::::::::::::",""+selection);
 			rowsUpdated = db.update(PlayNoteDAO.TABLE_NAME,values,selection,null);
 			break;
 		case AUDIO:
-			Log.v("db.update:::::::::::::::::::::::::::::::::",""+selection+values);
 			rowsUpdated = db.update(AudioDAO.TABLE_NAME,values,selection,null);
 			break;
 		case PLAYS:
-			Log.v("db.update:::::::::::::::::::::::::::::::::",""+selection);
 			rowsUpdated = db.update(PlayDAO.TABLE_NAME,values,selection,null);
 		case CHAPTERS:
-			Log.v("db.update:::::::::::::::::::::::::::::::::",""+selection);
 			rowsUpdated = db.update(ChaptersDAO.TABLE_NAME,values,selection,null);
 		break;	
 		case SHEETMUSIC:
-			Log.v("db.update:::::::::::::::::::::::::::::::::",""+selection);
 			rowsUpdated = db.update(SheetMusicDAO.TABLE_NAME,values,selection,null);
 		break;	
 		default:

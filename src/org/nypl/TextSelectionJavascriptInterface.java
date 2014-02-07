@@ -1,7 +1,6 @@
 package org.nypl;
 
 import android.content.Context;
-import android.util.Log;
 
 /**
  * This javascript interface allows the page to communicate that text has been selected by the user.
@@ -12,7 +11,6 @@ import android.util.Log;
 public class TextSelectionJavascriptInterface {
 
 	/** The TAG for logging. */
-	private static final String TAG = "TextSelectionJavascriptInterface";
 	
 	/** The javascript interface name for adding to web view. */
 	private final String interfaceName = "TextSelection";

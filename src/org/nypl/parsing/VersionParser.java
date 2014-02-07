@@ -54,28 +54,25 @@ public class VersionParser {
 
 	public static class RssHandler extends DefaultHandler {
 		private ArrayList<VersionBean> versionItemList;
-		private ArrayList<PlaysBean> playsItemList;
+
 		private ArrayList<ChaptersBean> chaptersItemList;
 		private VersionBean currentVersion;
 		private ChaptersBean currentChapter;
 		private PlaysBean currentPlay = new PlaysBean();
 		private StringBuilder builder;
-		private String item_id;
+		
 		private String version_id;
-		private String version_name;
+
 		private String version_html_name;
 		private String chapterID;
 		private String chapterName;
 		private String chapterHTML;
 		private String versionName;
-	//	private String version_audio_name;
+
 		private String playidfinal;
 		private Boolean IsMusic = false;
 
-		private String songId;
-		private String songPageHTML;
-		private String songTitle;
-		
+
 		
 		private int versionDepth = 0;
 		
@@ -97,16 +94,10 @@ public class VersionParser {
 		public void endElement(String uri, String localName, String name)
 				throws SAXException {
 			super.endElement(uri, localName, name);
-			System.out.println("end: " + localName);
 			// if (this.currentItem != null){
-			System.out.println("Do do do " + localName);
 			if ((localName.equalsIgnoreCase(LI))
 					&& (this.currentVersion != null)) {
 				//String versionname = builder.toString().trim();
-				System.out.println("*******" + version_id);
-				System.out.println("*******" + versionName);
-				System.out.println("*******" + version_html_name);
-				System.out.println("*******" + chapterHTML);
 				if (!(IsMusic)){
 				// Same for all chapters
 			
@@ -126,24 +117,19 @@ public class VersionParser {
 				
 				versionItemList.add(currentVersion);
 				chaptersItemList.add(currentChapter);
-				System.out.println("Inserting version");
+				
 				if (versionDepth<2){
 				if (db1 != null) {
-					currentChapter.setHTMLFile(version_html_name);
-					System.out.println("db1 not null");
+					currentChapter.setHTMLFile(version_html_name);			
 					CsvReader.insertVersionTable(db1, context1, version_id,
 							playidfinal, versionName);
 				} else {
-					System.out.println("DB1 null but playidfinal is "
-							+ playidfinal);
+						
 					ContentValues cv = new ContentValues();
 					cv.put(VersionDAO.COLUMN_NAME_VERSION_UUID, version_id);
 					cv.put(VersionDAO.COLUMN_NAME_VERSION_PLAY_ID, playidfinal);
 					cv.put(VersionDAO.COLUMN_NAME_VERSION_NAME, versionName);
-				//	cv.put(VersionDAO.COLUMN_NAME_HTML_FILE, chapterHTML);
-				//	cv.put(VersionDAO.COLUMN_NAME_CHAPTER_ID, chapterID);
-				//	cv.put(VersionDAO.COLUMN_NAME_CHAPTER_NAME, chapterName);
-				//	cv.put(VersionDAO.COLUMN_NAME_CHAPTER_PLAYORDER, playOrder+"");
+				
 					context1.getContentResolver().insert(
 							Uri.parse(LibrettoContentProvider.CONTENT_URI + "/"
 									+ LibrettoContentProvider.VERSION_PATH), cv);
@@ -155,12 +141,10 @@ public class VersionParser {
 				}
 				else{	
 					if (db1 != null) {
-						System.out.println("db1 not null");
 						CsvReader.insertChapterTable(db1, context1, version_id,
 								 chapterHTML, chapterName, chapterID, playOrder);
 					} else {
-						System.out.println("DB1 null but playidfinal is "
-								+ playidfinal);
+								
 						ContentValues cv = new ContentValues();
 						cv.put(ChaptersDAO.COLUMN_NAME_VERSION_ID, version_id);
 						cv.put(ChaptersDAO.COLUMN_NAME_HTML_FILE, chapterHTML);
@@ -182,8 +166,6 @@ public class VersionParser {
 						}
 					else{
 					if (db1 != null) {
-						System.out.println("Inserting ID: "+version_id);
-						System.out.println("db1 not null");
 						CsvReader.insertSheetMusicTable(db1, context1, chapterHTML,version_id,versionName,playOrder);
 					} else {
 					// CREATE SHEET MUSIC BEAN AND INSERT IT INTO SHEETMUSIC TABLE
@@ -278,17 +260,13 @@ public class VersionParser {
 										cv);
 
 					}
-					System.out.println("Inserted");
 					PlayJsonParser.addPlayToJson(ProjectFolder + File.separator
 							+ "playjsonformat.json", playidfinal,
 							currentPlay.getPlayName(), ProjectFolder + File.separator+"cover.jpeg", "",
 							currentPlay.getPlayAuthors(), "");
 				}
-				System.out.println("IS PLAY FOLDER NAMED RIGHT?");
 				if (PlayFolder.exists()) {
-					System.out.println(CONTENT_LOCATION);
-					System.out.println(ProjectFolder + File.separator
-							+ playidfinal);
+							
 					PlayFolder.renameTo(new File(ProjectFolder + File.separator
 							+ playidfinal));
 				}
@@ -339,7 +317,7 @@ public class VersionParser {
 		private static final String NAV = "nav";
 		private static final String SPAN = "span";
 		private static final String LI = "li";
-		private static final String OL = "ol";
+
 		private static final String ID = "id";
 		private static final String A = "a";
 		private static final String TITLE = "title";

@@ -1,7 +1,6 @@
 package org.nypl.database;
 
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 /**
  * @author hcl
@@ -216,8 +215,7 @@ public class DatabaseTable {
 	  
   
 	public static void onCreate(SQLiteDatabase database) {
-		Log.v("database create",""+database);
-		   System.out.println(DATABASE_CREATE);
+		  
 		database.execSQL(DATABASE_CREATE);
 		database.execSQL(DATABASE_CREATE2);
 		database.execSQL(DATABASE_CREATE6);

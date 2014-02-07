@@ -1,23 +1,14 @@
 package org.nypl.database;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
 
 import org.nypl.LibrettoContentProvider;
-import org.nypl.dataholder.PlaysBean;
 import org.nypl.dataholder.VersionBean;
 
 
-
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
-import android.util.Log;
-import android.widget.Toast;
 
 public class VersionDAO {
 	public static final String TABLE_NAME = "VERSION"; 
@@ -72,12 +63,10 @@ public class VersionDAO {
 	}
 	public static ArrayList<VersionBean> getVersionOf(Context ctx,String PlayId){
 		ArrayList<VersionBean> list = new ArrayList<VersionBean>();
-		System.out.println("All versions for: "+PlayId);
 		
 		Cursor cursor =ctx.getContentResolver().query(Uri.withAppendedPath(LibrettoContentProvider.CONTENT_URI,
 				LibrettoContentProvider.VERSION_PATH), null,  COLUMN_NAME_VERSION_PLAY_ID +" =\""+PlayId+"\"", null, null);
 		///.query(MoverContentProvider.CONTENT_URI+"/"+MoverContentProvider.PLAY_PATH, null, null, null, null);
-		System.out.println("CURSOR COUNT "+cursor.getCount());
 		if(cursor != null && cursor.getCount()>0){
 			setColumns(cursor);
 			for(int i=0;i<cursor.getCount();i++){
@@ -162,19 +151,5 @@ public class VersionDAO {
 	
 
 
-	public static void putNotes(Context ctx, int versionId ,String Note) {
-		int change = 0;
-		ContentValues values = new ContentValues();
-		values.put(COLUMN_NAME_NOTE, Note);
-		change = ctx.getContentResolver().update(Uri.withAppendedPath(LibrettoContentProvider.CONTENT_URI,
-				LibrettoContentProvider.VERSION_PATH), values, DatabaseTable.TABLE_VERSION_ID + "=" + versionId, null);
-	}
-
-	public static void deleteNotes(Context ctx, int versionId) {
-		int change = 0;
-		ContentValues values = new ContentValues();
-		///values.put(COLUMN_NAME_NOTE,);
-		change = ctx.getContentResolver().delete(Uri.withAppendedPath(LibrettoContentProvider.CONTENT_URI,
-				LibrettoContentProvider.VERSION_PATH),  DatabaseTable.TABLE_VERSION_ID + "=" + versionId, null);
-	}
+	
 }

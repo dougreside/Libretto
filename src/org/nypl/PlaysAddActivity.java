@@ -18,7 +18,6 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.view.View;
 
 
@@ -51,7 +50,6 @@ public class PlaysAddActivity extends SherlockFragmentActivity{
 		
 		@Override
 		protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-			System.out.println("ACTIVITY RESULT");
 			if ((thisContext!=null) && (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK)) {
 				savedURI = data.getData().getPath();
 				
@@ -84,14 +82,12 @@ public class PlaysAddActivity extends SherlockFragmentActivity{
 
 	     	
 	 		try {
-	 			Log.v("CSVImport","GOTCHA");
 	 			InputStream is = new FileInputStream(mVersionFile);
 	 			String playid = VersionParser.parsePlayVersion(is,null,ctx,FilePath.getAbsolutePath() + File.separator+ CONTENT_LOCATION+File.separator+fileName.substring(0,fileName.lastIndexOf(".")));
 				CsvToSqliteImport.readFromCsvForAudioTable(playid,null,ctx);
 	 		//	int rowUpdated=getContentResolver().insert(Uri.parse(MoverContentProvider.CONTENT_URI+"/"+MoverContentProvider.PLAY_PATH), cv, AudioDAO.COLUMN_NAME_AUDIO_VERSION_ID + "=\"" + Version +"\" and "+ AudioDAO.COLUMN_NAME_AUDIO_PLAY_ID + "=\"" + mPlaysId+"\"" , null);
 				
 	 			//VersionBean playVersionData =VersionParser.parsePlayVersion(is,thisContext.,thisContext,CONTENT_LOCATION);
-	 			Log.v("CSVImport","GOTTEN");
 	 			
 	 			//HomeActivity.refreshCarousel();
 	 		
@@ -103,7 +99,6 @@ public class PlaysAddActivity extends SherlockFragmentActivity{
 	 		}
 			}
 			catch (Exception e){
-				System.out.println(e.getStackTrace());
 			}
 		}
 		public boolean isWhitespace(String str) {

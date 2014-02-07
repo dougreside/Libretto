@@ -10,7 +10,6 @@ import org.nypl.dataholder.PlaysBean;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,9 +54,7 @@ public class SearchPlayAdapter extends BaseAdapter {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		mListCoverWidth  = (int)mContext.getResources().getDimension(R.dimen.list_cover_image_width);
 		mListCoverHeight = (int)mContext.getResources().getDimension(R.dimen.list_cover_image_height);
-		ImageView mPlayImage = null;
-		TextView mPlayName = null ;
-		TextView mPlayAuthorName = null  ;
+		
 		InputStream bitmap =null;
 		ViewHolder holder  = null;
 		if(convertView==null){
@@ -80,7 +77,6 @@ public class SearchPlayAdapter extends BaseAdapter {
 		try {
 
 			bitmap=mContext.getResources().getAssets().open(playlist.getPlayImage());
-			Log.v("bitmap",""+bitmap);
 			Bitmap bit=BitmapFactory.decodeStream(bitmap);
 			Bitmap scaled = Bitmap.createScaledBitmap(bit, mListCoverWidth, mListCoverHeight, true);
 

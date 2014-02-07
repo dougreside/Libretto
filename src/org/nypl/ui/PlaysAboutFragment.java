@@ -4,29 +4,15 @@ package org.nypl.ui;
 import org.nypl.R;
 import org.nypl.adapter.ViewPagerAdapter;
 
-import android.app.ProgressDialog;
-import android.content.Context;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.KeyEvent;
+
 import android.view.LayoutInflater;
 import android.view.View;
 
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.TextView.OnEditorActionListener;
 
 public class PlaysAboutFragment extends BaseFragment {
-	
 
-
-
-	private ProgressDialog pd;
-	private int trans = android.R.color.transparent;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -37,7 +23,7 @@ public class PlaysAboutFragment extends BaseFragment {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		View view = getView();
+
 		
 		if(ViewPagerAdapter.mp!=null)
 			ViewPagerAdapter.mp.release();

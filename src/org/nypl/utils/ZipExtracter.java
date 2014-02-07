@@ -20,7 +20,7 @@ public class ZipExtracter {
 	public static void extract(InputStream input, String destination) throws FileNotFoundException, IOException{
 		
 		if(DEBUG)Log.i(TAG, "ZIP EXTRACTION STARTED");
-	        System.out.println("In zip: "+input);
+	       
 	        
 			ZipInputStream inputStream = new ZipInputStream(input);
 

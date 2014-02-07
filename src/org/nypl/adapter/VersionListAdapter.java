@@ -3,9 +3,7 @@ package org.nypl.adapter;
 import java.util.ArrayList;
 
 import org.nypl.R;
-import org.nypl.database.VersionDAO;
 import org.nypl.dataholder.VersionBean;
-
 
 import android.view.LayoutInflater;
 import android.view.View;

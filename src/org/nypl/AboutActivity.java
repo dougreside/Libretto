@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 import org.nypl.adapter.ViewPagerAdapter;
 import org.nypl.database.AudioDAO;
-import org.nypl.dataholder.PlaysBean;
+
 import org.nypl.dataholder.VersionBean;
 import org.nypl.utils.CustomTypefaceSpan;
 
@@ -26,9 +26,9 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Handler;
+
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.view.ViewPager;
+
 import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -37,48 +37,36 @@ import android.text.method.LinkMovementMethod;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.webkit.WebView;
-import android.widget.Button;
+
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+
 import android.widget.TextView;
 
 public class AboutActivity extends FragmentActivity {
 
-	private TextView mAboutText;
-	private TextView mVersionName;
+
 	public static ImageView mFontsize;
-	private Dialog mVersionDialog;
-	private Dialog mChapterDialog;
-	private ImageView mVersionTypeDropDown;
+	
 	public static ImageView mPlayNote;
 
 	public static Dialog mPlayNoteDialog;
 	public EditText mNoteText;
-	private Dialog mCoverDialog;
-	private ViewPager mPlayDetailPager;
-	private Button mSaveBtn;
-	private Button mCancelBtn;
-	private LinearLayout mPlayversionDropDown;
-	private WebView mFocusedPage;
 	private File FilePath = Environment.getExternalStorageDirectory();
 
-	private String mPlaysId;
+
 	private ArrayList<VersionBean> versionDetailList;
-	private ArrayList<String> ChapterList;
+	
 	private String AboutText="About";
 	public int mPosition = 0;
 	public String mFlag;
 	public String Version = null ;
 	public String mNotes = null;
 	public String mSearchNote =null;
-	private ArrayList<PlaysBean> PlayName;
 
-	private ArrayList<VersionBean> versionNoteList;
-	private String VersionHtmlID = null;
 	private String savedUri;
 	public static ImageView mPlayerEditAudio;
-	private static Dialog mAudioDialog;
+
 	public static int fontBtnCount = 0;
 	private static final int REQUEST_CODE = 1;
 	public static Context ctx;
@@ -126,7 +114,7 @@ public class AboutActivity extends FragmentActivity {
 		    @Override
 		    public void onClick(View view) {
 		        // This will get "Lorem ipsum dolor sit amet", but I just want "dolor"
-		        System.out.println("Home");
+		       
 		        finish();
 		    }
 		};
@@ -178,7 +166,6 @@ public class AboutActivity extends FragmentActivity {
 			///	((SelectionWebView) mFocusedPage).SetAudio(savedUri,HTMLFileName);
 			if(savedUri.contains("external"))
 			{
-				System.out.println("ID::::::::::::::::::::::in activity:::::::::::::::::::::::::"+savedUri);
 			Uri parcialUri = Uri.parse("content://media"+savedUri);
 			 Cursor cursor = this.getContentResolver().query(parcialUri, new String[] { android.provider.MediaStore.Audio.AudioColumns.DATA }, null, null, null);//("content://media/external/audio/media/4743.mp3", new String[] { android.provider.MediaStore.Audio.AudioColumns.DATA }, null, null, null);
 	         cursor.moveToFirst();   
@@ -187,15 +174,10 @@ public class AboutActivity extends FragmentActivity {
 			}else{
 				URLID = savedUri;
 			}
-			System.out.println("URLID::::::::::::::::::::::::::::::::::::"+URLID);
 			ContentValues cv =new ContentValues();
 			cv.put(AudioDAO.COLUMN_NAME_AUDIO_PATH, URLID);
 
-			int rowUpdated=getContentResolver().update(Uri.parse(LibrettoContentProvider.CONTENT_URI+"/"+LibrettoContentProvider.AUDIO_PATH), cv, AudioDAO.COLUMN_NAME_AUDIO_VERSION_ID + "=\"" + Version +"\" and "+ AudioDAO.COLUMN_NAME_AUDIO_PLAY_ID + "=\"" + mPlaysId+"\"" , null);
-			System.out.println("rowUpdated::::::::::::::::::::::::::::::::::"+rowUpdated);
-			 //HTMLFileName=versionDetailList.get(mPosition).getVersionHTMlFile();
-			//((SelectionWebView) mFocusedPage).SetAudio(savedUri,HTMLFileName);
-			
+				
 			
 		}
 		super.onActivityResult(requestCode, resultCode, data);
@@ -204,11 +186,7 @@ public class AboutActivity extends FragmentActivity {
 	@Override
 	protected void onResume() {
 		
-		new Handler(){
-			public void handleMessage(android.os.Message msg) {
-				//mFocusedPage = (WebView) mPlayPagerAdapter.getChildAtIndex(mPosition).findViewById(R.id.s_plays_detail_webview);		
-			};
-		}.sendEmptyMessageDelayed(1, 500);
+		
 		super.onResume();
 	}
 	
@@ -226,7 +204,7 @@ public class AboutActivity extends FragmentActivity {
 	        
 	            int count;
 	            while ((count = inputStream.read(data)) != -1) {
-	             //  System.out.println("count "+count);
+	             // 
 	                output.write(data, 0, count);
 	            }
 
@@ -236,7 +214,6 @@ public class AboutActivity extends FragmentActivity {
 	            
 			}
 			catch (Exception e){
-				System.out.println("Ow");
 			}
 	}
 

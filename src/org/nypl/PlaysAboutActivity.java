@@ -1,26 +1,11 @@
 package org.nypl;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
-
 import org.nypl.adapter.ViewPagerAdapter;
-import org.nypl.database.CsvToSqliteImport;
-import org.nypl.parsing.VersionParser;
-import org.nypl.utils.ZipExtracter;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.os.Environment;
-import android.support.v4.app.FragmentActivity;
-import android.util.Log;
-import android.view.View;
-import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 

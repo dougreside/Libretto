@@ -10,7 +10,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.lang.reflect.Array;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
@@ -22,7 +21,6 @@ import org.nypl.adapter.ViewPagerAdapter;
 import org.nypl.database.CsvToSqliteImport;
 import org.nypl.database.PlayDAO;
 import org.nypl.dataholder.PlaysBean;
-import org.nypl.parsing.AudioFileParserSAX;
 import org.nypl.parsing.VersionParser;
 import org.nypl.utils.CustomTypefaceSpan;
 import org.nypl.utils.ZipExtracter;
@@ -46,7 +44,6 @@ import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -66,7 +63,6 @@ public class PlaysListActivity extends FragmentActivity   {
 	private ListView mSearchPlayList;
 	private EditText mSearchText;
 	private ArrayList<PlaysBean> mSearchplaysList;
-	//private String mSearchWord = null;
 	private TextView mNoText;
 	private ProgressDialog pd;
 	public static String CONTENT_LOCATION;
@@ -87,25 +83,19 @@ public class PlaysListActivity extends FragmentActivity   {
 		TextView titleBar = (TextView) findViewById(R.id.s_main_title);
 		String titleLogo ="&#xe012;";
 		String titleText = " Libretto";
-		//titleBar.setText(titleText);
 		Spannable s = new SpannableString(Html.fromHtml(titleLogo+titleText));
-		System.out.println("LOGO LENGTH "+titleLogo.length());
 		s.setSpan (new CustomTypefaceSpan("", icomoon ), 0, 1,Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 		s.setSpan (new CustomTypefaceSpan("", lato ), 2, titleText.length(),Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 	
 		titleBar.setText(s);
 		
 		
-		//.setTypeface(icomoon);
-	//	title.setTypeface(lato);
-		options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-		//((ImageView)findViewById(R.id.s_background_img)).setBackgroundDrawable(new BitmapDrawable(BitmapFactory.decodeResource(getResources(), R.drawable.img_background, options)));
 
-		///findViewById(R.id.progress).setVisibility(View.VISIBLE);
+		options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+		
 		
 		pd = ProgressDialog.show(this, "Loading", "please wait...");
 		if(ViewPagerAdapter.mp!=null)
-			//ViewPagerAdapter.mp.reset();
 		ViewPagerAdapter.mp.release();
 	
 	}
@@ -119,20 +109,8 @@ public class PlaysListActivity extends FragmentActivity   {
 	{
 		super.onResume();
 		mPlayList = (ExpandableListView) findViewById(R.id.s_play_expendable_list);
-		//mSearchPlayList=(ListView)findViewById(R.id.s_play_search_list);
-		//mSearchText = (EditText) findViewById(R.id.s_play_search_text);
 		mNoText=(TextView) findViewById(R.id.s_play_no_text);
-		//mSearchText.setOnEditorActionListener(this);
-		//Bundle extras = getIntent().getExtras();
-		/*mSearchWord = extras.getString("searchtext");
-		if(mSearchWord!=null){
-			mSearchText.setText(mSearchWord);
-			mSearchText.setSelection(mSearchWord.length());
-			switchMode(true);
-		}else{
-			switchMode(false);
-		}*/
-		//switchMode(false);
+	
 		
 		mPlayList.setVisibility(View.VISIBLE);
 
@@ -157,28 +135,7 @@ public class PlaysListActivity extends FragmentActivity   {
 	 * It make the appropriate ListView to be visible and set the data of that.
 	 * @param isSearchMode 'true' to switch to search mode 'false' to no search mode
 	 */
-	/*private void switchMode(boolean isSearchMode){
-
-		if(isSearchMode)
-		{
-			mSearchPlayList.setVisibility(View.VISIBLE);
-			mPlayList.setVisibility(View.GONE);
-
-			getSearchList();
-
-		}
-		else
-		{
-			mSearchPlayList.setVisibility(View.GONE);
-			mPlayList.setVisibility(View.VISIBLE);
-
-			getPlays();
-
-		}
-
-	}
-
-*/
+	
 	@Override
 	protected void onPause()
 	{
@@ -191,9 +148,6 @@ public class PlaysListActivity extends FragmentActivity   {
 
 
 	public void deletePlayClicked(View v){
-		System.out.println("Delete clicked ");
-		
-		System.out.println(v.getTag());
 		deletePlay((Integer)v.getTag(),v);
 		
 		
@@ -246,7 +200,6 @@ public class PlaysListActivity extends FragmentActivity   {
 
 
 			private String mVersion = null;
-			private String mNote = null;
 
 			@Override
 			public boolean onChildClick(ExpandableListView parent, View v,
@@ -254,8 +207,6 @@ public class PlaysListActivity extends FragmentActivity   {
 				mPlaysNameList=	(ArrayList<PlaysBean>)mPlaysList.get(mkeyList.get(groupPosition));
 			      //--- Getting a new play
 				 ctx = findViewById(R.id.s_main_title).getContext();
-		 			
-				System.out.println("The one clicked is "+childPosition);
 				String uuid = mPlaysNameList.get(childPosition).getPlayID().toString();
 				if (uuid.equals("About")){
 					Intent i = new Intent(PlaysListActivity.this,AboutActivity.class);
@@ -265,7 +216,6 @@ public class PlaysListActivity extends FragmentActivity   {
 				else{
 				String epuburl = mPlaysNameList.get(childPosition).getPlayUrl().toString();
 				File epubDir = new File(FilePath.getAbsolutePath()+File.separator+CONTENT_LOCATION+File.separator+uuid);
-				File epubFile = new File(FilePath.getAbsolutePath()+File.separator+CONTENT_LOCATION+File.separator+uuid+".epub");
 				
 			   	if ((haveNetworkConnection())&&(!epubDir.exists()))	{
 			   
@@ -282,23 +232,18 @@ public class PlaysListActivity extends FragmentActivity   {
 				//---------
 		   	   	if (epubDir.exists()){
 				Intent i = new Intent(PlaysListActivity.this,PlaysDetailActivity.class);
-
-
-				Log.v("PlayListActivity","CHILD POSITION: "+childPosition);
 				i.putExtra("playsId",mPlaysNameList.get(childPosition).getPlayID().toString());
 				i.putExtra("playsName",mPlaysNameList.get(childPosition).getPlayName().toString());
 				i.putExtra("mNote","Home" );
 				i.putExtra("position",childPosition);
 				i.putExtra("mVersion",mVersion );
 				i.putExtra("mChapter","0");
-				System.out.println(i.getExtras().toString());
 				startActivity(i);
 				
 				
 		   	   	}
 		   	   	else{
-		   	   	pd = ProgressDialog.show(ctx, "Installing libretto", "please wait...");		
-	   			System.out.println("To the unzipper "+CONTENT_LOCATION);
+		   	   	pd = ProgressDialog.show(ctx, "Installing libretto", "please wait...");
 	   			final UnzipEPUB unzipper = new UnzipEPUB(); 
 	   		    unzipper.execute(childPosition+"",uuid,mPlaysNameList.get(childPosition).getPlayName().toString(),mVersion);
 
@@ -335,8 +280,6 @@ public class PlaysListActivity extends FragmentActivity   {
 			i.putExtra("mVersion",mVersion);
 			i.putExtra("mChapter","0");
 			startActivity(i);
-			System.out.println("Download Complete");
-			System.out.println(i.getExtras().toString());
 			super.onPostExecute(intentVals);
 	    	
 			
@@ -360,7 +303,7 @@ public class PlaysListActivity extends FragmentActivity   {
 		       String mFilename=playId+".epub";
 		       String mFilepath=FilePath.getAbsolutePath()+File.separator+CONTENT_LOCATION+File.separator+mFilename;
 		      
-		       System.out.println("UNZIPPING "+mFilepath);
+		      
 		       ctx = findViewById(R.id.s_main_title).getContext();
 		 		
 		      // pd = ProgressDialog.show(ctx, "Installing libretto", "please wait...");
@@ -382,7 +325,6 @@ public class PlaysListActivity extends FragmentActivity   {
 
 					     	
 					 		try {
-					 			Log.v("CSVImport","GOTCHA");
 					 			InputStream is = new FileInputStream(mVersionFile);
 					 			String playid = VersionParser.parsePlayVersion(is,null,ctx,CONTENT_LOCATION);
 							
@@ -392,14 +334,12 @@ public class PlaysListActivity extends FragmentActivity   {
 					 			//	int rowUpdated=getContentResolver().insert(Uri.parse(MoverContentProvider.CONTENT_URI+"/"+MoverContentProvider.PLAY_PATH), cv, AudioDAO.COLUMN_NAME_AUDIO_VERSION_ID + "=\"" + Version +"\" and "+ AudioDAO.COLUMN_NAME_AUDIO_PLAY_ID + "=\"" + mPlaysId+"\"" , null);
 								
 					 			//VersionBean playVersionData =VersionParser.parsePlayVersion(is,thisContext.,thisContext,CONTENT_LOCATION);
-					 			Log.v("CSVImport","GOTTEN");
 					 			
 					 			
 					 			
 					 		  
 						
 								
-								System.out.print("Happy");
 					 			
 					 			
 					 			
@@ -440,97 +380,6 @@ public class PlaysListActivity extends FragmentActivity   {
 	
 	
 	
-
-	/*public void unzipEPUB(String epubUrl, String playID,String groupPos,String childPos){
-		File mFirstVersionFile = new File(FilePath.getAbsolutePath()+File.separator+CONTENT_LOCATION+File.separator+playID+".epub");
-	
-		   int childPosition = Integer.parseInt(childPos);
-		   int groupPosition = Integer.parseInt(groupPos);
-		   
-   	  
-  
-	
-	       String mFilename=playID+".epub";
-	       String mFilepath=FilePath.getAbsolutePath()+File.separator+CONTENT_LOCATION+File.separator+mFilename;
-	      
-	       System.out.println("UNZIPPING "+mFilepath);
-	       ctx = findViewById(R.id.s_main_title).getContext();
-	 		
-	       pd = ProgressDialog.show(ctx, "Installing libretto", "please wait...");
-		
-	        try {
-	        
-	            InputStream inputStream = null;
-				try {
-
-				   	 mFirstVersionFile.mkdirs();
-				   	 inputStream = new FileInputStream(mFilepath);   
-				   	 String output = FilePath.getAbsolutePath()+File.separator+CONTENT_LOCATION+File.separator+playID+File.separator;
-					ZipExtracter.extract(inputStream, output);
-					
-					inputStream.close();
-					
-					
-					 File mVersionFile = new File(output+File.separator+"toc.ncx");
-
-				     	
-				 		try {
-				 			Log.v("CSVImport","GOTCHA");
-				 			InputStream is = new FileInputStream(mVersionFile);
-				 			String playid = VersionParser.parsePlayVersion(is,null,ctx,CONTENT_LOCATION);
-							CsvToSqliteImport.readFromCsvForAudioTable(playid,null,ctx);
-				 		//	int rowUpdated=getContentResolver().insert(Uri.parse(MoverContentProvider.CONTENT_URI+"/"+MoverContentProvider.PLAY_PATH), cv, AudioDAO.COLUMN_NAME_AUDIO_VERSION_ID + "=\"" + Version +"\" and "+ AudioDAO.COLUMN_NAME_AUDIO_PLAY_ID + "=\"" + mPlaysId+"\"" , null);
-							
-				 			//VersionBean playVersionData =VersionParser.parsePlayVersion(is,thisContext.,thisContext,CONTENT_LOCATION);
-				 			Log.v("CSVImport","GOTTEN");
-				 			
-				 			
-				 			
-				 		  	pd.dismiss();
-							Intent i = new Intent(PlaysListActivity.this,PlaysDetailActivity.class);
-							
-							mPlaysNameList=	(ArrayList<PlaysBean>)mPlaysList.get(mkeyList.get(groupPosition));
-							Log.v("PlayListActivity","CHILD POSITION: "+childPosition);
-							i.putExtra("playsId",mPlaysNameList.get(childPosition).getPlayID().toString());
-							i.putExtra("playsName",mPlaysNameList.get(childPosition).getPlayName().toString());
-							i.putExtra("mNote","Home" );
-							i.putExtra("position",childPosition);
-							//i.putExtra("mVersion",mVersion );
-							startActivity(i);
-						
-				 			
-				 			
-				 			
-				 			//HomeActivity.refreshCarousel();
-				 		
-				 			
-				 		} catch (FileNotFoundException e) {
-				 			// TODO Auto-generated catch block
-
-				 			e.printStackTrace();
-				 		}
-						}
-						catch (Exception e){
-							System.out.println(e.getStackTrace());
-						}
-					
-					
-					//publishProgress(-2);
-				} 
-				catch (Exception e) 
-				{
-					//publishProgress(-4);
-				}
-	         		    	   	
-	      
-	       
-	       
-   	   
-   	   	
-		
-		
-
-	}*/
 	public void getSearchList(){
 
 		final String currentString = mSearchText.getText().toString().trim();
@@ -547,8 +396,7 @@ public class PlaysListActivity extends FragmentActivity   {
 				mSearchplaysList = PlayDAO.getAllSearchPlays(PlaysListActivity.this,currentString);
 				runOnUiThread(new Runnable(){
 					@Override
-					public void run() {  
-						System.out.println("mSearchplaysList:::::::::::::::::::::::::::::"+mSearchplaysList.size());
+					public void run() {
 						if(mSearchplaysList.size()>0){
 							mSearchPlayList.setDrawingCacheBackgroundColor(17170445);
 							mSearchPlayList.setAdapter(new SearchPlayAdapter(PlaysListActivity.this,mSearchplaysList,0));
@@ -571,7 +419,6 @@ public class PlaysListActivity extends FragmentActivity   {
 		mSearchPlayList.setOnItemClickListener(new OnItemClickListener() {
 
 			private String mVersion = null;
-			private String mNote = null;
 
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
@@ -602,9 +449,7 @@ public class PlaysListActivity extends FragmentActivity   {
 		mPlaysNameList=	(ArrayList<PlaysBean>)mPlaysList.get(mkeyList.get(index));
 		String delID = mPlaysNameList.get(index).getPlayID().toString();
 		String contentFolder = Environment.getExternalStorageDirectory().getAbsolutePath()+File.separator+"Android/data/"+v.getContext().getPackageName()+File.separator+"contents"+File.separator+delID;
-		System.out.println(contentFolder);
 		ContentResolver cr = v.getContext().getContentResolver();
-		Log.v("PlayListActivity","Delete CHILD POSITION: "+index);
 		cr.delete(Uri.parse(LibrettoContentProvider.CONTENT_URI+"/"+LibrettoContentProvider.PLAY_PATH), "PLAY_LONG_ID=\""+delID+"\"", null);
 		cr.delete(Uri.parse(LibrettoContentProvider.CONTENT_URI+"/"+LibrettoContentProvider.VERSION_PATH),"PLAY_ID=\""+delID+"\"",null);
 		cr.delete(Uri.parse(LibrettoContentProvider.CONTENT_URI+"/"+LibrettoContentProvider.AUDIO_PATH),"PLAY_ID=\""+delID+"\"",null);
@@ -641,8 +486,7 @@ public class PlaysListActivity extends FragmentActivity   {
 		String playVersion;
 		@Override
 		protected void onPostExecute(String outstring) {
-			pd.dismiss();	
-			System.out.println("Download Complete");
+			pd.dismiss();
 			pd = ProgressDialog.show(ctx, "Installing libretto", "please wait...");
 			
 			final UnzipEPUB unzipper = new UnzipEPUB(); 
@@ -685,7 +529,7 @@ public class PlaysListActivity extends FragmentActivity   {
 	            connection.connect();
 	            // this will be useful so that you can show a typical 0-100% progress bar
 	            int fileLength = connection.getContentLength();
-	            System.out.println("Downloading to: "+outstring);
+	           
 	            // download the file
 	            InputStream input = new BufferedInputStream(url.openStream());
 	            OutputStream output = new FileOutputStream(outstring);
@@ -706,7 +550,6 @@ public class PlaysListActivity extends FragmentActivity   {
 	    	
 	    }
 	    	catch (Exception e){
-	    		System.out.println(e);
 	    	}
 	}
    
@@ -752,51 +595,3 @@ public class PlaysListActivity extends FragmentActivity   {
 }
 
 
-/*
-
-@Override
-public void afterTextChanged(Editable s) {
-	// TODO Auto-generated method stub
-
-}
-
-
-
-@Override
-public void beforeTextChanged(CharSequence s, int start, int count,
-		int after) {
-	// TODO Auto-generated method stub
-
-}
-
-
-
-@Override
-   public void onTextChanged(CharSequence s, int start, int before, int count) {
-	// TODO Auto-generated method stub
-	if(s.length()>0)
-	{
-		switchMode(true);
-	}else
-	{
-		switchMode(false);
-	}
-
-
-}
-
-@Override
-public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-	if (actionId == EditorInfo.IME_ACTION_SEARCH ||
-			actionId == EditorInfo.IME_ACTION_DONE ||
-			event.getAction() == KeyEvent.ACTION_DOWN &&
-			event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
-		InputMethodManager inputMgr = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-		inputMgr.toggleSoftInput(0, 0);
-		///	isAuntheticate();
-		switchMode(true);
-		return true;
-	}
-	return false;
-
-}*/

@@ -37,20 +37,8 @@
         android:orientation="vertical" 
        >
 <!-- android:background="@drawable/titlebar" -->
-        <RelativeLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content" >
+       
 
-            <!-- ImageView
-                android:id="@+id/s_plays_detail_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:paddingBottom="8dp"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:paddingTop="5dp"
-                android:src="@drawable/img_text" /> -->
 
             <LinearLayout
                 android:id="@+id/play_version_drop_down_layout"
@@ -77,41 +65,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_toRightOf="@+id/s_plays_version_name"
+                  
                     android:paddingLeft="5dp"
                     android:src="@drawable/arrow_down" />
             </LinearLayout>
 
-            <!-- ImageView
-                android:id="@+id/s_plays_detial_img_note"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:paddingLeft="3dp"
-                android:paddingRight="10dp" android:visibility="gone"
-                android:paddingTop="2dp"
-                android:src="@drawable/img_notes_default" />
-<ImageView
-                android:id="@+id/s_plays_detial_img_favorites"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:paddingLeft="3dp"
-                android:paddingRight="10dp" 
-                android:paddingTop="2dp"
-                android:src="@drawable/img_bookmarks_default" /-->
-           <!--  <ImageView
-                android:id="@+id/s_plays_detial_img_favorites"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_toLeftOf="@+id/s_plays_detial_img_note"
-                android:paddingLeft="10dp"
-                android:paddingRight="2dp"
-                android:src="@drawable/img_bookmarks_default" /> -->
-        </RelativeLayout>
+           
     </LinearLayout>
 
     <LinearLayout
@@ -136,7 +95,7 @@
             android:gravity="center_horizontal"
             android:text="Loading..."
             android:textColor="#FFF"
-            android:textSize="18dp"
+            android:textSize="18sp"
             android:textStyle="bold" >
         </TextView>
     </LinearLayout>

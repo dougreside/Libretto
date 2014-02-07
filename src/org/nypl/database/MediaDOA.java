@@ -3,7 +3,6 @@ package org.nypl.database;
 import java.util.ArrayList;
 
 import org.nypl.LibrettoContentProvider;
-import org.nypl.dataholder.AnchorBean;
 import org.nypl.dataholder.MediaBean;
 
 import android.content.Context;

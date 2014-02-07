@@ -1,7 +1,6 @@
 package org.nypl.parsing;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 
@@ -10,8 +9,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.nypl.database.CsvToSqliteImport;
 import org.nypl.dataholder.PlaysBean;
-
-import android.util.Log;
 
 
 
@@ -31,7 +28,6 @@ public class PlayJsonParser {
 	public static final String PLAY_URL = "playUrl";
 	
 	public static  ArrayList<PlaysBean> playsList ;
-	private JSONArray UserData_Array;
 	private static String mPlayID;
 	private static String mPlayName;
 	private static String mImageUrl;
@@ -43,21 +39,21 @@ public class PlayJsonParser {
 	public static ArrayList<PlaysBean> parsePlayList(String is){
 		playsList = new ArrayList<PlaysBean>();
 		String startNode = "";
+	
 		try { 
 
 			JSONObject jsonObj = new JSONObject(is);
-		    System.out.println("JSON STRING: "+jsonObj);
+		   
 			PlaysData_Array = jsonObj.getJSONArray(PLAYS);
 			for(int i = 0; i < PlaysData_Array.length(); i++){
 				PlaysBean currentplaylist = new PlaysBean();
 				JSONObject playObject = PlaysData_Array.getJSONObject(i);
-				System.out.println("STRINGIFIED::::::"+playObject);
 				mPlayID = playObject.getString(PLAY_ID);
-				Log.v("PlayJsonParser","PlayID: "+mPlayID);
 				currentplaylist.setPlayID(mPlayID);
 				
 				mPlayName = playObject.getString(PLAY_NAME);
 				currentplaylist.setPlayName(mPlayName);
+			
 				mImageUrl = playObject.getString(PLAY_IMAGE_URL);
 				currentplaylist.setPlayImage(mImageUrl);
 				mAuthorName = playObject.getString(PLAY_AUTHOR);

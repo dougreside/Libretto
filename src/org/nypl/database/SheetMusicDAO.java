@@ -43,7 +43,6 @@ public class SheetMusicDAO {
 			Cursor cursor =ctx.getContentResolver().query(Uri.withAppendedPath(LibrettoContentProvider.CONTENT_URI,
 				LibrettoContentProvider.SHEETMUSIC_PATH), null,  COLUMN_NAME_SHEETMUSIC_ID +" =\""+SheetMusicId+"\"", null, "PLAYORDER");
 		///.query(MoverContentProvider.CONTENT_URI+"/"+MoverContentProvider.PLAY_PATH, null, null, null, null);
-		System.out.println("SHEETMUSIC CURSOR COUNT "+cursor.getCount());
 		if(cursor != null && cursor.getCount()>0){
 			setColumns(cursor);
 			for(int i=0;i<cursor.getCount();i++){

@@ -42,14 +42,9 @@ public class ChaptersDAO {
 	}
 	public static ArrayList<ChaptersBean> getChaptersForVersion(Context ctx,String VersionId){
 		ArrayList<ChaptersBean> list = new ArrayList<ChaptersBean>();
-		System.out.println("All versions for: "+VersionId);
-		System.out.println( COLUMN_NAME_VERSION_ID +" =\""+VersionId+"\"");
-		System.out.println(ctx.getContentResolver());
-		System.out.println(LibrettoContentProvider.CONTENT_URI+" "+LibrettoContentProvider.CHAPTER_PATH);
 		Cursor cursor =ctx.getContentResolver().query(Uri.withAppendedPath(LibrettoContentProvider.CONTENT_URI,
 				LibrettoContentProvider.CHAPTER_PATH), null,  COLUMN_NAME_VERSION_ID +" =\""+VersionId+"\"", null, "CHAPTER_PLAYORDER");
 		///.query(MoverContentProvider.CONTENT_URI+"/"+MoverContentProvider.PLAY_PATH, null, null, null, null);
-		System.out.println("CURSOR COUNT "+cursor.getCount());
 		if(cursor != null && cursor.getCount()>0){
 			setColumns(cursor);
 			for(int i=0;i<cursor.getCount();i++){

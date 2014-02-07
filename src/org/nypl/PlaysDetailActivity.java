@@ -9,7 +9,6 @@ import org.nypl.adapter.ViewPagerAdapter;
 import org.nypl.database.ChaptersDAO;
 import org.nypl.database.VersionDAO;
 import org.nypl.dataholder.ChaptersBean;
-import org.nypl.dataholder.PlaysBean;
 import org.nypl.dataholder.VersionBean;
 import org.nypl.utils.CustomTypefaceSpan;
 
@@ -33,20 +32,17 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ForegroundColorSpan;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -54,22 +50,17 @@ import android.widget.Toast;
 public class PlaysDetailActivity extends FragmentActivity {
 
 	protected static final String TAG = "PlaysDetailActivity";
-	private TextView mPlaysName;
 	private TextView mVersionName;
 	public static ImageView mFontsize;
 	private Dialog mVersionDialog;
 	private Dialog mChapterDialog;
-	private ImageView mVersionTypeDropDown;
 	public static ImageView mPlayNote;
 
 	public static Dialog mPlayNoteDialog;
 	public EditText mNoteText;
 	private Dialog mCoverDialog;
 	private ViewPager mPlayDetailPager;
-	private Button mSaveBtn;
-	private Button mCancelBtn;
 	private LinearLayout mPlayversionDropDown;
-	private RelativeLayout mChapterControls;
 	private WebView mFocusedPage;
 	
     public static LinearLayout mAudiolayout;
@@ -83,20 +74,15 @@ public class PlaysDetailActivity extends FragmentActivity {
 	
 	private String mPlaysId;
 	private ArrayList<VersionBean> versionDetailList;
-	private ArrayList<String> ChapterList;
 	private String PlaysName;
 	public int mPosition = 0;
 	public String mFlag;
 	public String Version = null ;
 	public String mNotes = null;
 	public String mSearchNote =null;
-	private ArrayList<PlaysBean> PlayName;
-
-	private ArrayList<VersionBean> versionNoteList;
-	private String VersionHtmlID = null;
+	
 	private String savedUri;
 	public static ImageView mPlayerEditAudio;
-	private static Dialog mAudioDialog;
 	public static int fontBtnCount = 0;
 	private static final int REQUEST_CODE = 1;
 	public static Context ctx;
@@ -104,7 +90,6 @@ public class PlaysDetailActivity extends FragmentActivity {
 	public static String VersionID;
 	public static String VersionName;
 	public static String PlayID;
-	//public static String mNoteID;
 	public static String CONTENT_LOCATION ;
 	public static String URLID;
 	public static String currentChapter;
@@ -116,9 +101,7 @@ public class PlaysDetailActivity extends FragmentActivity {
 		
 		BitmapFactory.Options options = new BitmapFactory.Options();
 		options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-	//	((ImageView)findViewById(R.id.s_background_img)).setBackgroundDrawable(new BitmapDrawable(BitmapFactory.decodeResource(getResources(), R.drawable.bg_script, options)));
-		//setCover();
-		
+	
 		Typeface icomoon = Typeface.createFromAsset(getAssets(),
 		        "fonts/icomoon.ttf");
 		Typeface lato = Typeface.createFromAsset(getAssets(),
@@ -165,7 +148,7 @@ public class PlaysDetailActivity extends FragmentActivity {
 		    @Override
 		    public void onClick(View view) {
 		        // This will get "Lorem ipsum dolor sit amet", but I just want "dolor"
-		        System.out.println("Home");
+		       
 		        finish();
 		    }
 		};
@@ -201,11 +184,9 @@ public class PlaysDetailActivity extends FragmentActivity {
 	    leftText.setOnClickListener(new View.OnClickListener() {
 	        @Override
 	        public void onClick(View v) {
-	        	System.out.println("PREVIOUS");
 		      	int curChap = mPlayPagerAdapter.getCurrentChapterPos();
 		      	Version=versionDetailList.get(mPosition).getVersionUUID();
 		    	final ArrayList<ChaptersBean> cList = ChaptersDAO.getChaptersForVersion(getApplicationContext(), Version);
-				System.out.println("CURRENT CHAPTER = "+curChap);
 		    	if (curChap>1){
 		    		curChap--;
 		    		goToChapter(curChap,cList);
@@ -219,11 +200,9 @@ public class PlaysDetailActivity extends FragmentActivity {
 	    rightText.setOnClickListener(new View.OnClickListener() {
 	        @Override
 	        public void onClick(View v) {
-	        	System.out.println("NEXT!");
 		    	int curChap = mPlayPagerAdapter.getCurrentChapterPos();
 		    	Version=versionDetailList.get(mPosition).getVersionUUID();
 		    	final ArrayList<ChaptersBean> cList = ChaptersDAO.getChaptersForVersion(getApplicationContext(), Version);
-		    	System.out.println("CURRENT CHAPTER = "+curChap);
 		    	if (curChap<cList.size()-1){
 					curChap++;
 					goToChapter(curChap,cList);
@@ -235,17 +214,13 @@ public class PlaysDetailActivity extends FragmentActivity {
 	        }
 	    });
 		titleBar.setText(s);
-		System.out.println("mNotes::::::::::::::::::::::::::::::::"+mNotes);
 
 		
-		mPlaysName=(TextView) findViewById(R.id.s_plays_name_text);
 		mVersionName=(TextView) findViewById(R.id.s_plays_version_name);
 		//mFontsize = (ImageView) findViewById(R.id.s_plays_detail_text);
-		mVersionTypeDropDown = (ImageView) findViewById(R.id.s_plays_detial_arrow_down);
 	
 		//mPlayNote = (ImageView) findViewById(R.id.s_plays_detial_img_note);
 		mPlayversionDropDown=(LinearLayout) findViewById(R.id.play_version_drop_down_layout);
-		mChapterControls=(RelativeLayout) findViewById(R.id.s_playsdetail_chapterControls_layout);
 		mAudiolayout= (LinearLayout) findViewById(R.id.s_playsdetail_audio_layout);
 		btnPlay = (ImageButton) findViewById(R.id.btnPlay);
 		songProgressBar = (SeekBar) findViewById(R.id.songProgressBar);
@@ -254,26 +229,19 @@ public class PlaysDetailActivity extends FragmentActivity {
 		mPlayerCancel = (ImageView) findViewById(R.id.player_cancel);
 		mPlayerEditAudio =(ImageView) findViewById(R.id.player_edit_audio);
 		songTitleLabel = (TextView) findViewById(R.id.songTitle);
-		System.out.println("VERSION THING");
-		System.out.println(mPlaysId);
 		versionDetailList = VersionDAO.getVersionOf(PlaysDetailActivity.this, mPlaysId);
-		System.out.println("BEFORE CONDITION");
 		if(Version==null){
 			Version=versionDetailList.get(mPosition).getVersionUUID();
 		}
-		System.out.println("Before ViewPageAdapter");
 		mPlayPagerAdapter = new ViewPagerAdapter(versionDetailList,PlaysDetailActivity.this,Version,CONTENT_LOCATION,currentChapter);
-		System.out.println("After ViewPageAdapter");
 		mPlayDetailPager.setAdapter(mPlayPagerAdapter);
 		/*if(mNotes!=null){
 			for(int i=0;i<versionDetailList.size();i++){
 				if(versionDetailList.get(i).getVersionID().equals(Version)){
-					System.out.println("i::::::::::::::::::::::"+i);
 					mPosition=i;
 				}
 			}
 		}*/
-		System.out.println("After mNotes thing");
 
 
 		mPlayDetailPager.setCurrentItem(mPosition);
@@ -283,21 +251,10 @@ public class PlaysDetailActivity extends FragmentActivity {
 		 * 
 		 */	
 
-		
-		// HTMLFileName=versionDetailList.get(mPosition).getVersionHTMLFile();
 	     VersionID = versionDetailList.get(mPosition).getVersionID() ;
 		 VersionName = versionDetailList.get(mPosition).getVersionName();
 		 PlayID = versionDetailList.get(mPosition).getVersionPlayID();
 		
-		/**
-		 * 
-		 */
-		
-		//mPlaysName.setText(PlaysName+":");
-		//Log.v("mPosition",""+mPosition);
-		 
-		 
-		//versionNoteList=VersionDAO.getPlayVersionNotes(PlaysDetailActivity.this,null,Version);
 		CharSequence fullVName = versionDetailList.get(mPosition).getVersionName();
 	
 		if (fullVName.length()>40){
@@ -310,14 +267,10 @@ public class PlaysDetailActivity extends FragmentActivity {
 		
 		
 		if(ViewPagerAdapter.mp!=null){
-		//	ViewPagerAdapter.mp.pause();
 			ViewPagerAdapter.mp.release();
-		//ViewPagerAdapter.mp.stop();
 		ViewPagerAdapter.mHandler.removeCallbacks(ViewPagerAdapter.mUpdateTimeTask);
 		mAudiolayout.setVisibility(View.GONE);
 		}
-		
-		Log.v("PlaysDetailActivity","Page Listening");
 			
 		mPlayDetailPager.setOnPageChangeListener(new OnPageChangeListener() {
 
@@ -326,17 +279,13 @@ public class PlaysDetailActivity extends FragmentActivity {
 			@Override
 			public void onPageSelected(int arg0) {
 
-			//	ViewPagerAdapter.playAudio(null);
 				mFocusedPage = (WebView) mPlayPagerAdapter.getChildAtIndex(arg0).findViewById(R.id.s_plays_detail_webview);
 				if(ViewPagerAdapter.mp!=null){
-					//ViewPagerAdapter.mp.pause();
 					ViewPagerAdapter.mp.release();
-					//ViewPagerAdapter.mp.stop();
 					ViewPagerAdapter.mHandler.removeCallbacks(ViewPagerAdapter.mUpdateTimeTask);
 					mAudiolayout.setVisibility(View.GONE);
 				}
-				///	mPlaysName.setText(versionDetailList.get(arg0).getVersionPlayName()+":");
-				VersionHtmlID = null;
+			
 				
 				CharSequence fullVName = versionDetailList.get(arg0).getVersionName();
 				
@@ -345,37 +294,28 @@ public class PlaysDetailActivity extends FragmentActivity {
 				}
 				
 				mVersionName.setText(fullVName);
-				
-				//mVersionName.setText(versionDetailList.get(arg0).getVersionName());
 				mPosition=arg0;
 				Version=versionDetailList.get(arg0).getVersionID();
-				//versionNoteList=VersionDAO.getPlayVersionNotes(PlaysDetailActivity.this,null,Version);
-				
+	
 				
 				/**
 				 * vairiable for selectionwebview class
 				 * 
 				 */	
+				
 				 HTMLFileName=versionDetailList.get(arg0).getVersionHTMLFile();
 				 VersionID = versionDetailList.get(arg0).getVersionID() ;
 				 VersionName = versionDetailList.get(arg0).getVersionName();
 				 PlayID = versionDetailList.get(arg0).getVersionPlayID();
 				
 			
-				/* if ((versionNoteList!=null)&&(versionNoteList.size()>0)){
-				if(versionNoteList.get(0).getNotes().length()>0 &&  versionNoteList.get(0).getNotes()!=null){
-					mPlayNote.setImageResource(drawable.img_notes);
-				}else{
-					mPlayNote.setImageResource(drawable.img_notes_default);
-				}
-				 }*/
+		
 
 			}
 
 			@Override
 			public void onPageScrolled(int arg0, float arg1, int arg2) {
 				// TODO Auto-generated method stub
-				Log.v("Scrolled",arg0+" "+arg1+" "+arg2+" "+mPlayPagerAdapter.jsScrollPosition.getScrollPosition());
 				
 				mFocusedPage.loadUrl("javascript:scrollToElement("+mPlayPagerAdapter.jsScrollPosition.getScrollPosition()+")");
 				
@@ -384,26 +324,11 @@ public class PlaysDetailActivity extends FragmentActivity {
 			@Override
 			public void onPageScrollStateChanged(int arg0) {
 				// TODO Auto-generated method stub
-				Log.v("JSSCroll",""+mPlayPagerAdapter.jsScrollPosition.getScrollPosition());
-				Log.v("Scroll Change",""+arg0);
 
 			}
 		});
 
-		/*mFontsize.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				fontBtnCount++;
-				if(fontBtnCount == 7){
-					fontBtnCount = 0;
-				}
-				if (fontBtnCount == 1 || fontBtnCount == 2 || fontBtnCount == 3){
-					mFocusedPage.zoomIn();
-				}else if (fontBtnCount == 4 || fontBtnCount == 5 || fontBtnCount == 6){
-					mFocusedPage.zoomOut();
-				}//end of else				
-			}//end of on click
-		});//end of listener on font size button*/
+
 
 		mPlayversionDropDown.setOnClickListener(new OnClickListener() {
 			String version = null;
@@ -412,13 +337,7 @@ public class PlaysDetailActivity extends FragmentActivity {
 				getVersion(version);
 			}
 		});
-		/*mPlayNote.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				ViewPagerAdapter.saveNote(Version);
-			}
-		});*/
+		
 
 	
 	}
@@ -451,8 +370,6 @@ public class PlaysDetailActivity extends FragmentActivity {
 
 	@Override
 	protected void onResume() {
-		Log.i(TAG, ""+mPlayPagerAdapter);
-		Log.i(TAG, ""+mPlayPagerAdapter.getChildAtIndex(0));
 		new Handler(){
 			public void handleMessage(android.os.Message msg) {
 				mFocusedPage = (WebView) mPlayPagerAdapter.getChildAtIndex(mPosition).findViewById(R.id.s_plays_detail_webview);		
@@ -467,7 +384,6 @@ public class PlaysDetailActivity extends FragmentActivity {
 			
 	//	chapId = chapId.substring(0,chapId.indexOf("-"));
 		String chapUrl = cList.get(chapNum).getHTMLFile();
-		System.out.println("Setting chapter id in go to chapter "+chapId+" "+chapNum);
 		mPlayPagerAdapter.setCurrentChapter(chapId);
 		mPlayPagerAdapter.setCurrentChapterPos(chapNum);
 		mFocusedPage.loadUrl("file:///"+Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator+ CONTENT_LOCATION + File.separator+chapUrl);
@@ -509,16 +425,6 @@ public class PlaysDetailActivity extends FragmentActivity {
 				
 				mChapterDialog.cancel();
 				goToChapter(arg2,cList);
-				/*versionDetailList = VersionDAO.getVersionOf(PlaysDetailActivity.this, mPlaysId);
-				finish();
-				Intent i = new Intent(PlaysDetailActivity.this,PlaysDetailActivity.class);
-				i.putExtra("playsId",versionDetailList.get(arg2).getVersionPlayID());
-				i.putExtra("playsName",PlaysName);
-				i.putExtra("position",arg2);
-				i.putExtra("mVersion",mVersion);
-				i.putExtra("VersionHtmlID",mVersion);
-				i.putExtra("mNote","Home");
-				startActivity(i);*/
 
 
 			}
@@ -528,14 +434,12 @@ public class PlaysDetailActivity extends FragmentActivity {
 
 	}
 	private void getVersion(final String mVersion){
-		///	versionDetailList = VersionDAO.getVersionOf(PlaysDetailActivity.this, mPlaysId);
 		
 		mVersionDialog=new Dialog(PlaysDetailActivity.this,android.R.style.Theme_Translucent);
 		mVersionDialog.getWindow();
 		mVersionDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		mVersionDialog.setContentView(R.layout.popup_plays_version);
 		ListView mVersionList=(ListView) mVersionDialog.findViewById(R.id.s_play_version_list);
-		VersionHtmlID= null;
 		mVersionList.setAdapter(new VersionListAdapter(versionDetailList));
 		mVersionList.setOnItemClickListener(new OnItemClickListener() {
 

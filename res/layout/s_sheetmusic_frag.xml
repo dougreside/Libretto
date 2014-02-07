@@ -33,7 +33,6 @@
         android:id="@+id/progress"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_below="@+id/s_titlebar_layout"
         android:layout_centerInParent="true"
         android:gravity="center"
         android:orientation="vertical"
@@ -51,7 +50,7 @@
             android:gravity="center_horizontal"
             android:text="Loading..."
             android:textColor="#FFF"
-            android:textSize="18dp"
+            android:textSize="18sp"
             android:textStyle="bold" >
         </TextView>
     </LinearLayout>

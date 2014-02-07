@@ -19,10 +19,8 @@ import org.nypl.popup.QuickAction;
 import org.nypl.popup.QuickAction.OnDismissListener;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Rect;
@@ -33,19 +31,16 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
 import android.view.View.OnTouchListener;
-import android.view.inputmethod.InputMethodManager;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -54,7 +49,6 @@ import android.widget.Toast;
 
 public class SelectionWebView extends WebView implements TextSelectionJavascriptInterfaceListener, 
 OnTouchListener, OnLongClickListener, OnDismissListener, DragListener {
-	private static final String TAG = "SelectionWebView";
 	private ProgressDialog pd;
 	private String mNoteId;
 	private String textString;
@@ -109,8 +103,6 @@ OnTouchListener, OnLongClickListener, OnDismissListener, DragListener {
 
 	/** Last touched selection handle. */
 	private int mLastTouchedSelectionHandle = -1;
-	private String mRange = "";
-	private String path = Environment.getExternalStorageDirectory().toString();
 
 
 
@@ -552,7 +544,6 @@ OnTouchListener, OnLongClickListener, OnDismissListener, DragListener {
 				// TODO Auto-generated method stub
 				if (actionId == 1) { 
 					// Do Button 1 stuff
-					Log.i(TAG, "Hit Button 1");
 					((Activity)ctx).runOnUiThread(new Runnable() {
 
 
@@ -576,12 +567,10 @@ OnTouchListener, OnLongClickListener, OnDismissListener, DragListener {
 				} 
 				/*else if (actionId == 2) { 
 					// Do Button 2 stuff
-					Log.i(TAG, "Hit Button 2");
 				} */
 				
 				else if (actionId == 3) { 
 					// Do Button 3 stuff
-					Log.i(TAG, "Hit Button 3");
 
 					((Activity)ctx).runOnUiThread(new Runnable() {
 
@@ -615,7 +604,6 @@ OnTouchListener, OnLongClickListener, OnDismissListener, DragListener {
 		
 		if(Id.contains("external"))
 		{
-			System.out.println("ID:::::::::::::::::::::::::::::::::::::::::::::::"+Id);
 		Uri partialUri = Uri.parse("content://media"+Id);
 		 Cursor cursor = ctx.getContentResolver().query(partialUri, new String[] { android.provider.MediaStore.Audio.AudioColumns.DATA }, null, null, null);//("content://media/external/audio/media/4743.mp3", new String[] { android.provider.MediaStore.Audio.AudioColumns.DATA }, null, null, null);
          cursor.moveToFirst();   
@@ -673,9 +661,7 @@ OnTouchListener, OnLongClickListener, OnDismissListener, DragListener {
 			FileOutputStream fos;
 			byte[] data = new String(html).getBytes();
 			try {
-				System.out.println("data:::::::"+data);
 				fos = new FileOutputStream(xml_file_path);
-				System.out.println("fos:::::::"+fos);
 				fos.write(data);
 				fos.flush();
 				fos.close();
@@ -687,11 +673,10 @@ OnTouchListener, OnLongClickListener, OnDismissListener, DragListener {
 			} catch (IOException e) {
 				// handle exception
 			}
-			System.out.println("SelectionWebView 690");
 			//String filePath = "file://"+path+"/HTMLContent/"+HTMLFileLocation
 			String filePath = "file:///"+FilePath.getAbsolutePath() + File.separator+ PlaysDetailActivity.CONTENT_LOCATION + File.separator +HTMLFileLocation;
 			SelectionWebView.this.loadUrl(filePath);
-			/*System.out.println("xml_file_path:::::::"+xml_file_path);
+			/*
 			new AlertDialog.Builder(ctx)  
 			.setTitle("HTML")  
 			.setMessage(html)  
@@ -713,9 +698,7 @@ OnTouchListener, OnLongClickListener, OnDismissListener, DragListener {
 			FileOutputStream fos;
 			byte[] data = new String(html).getBytes();
 			try {
-				System.out.println("data:::::::"+data);
 				fos = new FileOutputStream(xml_file_path);
-				System.out.println("fos:::::::"+fos);
 				fos.write(data);
 				fos.flush();
 				fos.close();
@@ -838,7 +821,6 @@ OnTouchListener, OnLongClickListener, OnDismissListener, DragListener {
 	 * Shows/updates the context menu based on the range
 	 */
 	public void tsjiJSError(String error){
-		Log.e(TAG, "JSError: " + error);
 	}
 
 
@@ -871,9 +853,6 @@ OnTouchListener, OnLongClickListener, OnDismissListener, DragListener {
 	 */
 	public void tsjiSelectionChanged(String range, String text, String handleBounds, String menuBounds){
 		try {
-			System.out.println("range is "+range);
-			System.out.println("text is::::::::::::::: "+text);
-			mRange=range;
 			mText=text;
 			JSONObject selectionBoundsObject = new JSONObject(handleBounds);
 
@@ -947,7 +926,6 @@ OnTouchListener, OnLongClickListener, OnDismissListener, DragListener {
 
 		return val * (metrics.densityDpi / 160f);
 
-		//return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, val, metrics);
 
 	}
 
@@ -969,7 +947,6 @@ OnTouchListener, OnLongClickListener, OnDismissListener, DragListener {
 
 		return val / (metrics.densityDpi / 160f);
 
-		//return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, val, metrics);
 
 	}
 

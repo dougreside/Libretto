@@ -1,7 +1,7 @@
 package org.nypl;
 
 import java.io.IOException;
-import java.util.Random;
+
 
 import org.nypl.utils.Utilities;
 
@@ -24,8 +24,7 @@ public class AudioPlayerActivity extends Activity implements OnCompletionListene
 	
 	private  MediaPlayer mp;
 	private Handler mHandler = new Handler();
-	private int seekForwardTime = 5000; // 5000 milliseconds
-	private int seekBackwardTime = 5000; // 5000 milliseconds
+
 	private Utilities utils;
 	private String mPlaysId;
 	private TextView songTitleLabel;
@@ -95,7 +94,6 @@ public class AudioPlayerActivity extends Activity implements OnCompletionListene
 		// Play song
 		try {
 			mp.reset();
-			System.out.println("songIndex:::::::"+songIndex);
 			AssetFileDescriptor afd=this.getAssets().openFd(songIndex+".mp3");
 			mp.setDataSource(afd.getFileDescriptor(),afd.getStartOffset(),afd.getLength());
 			afd.close();

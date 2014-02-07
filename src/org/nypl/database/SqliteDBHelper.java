@@ -6,7 +6,6 @@ import java.io.IOException;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 public class SqliteDBHelper extends SQLiteOpenHelper{
 
@@ -22,16 +21,13 @@ public class SqliteDBHelper extends SQLiteOpenHelper{
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		// TODO Auto-generated method stub
-		Log.v("Database Created",""+"Created");
+		System.out.println("CREATING");
 		DatabaseTable.onCreate(db);
 		
 			try {
-				
+			System.out.println("LET THERE BE!");	
 			CsvToSqliteImport.readFromCsvForPlayTable(db,context);
 			
-			//CsvToSqliteImport.readFromCsvForVersionTable(db,context);
-			//CsvToSqliteImport.readFromCsvForAnchorTable(db,context);
-			//CsvToSqliteImport.readFromCsvForAudioTable(db,context);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

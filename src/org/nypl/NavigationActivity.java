@@ -14,12 +14,10 @@ public class NavigationActivity {
 	private int mTabNumber;
 	private ImageView mPlayImage;
 	private ImageView mAnnotateImage;
-	private ImageView mBookmarkImage;
 	private ImageView mAboutImage;
 	private Activity mActivity;
 	private LinearLayout mPlayNavigation;
 	private LinearLayout mAnnotateNavigation;
-	private LinearLayout mBookmarkNavigation;
 	private LinearLayout mAboutNavigation;
 
 	public static void init(Activity activity, int tabNumber) {
@@ -35,11 +33,9 @@ public class NavigationActivity {
 	public  void initNavigationBar(int tab){
 		mPlayImage = (ImageView) mActivity.findViewById(R.id.s_navigation_img_play);
 		mAnnotateImage = (ImageView) mActivity.findViewById(R.id.s_navigation_img_annotate);
-	//	mBookmarkImage = (ImageView) mActivity.findViewById(R.id.s_navigation_img_bookmark);
 		mAboutImage = (ImageView) mActivity.findViewById(R.id.s_navigation_img_about);
 		mPlayNavigation =(LinearLayout) mActivity.findViewById(R.id.s_navigation_play);
 		mAnnotateNavigation =(LinearLayout) mActivity.findViewById(R.id.s_navigation_annotate);
-	//	mBookmarkNavigation =(LinearLayout) mActivity.findViewById(R.id.s_navigation_bookmark);
 		mAboutNavigation =(LinearLayout) mActivity.findViewById(R.id.s_navigation_about);
 
 		setListeners();
@@ -50,13 +46,11 @@ public class NavigationActivity {
 		case 2:
 			mAnnotateImage.setImageResource(R.drawable.img_annotate);
 			break;
-		/*case 3:
-			mBookmarkImage.setImageResource(R.drawable.img_bookmarks);
-			break;*/
+	
 		case 4:
 			mAboutImage.setImageResource(R.drawable.img_about);
 			break;
-		}//end of switch
+		}
 	}
 	/**
 	 * Listener method

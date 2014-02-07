@@ -44,7 +44,6 @@ import android.os.Parcelable;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -82,11 +81,9 @@ public class ViewPagerAdapter extends PagerAdapter{
 	}
 	public void setCurrentChapter(String chapterId){
 		this.currentChapterId = chapterId;
-		System.out.println("Just set chapter to "+ this.currentChapterPos);
 	}
 	public void setCurrentChapterPos(int pos){
 		this.currentChapterPos=pos;
-		System.out.println("Just set chapter to "+ this.currentChapterPos);
 	}
 	public String getCurrentChapter(){
 		return this.currentChapterId;
@@ -96,13 +93,11 @@ public class ViewPagerAdapter extends PagerAdapter{
 		int i=0;
 		while ((i<chaps.size())&&
 				(!(chaps.get(i).getChapterMappingID().equalsIgnoreCase(chapterId)))){
-			System.out.println("Too bad that "+chaps.get(i).getChapterMappingID()+ " isnt "+chapterId);
 			i++;
 		}
 		if (i==chaps.size()){
 			i=0;
 		}
-		System.out.println("I think the position is "+i);
 		return i;
 	
 	}
@@ -111,16 +106,13 @@ public class ViewPagerAdapter extends PagerAdapter{
 	}
 	
 	 public class ScrollPosition {
-		    private String scrollposition= "";
 		    
 		    public ArrayList<ChaptersBean> Chapters = new ArrayList<ChaptersBean>();;
 		    @JavascriptInterface
 		    public void reportHeads(String heads){
 		    	Chapters.clear();
-		    	System.out.println("HEADS----"+heads);
 		    	try{
 		    	JSONArray jheads = new JSONArray(heads);
-		    	Log.v("reportHeads","JSON CREATED");
 				
 				for(int i = 0; i < jheads.length(); i++){
 					JSONObject headobject = jheads.getJSONObject(i);	
@@ -137,8 +129,7 @@ public class ViewPagerAdapter extends PagerAdapter{
 				e.printStackTrace();
 			}
 		    }
-		    public void setScrollPosition(String sp ) {    	
-		    	System.out.println("SETTING TO "+sp);
+		    public void setScrollPosition(String sp ) {
 		    	PlayDAO.updateScrollPosition(mContext,mPlaysId,sp);
 		    	
 		    	
@@ -146,16 +137,9 @@ public class ViewPagerAdapter extends PagerAdapter{
 		    	
 		    }
 		    @JavascriptInterface
-		    public String getScrollPosition() { 
-		    	Log.v("SCROLL POS ",scrollposition);
-
-
-		    	//Cursor cursor = mContext.getContentResolver().query(Uri.parse(MoverContentProvider.CONTENT_URI+"/"+MoverContentProvider.PLAY_PATH), null, PlayDAO.COLUMN_NAME_PLAY_ID +"=\""+mPlaysId +"\""  ,null,null );
-		    	//String sp = cursor.getString(PlayDAO.COLUMN_INDEX_PLAY_SCROLL_POSITION)
+		    public String getScrollPosition() {
 		    	String sp = PlayDAO.getPlayByID(mContext,mPlaysId).get(0).getScrollPosition();
-		    	System.out.println("FROM DA DATA DAT DATA DATA DATABASE:" + sp);
 		    	
-		    	//return scrollposition;
 		    	return sp;
 		    }
 	 }
@@ -177,12 +161,7 @@ public class ViewPagerAdapter extends PagerAdapter{
 	private String mNotes;
 	private int mPosition;
 	private String path = Environment.getExternalStorageDirectory().toString();
-	//	private Handler mHandler = new Handler();
-	/*private static ImageButton btnPlay;
-	private static SeekBar songProgressBar;
-	private static TextView songCurrentDurationLabel;
-	private static TextView songTotalDurationLabel;*/
-
+	
 
 	public static  MediaPlayer mp=new MediaPlayer();
 	public static Handler mHandler = new Handler();
@@ -205,7 +184,6 @@ public class ViewPagerAdapter extends PagerAdapter{
 	private static ArrayList<PlayNoteBean> playNoteList;
 
 	private static Dialog mAudioDialog;
-	///public static MediaPlayer player=new MediaPlayer();
 	public static SharedPreferences app_preferences;
 	private static String PKG;
 	public static int mPlayFlag=0;
@@ -247,18 +225,16 @@ public class ViewPagerAdapter extends PagerAdapter{
 		
 		LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		View vg = (View) inflater.inflate(R.layout.e_play_fulltext, null);
-		Log.v("Test","switched");
 		PlaysDetailActivity.mAudiolayout.setVisibility(View.GONE);
 		mPlayDetailView= (SelectionWebView) vg.findViewById(R.id.s_plays_detail_webview);
 		((ViewPager) collection).addView(vg,0);
 		mChilds[position] = vg;
 		progress =(LinearLayout) vg.findViewById(R.id.progress);
-		Log.v("JavaScript","Turning on Javascript");
 		mPlayDetailView.getSettings().setJavaScriptEnabled(true);
 		mPlayDetailView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
 		mPlayDetailView.clearCache(true);
 		mPlayDetailView.setVerticalScrollBarEnabled(true);
-		//mPlayDetailView.setBackgroundColor(Color.TRANSPARENT);
+
 		mPlayDetailView.setBackgroundColor(Color.WHITE);
 		mPosition=((ViewPager) collection).getCurrentItem();
 		webposition=position;
@@ -278,19 +254,15 @@ public class ViewPagerAdapter extends PagerAdapter{
 		 currentChapterBean= chaptersList.get(0);
 				
 		}
-	//	mPlaysId = mVersionDetailList.get(position).getVersionID();
 		String filePath = "file:///"+FilePath.getAbsolutePath() + File.separator+ CONTENT_LOCATION + File.separator +currentChapterBean.getHTMLFile();
 	
 		
 		mPlayDetailView.addJavascriptInterface(jsScrollPosition, "appScrollManager");
-		System.out.println("after swipe, loading "+filePath);
 		mPlayDetailView.loadUrl(filePath);
 		
 		mPlayDetailView.setWebChromeClient(new WebChromeClient() {
 			  public void onConsoleMessage(String message, int lineNumber, String sourceID) {
-			    Log.d("MyApplication", message + " -- From line "
-			                         + lineNumber + " of "
-			                         + sourceID);
+			   
 			  }
 			});
 		mPlayDetailView.setWebViewClient(new myclient());
@@ -311,15 +283,12 @@ public class ViewPagerAdapter extends PagerAdapter{
 		@Override
 		public void onPageFinished(WebView view, String url) {
 			super.onPageFinished(view, url);
-			
-			Log.v("OnPageFinished",url);
 
 			if(url.contains("#")){
 				VersionHtmlId=null;
 			}
 			if(VersionHtmlId!=null )
-			{  
-				Log.v("OnPageFinished",VersionHtmlId);
+			{
 				
 				view.loadUrl("javascript:scrollToElement('" + VersionHtmlId.trim() + "')");
 				
@@ -356,12 +325,9 @@ public class ViewPagerAdapter extends PagerAdapter{
 			aflag= 0;
 			if(url.contains("nypl_audio")){
 				audioid= url.substring(url.indexOf("nypl_audio-")+11);
-				System.out.println("URL in URL OVERRIDE: "+url);
-				System.out.println("AUDIO ID in URL OVERRIDE: "+audioid);
-			Log.v("ViewPageAdapter",mContext+" "+audioid+" "+mPlaysId);
 			AudioDatalist = AudioDAO.getAudioData(mContext, audioid,mPlaysId);
 
-//System.out.println("AudioDatalist.get(0).getAudioPath():::::::::::::::::::::::::::::::::::::::::::"+AudioDatalist.get(0).getAudioPath());
+//
 			File extStore = Environment.getExternalStorageDirectory();
 			if(AudioDatalist.get(0).getAudioPath()!=null ){
 			//if(url.contains(".mp3") || url.contains("/audio") || url.contains("/media") || url.contains(".m4a")  || url.contains(".aac")  || url.contains(".f4a")){
@@ -371,8 +337,6 @@ public class ViewPagerAdapter extends PagerAdapter{
 					///mp.reset();
 				}
 				PlaysDetailActivity.mAudiolayout.setVisibility(View.GONE);
-				
-				System.out.println("Attempting to load "+AudioDatalist.get(0).getAudioPath());
 				
 				url = AudioDatalist.get(0).getAudioPath().replace("file://", "").replace("%20", " ").trim();
 				File file = new File(url);
@@ -526,7 +490,6 @@ public class ViewPagerAdapter extends PagerAdapter{
 			@Override
 			public void onAnimationEnd(Animation animation) {
 				// TODO Auto-generated method stub
-				Log.d("LA","sliding down ended");
 
 			}
 		});
@@ -540,7 +503,6 @@ public class ViewPagerAdapter extends PagerAdapter{
 	}
 
 	public static void playAudio(String id){
-		System.out.println("id in playaudio "+id);
 		mp=new MediaPlayer();
 		if(mp!=null){
 			mp.pause();
@@ -886,7 +848,6 @@ public class ViewPagerAdapter extends PagerAdapter{
 
 
 	public static void playAttachedAudio(final String url ){
-		System.out.println("PLAY ATTACHED AUDIO");
 		PlaysDetailActivity.mAudiolayout.setVisibility(View.GONE);
 		mAudioDialog=new Dialog(mContext,android.R.style.Theme_Translucent);
 		mAudioDialog.getWindow();
@@ -923,10 +884,8 @@ public class ViewPagerAdapter extends PagerAdapter{
 	public static void updateAudio(String savedUri){
 		String URLID;
 		String clip_id=AudioDatalist.get(0).getClipID().toString();
-		System.out.println("Update with clip_id "+clip_id);
 		if(savedUri.contains("external"))
 		{
-			System.out.println("ID::::::::::::::::::::::in activity:::::::::::::::::::::::::"+savedUri);
 		 Uri partialUri = Uri.parse("content://media"+savedUri);
 		 Cursor cursor = mContext.getContentResolver().query(partialUri, new String[] { android.provider.MediaStore.Audio.AudioColumns.DATA }, null, null, null);//("content://media/external/audio/media/4743.mp3", new String[] { android.provider.MediaStore.Audio.AudioColumns.DATA }, null, null, null);
          cursor.moveToFirst();   
@@ -939,15 +898,11 @@ public class ViewPagerAdapter extends PagerAdapter{
 		URLID=URLEncoder.encode(URLID, "ISO-8859-1");
 		}
 		catch (Exception e){
-			System.out.println("Encode fail");
 		}*/
-		System.out.println("URLID::::::::::::::::::::::::::::::::::::"+URLID);
 		ContentValues cv =new ContentValues();
 		cv.put(AudioDAO.COLUMN_NAME_AUDIO_PATH, URLID);
 		//int rowUpdated=mContext.getContentResolver().update(Uri.parse(MoverContentProvider.CONTENT_URI+"/"+MoverContentProvider.AUDIO_PATH), cv, AudioDAO.COLUMN_NAME_AUDIO_CLIP_ID+"='"+clip_id+"' and ("+ AudioDAO.COLUMN_NAME_AUDIO_VERSION_ID + "='" + Version +"' and "+ AudioDAO.COLUMN_NAME_AUDIO_PLAY_ID + "='" + mPlaysId+"')" , null);
 		int rowUpdated=mContext.getContentResolver().update(Uri.parse(LibrettoContentProvider.CONTENT_URI+"/"+LibrettoContentProvider.AUDIO_PATH), cv, AudioDAO.COLUMN_NAME_AUDIO_CLIP_ID+"='"+clip_id+"' and "+ AudioDAO.COLUMN_NAME_AUDIO_PLAY_ID + "='" + mPlaysId+"'" , null);
-		
-		System.out.println("rowUpdated::::::::::::::::::::::::::::::::::"+rowUpdated);
 		
 		
 	
@@ -959,7 +914,6 @@ public class ViewPagerAdapter extends PagerAdapter{
 		intent.setAction(Intent.ACTION_GET_CONTENT);
 		intent.addCategory(Intent.CATEGORY_OPENABLE);
 		((FragmentActivity) mContext).startActivityForResult(intent, REQUEST_CODE);
-		System.out.println("REQUEST CODE: "+REQUEST_CODE);
 		if (mEditAudioDialog!=null){
 		mEditAudioDialog.cancel();}
 		//mAudioDialog.cancel();
@@ -1066,7 +1020,6 @@ public class ViewPagerAdapter extends PagerAdapter{
 
 		playNoteList=PlayNoteDAO.getNoteDetail(mContext,mNoteId);
 		if(playNoteList.get(0).getNotes()!=null ){
-			System.out.println("mPosition:::::::::::"+playNoteList.get(0).getNotes());
 			mNoteText.setText(playNoteList.get(0).getNotes());
 			mNoteText.setSelection(playNoteList.get(0).getNotes().length());
 		}
@@ -1088,7 +1041,6 @@ public class ViewPagerAdapter extends PagerAdapter{
 					cv.put(PlayNoteDAO.COLUMN_NAME_NOTE_PLAY_NOTE, textString.trim());
 
 					int rowUpdated=mContext.getContentResolver().update(Uri.parse(LibrettoContentProvider.CONTENT_URI+"/"+LibrettoContentProvider.PLAYNOTE_NOTEID), cv, PlayNoteDAO.COLUMN_NAME_NOTE_PLAY_ID + "=" + playNoteList.get(0).getPlayID()+" "+ "and"+ " " + PlayNoteDAO.COLUMN_NAME_NOTE_ID+ "=" + mNoteId, null);
-					Log.v("UPDATE::::::::","::"+rowUpdated);
 					mPlayNoteDialog.cancel();
 					if(rowUpdated>0){
 
@@ -1147,7 +1099,6 @@ public class ViewPagerAdapter extends PagerAdapter{
 			public void onClick(View v) {
 				String clip_id=AudioDatalist.get(0).getClipID().toString();	
 				String filePath = "file:///"+FilePath.getAbsolutePath() + File.separator+ CONTENT_LOCATION + File.separator +"Audio"+File.separator+clip_id+".mp3";
-				System.out.println("Restoring to: ");
 				updateAudio(filePath);
 				mEditAudioDialog.cancel();
 				//Toast.makeText(mContext, "Audio Successfully Deleted.", Toast.LENGTH_LONG).show();
@@ -1179,7 +1130,6 @@ public class ViewPagerAdapter extends PagerAdapter{
 			FileOutputStream fos;
 			byte[] data = new String(html).getBytes();
 			try {
-				System.out.println("data:::::::"+data);
 				fos = new FileOutputStream(xml_file_path);
 				fos.write(data);
 				fos.flush();
@@ -1218,7 +1168,7 @@ public class ViewPagerAdapter extends PagerAdapter{
 			} catch (IOException e) {
 				// handle exception
 			}
-			/*	System.out.println("xml_file_path:::::::"+xml_file_path);
+			/*
 			new AlertDialog.Builder(mContext)  
 			.setTitle("HTML")  
 			.setMessage(html)  

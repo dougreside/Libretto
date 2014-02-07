@@ -88,7 +88,6 @@ public class PlaysListAdapter extends BaseExpandableListAdapter{
 		mPlaysNameList=	(ArrayList<PlaysBean>) mPlaysList.get(mKeyList.get(groupPosition));
 		CONTENT_LOCATION = "Android/data/"+mContext.getPackageName()+File.separator+"contents";
 		try {
-			System.out.println(mPlaysNameList.get(childPosition).getPlayID().toString());
 			 final File mfreeChapterFolder = new File(FilePath.getAbsolutePath()+File.separator+CONTENT_LOCATION+File.separator
 						+mPlaysNameList.get(childPosition).getPlayID().toString());
 		     if (mfreeChapterFolder.exists()||(mPlaysNameList.get(childPosition).getPlayID().toString().contentEquals("About")))  {
@@ -110,7 +109,6 @@ public class PlaysListAdapter extends BaseExpandableListAdapter{
 
 					holder.img1.setImageBitmap(scaled);
 		     }
-			Log.v("bitmap",""+bitmap);
 		
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
@@ -139,7 +137,6 @@ public class PlaysListAdapter extends BaseExpandableListAdapter{
 	@Override
 	public int getChildrenCount(int groupPosition) {
 		mPlaysNameList=(ArrayList<PlaysBean>) mPlaysList.get(mKeyList.get(groupPosition));
-		Log.v("mPlaysNameList count ::::::::::::::::::::",""+mPlaysNameList.size());
 		return mPlaysNameList.size();
 	}
 

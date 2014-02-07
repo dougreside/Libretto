@@ -13,7 +13,6 @@ import org.nypl.PlaysAddActivity;
 import org.nypl.R;
 import org.nypl.adapter.ViewPagerAdapter;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -35,9 +34,7 @@ public class PlaysAddFragment extends BaseFragment implements TextWatcher,OnEdit
     private String CONTENT_LOCATION;
 	private EditText mSearchField;
 	private static File FilePath = Environment.getExternalStorageDirectory();
-	
-	private ProgressDialog pd;
-	private int trans = android.R.color.transparent;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -112,14 +109,12 @@ public class PlaysAddFragment extends BaseFragment implements TextWatcher,OnEdit
 			InputMethodManager inputMgr = (InputMethodManager)sActivityInstance.getSystemService(Context.INPUT_METHOD_SERVICE);
 			inputMgr.toggleSoftInput(0, 0);
 			///	isAuntheticate();
-			System.out.println("Dude");
 			 uri = mSearchField.getText().toString();
 			
 				String protocol = uri.substring(0,uri.indexOf("/"));
 	       		 if ((protocol.length()>1)&&(!(protocol.startsWith("http")))){
 	       		 uri = "http://"+uri;
-	       		 }	
-	       		System.out.println(uri);
+	       		 }
 				 DownloadFile downloadFile = new DownloadFile();
 			       //downloadFile.execute("https://s3.amazonaws.com/lpa-musical.nypl.org/dh2013/HTMLContent.zip");
 			       downloadFile.execute(uri);
@@ -132,10 +127,9 @@ public class PlaysAddFragment extends BaseFragment implements TextWatcher,OnEdit
 	private class DownloadFile extends AsyncTask<String,Integer,String> {
 		@Override
 		protected void onPostExecute(String result) {
-			System.out.println("Download Complete");
 			//new ExtractingTask("HTMLObject.zip", FilePath.getAbsolutePath()+File.separator+CONTENT_LOCATION+"/").execute();
 			 //CONTENT_LOCATION = "Android/data/"+getView().getContext().getPackageName()+File.separator+"contents";
-		     System.out.println("UNZIP THIS: "+result);	
+		    
 			
 			 PlaysAddActivity.processZipFile(result,getView().getContext());
 
@@ -152,7 +146,6 @@ public class PlaysAddFragment extends BaseFragment implements TextWatcher,OnEdit
 	    	String outstring = FilePath.getAbsolutePath()+File.separator+CONTENT_LOCATION+File.separator+params[0].substring(params[0].lastIndexOf("/")+1);
 	           
 	        try {
-	        	System.out.println("FROM:"+params[0]);
 	        	URL url = new URL(params[0]);
 	            
 		           
@@ -188,21 +181,16 @@ public class PlaysAddFragment extends BaseFragment implements TextWatcher,OnEdit
 	}
 	/*
 	private void DownloadFile(String uri) {
-	
-	        	System.out.println("FROM:"+uri);
 	          
 	            Context thisContext = getView().getContext();
 	            CONTENT_LOCATION = "Android/data/"+thisContext.getPackageName()+File.separator+"contents";
 		     	
-	            System.out.println("TO:"+FilePath.getAbsolutePath()+File.separator+CONTENT_LOCATION+File.separator+uri.substring(uri.lastIndexOf("/")+1));
+	           
 	       	 try {
 	       		 String protocol = uri.substring(0,uri.indexOf("/"));
 	       		 if ((protocol.length()>1)&&(!(protocol.startsWith("http")))){
 	       		 uri = "http://"+uri;
-	       		 }	 
-	       		System.out.println("FROM:"+uri);
-		          	 
-	       		System.out.println("TO:"+FilePath.getAbsolutePath()+File.separator+CONTENT_LOCATION+File.separator+uri.substring(uri.lastIndexOf("/")+1));
+	       		 }
 	 	        
 	            URL url = new URL(uri);
 	            URLConnection connection = url.openConnection();

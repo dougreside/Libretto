@@ -18,8 +18,7 @@ import org.jsoup.parser.Tag;
 import org.jsoup.select.Elements;
 import org.nypl.dataholder.AudioBean;
 
-import android.content.res.AssetManager;
-import android.util.Log;
+
 
 
 public class AudioFileParser{
@@ -42,14 +41,13 @@ public class AudioFileParser{
 		String clip_id;
 		 String clip_from;
 		String clip_to;
-		Elements mp3src;
-		String audio_clip_version_id;
+	
+
 		AudioBean currentItem;
 		
 		ArrayList<AudioBean> audioItemList = new ArrayList<AudioBean>();
 		File mAudioFile = new File(htmlfile);
 		if(mAudioFile.exists()){
-		System.out.println("imageFile data ::::::::::::::::::::::1111::::::::::" +mAudioFile.exists() );  
 
 		try {
 
@@ -74,12 +72,10 @@ public class AudioFileParser{
 	//	"<script type='text/javascript' src='file:///android_asset/searchwebview.js'></script>");
 					dHead.append("<script type='text/javascript' src='file:///android_asset/anchors.js'></script>");
 					dHead.append("<link type='text/css' href='file:///android_asset/pagestyle.css' rel='stylesheet'/>");
-					
-					System.out.println(dHead);
 					Elements auds = doc.select("audio");
 					Elements sheetmusics = doc.select("div[class=sheetmusic]");
 					
-					Log.v("audio","starting");
+
 					if (auds.size()>0){
 					ListIterator<Element> eli = auds.listIterator();
 					
@@ -102,13 +98,9 @@ public class AudioFileParser{
 						currentItem.setClipTo(clip_to);
 						currentItem.setClipVesrsionId(version_id);
 						
-						//mp3src = el.select("source[type=audio/mp3]");
-						//System.out.println("MP3 size: "+mp3src.size());
-						//if (!(mp3src.isEmpty())){
-					//	String aPath = mp3src.first().attr("src").toString();
+						
 						String aPath = el.attr("src").toString();
 						aPath = htmlfile.substring(0,htmlfile.lastIndexOf("/"))+File.separator+aPath;
-						System.out.println(aPath);
 						currentItem.setAudioPath(aPath);
 						audioItemList.add(currentItem);
 						
@@ -126,17 +118,13 @@ public class AudioFileParser{
 						iElement.attr("style","max-width: 30px");
 						iElement.attr("alt","image");
 						//}
-						Log.v("audio",el.attr("starttime").toString());
-						Log.v("audio",el.attr("endtime").toString());
-						
-						System.out.println(el.html());
 					}
 					}
 					else{
 						
 					}
 
-					Log.v("sheetmusics","starting");
+		
 					if (sheetmusics.size()>0){
 					ListIterator<Element> eli = sheetmusics.listIterator();
 					
@@ -163,9 +151,6 @@ fooStream.close();
 
 			e.printStackTrace();
 		}
-		
-			
-System.out.println("Sending back....");
 
 
 	}

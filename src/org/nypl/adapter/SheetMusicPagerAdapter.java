@@ -6,23 +6,15 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import org.nypl.LibrettoContentProvider;
 import org.nypl.PlaysDetailActivity;
 import org.nypl.R;
 import org.nypl.SelectionWebView;
 import org.nypl.database.AudioDAO;
-import org.nypl.database.ChaptersDAO;
-import org.nypl.database.PlayDAO;
-import org.nypl.database.PlayNoteDAO;
 import org.nypl.dataholder.AudioBean;
 import org.nypl.dataholder.ChaptersBean;
-import org.nypl.dataholder.PlayNoteBean;
-import org.nypl.dataholder.PlaysBean;
 import org.nypl.dataholder.SheetMusicBean;
-import org.nypl.dataholder.VersionBean;
 import org.nypl.utils.Utilities;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.ContentValues;
@@ -41,29 +33,18 @@ import android.os.Parcelable;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationSet;
-import android.view.animation.LayoutAnimationController;
 import android.view.animation.TranslateAnimation;
-import android.view.inputmethod.InputMethodManager;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
@@ -82,17 +63,14 @@ public class SheetMusicPagerAdapter extends PagerAdapter{
 	public static SelectionWebView mPlayDetailView;
 	private String VersionHtmlId = null;
 	private ProgressDialog pd;
-	private LinearLayout progress;
 
 	private int mPosition;
-	private String path = Environment.getExternalStorageDirectory().toString();
-
+	
 
 
 	public static  MediaPlayer mp=new MediaPlayer();
 	public static Handler mHandler = new Handler();
-	private int seekForwardTime = 5000; // 5000 milliseconds
-	private int seekBackwardTime = 5000; // 5000 milliseconds
+
 
 	private static Utilities utils;
 	private static String mPlaysId;
@@ -104,11 +82,10 @@ public class SheetMusicPagerAdapter extends PagerAdapter{
 	private static Dialog mAudioDialog;
 	///public static MediaPlayer player=new MediaPlayer();
 	public static SharedPreferences app_preferences;
-	private static String PKG;
+	
 	public static int mPlayFlag=0;
 	public static String audioid = null;
 	public static int currentPosition1 =0;
-	private static Animation slideUpIn;
 	private static final int REQUEST_CODE = 1;
 	static int aflag = 0;
 	public int webposition ;
@@ -120,7 +97,6 @@ public class SheetMusicPagerAdapter extends PagerAdapter{
 	}
 	public SheetMusicPagerAdapter(ArrayList<SheetMusicBean> smpages,Context ctx,String content_location) {
 		super();
-		System.out.println("STARTIN THE ADAPTER!");
 		this.pages = smpages;
 		this.mContext=ctx;
 		mChilds = new View[this.pages.size()];
@@ -134,7 +110,6 @@ public class SheetMusicPagerAdapter extends PagerAdapter{
 
 	@Override
 	public int getCount() {
-		System.out.println("TOTAL SHEETMUSIC SIZE "+pages.size());
 		return pages.size();
 	}
 
@@ -143,18 +118,15 @@ public class SheetMusicPagerAdapter extends PagerAdapter{
 		
 		LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		View vg = (View) inflater.inflate(R.layout.e_play_fulltext, null);
-		Log.v("Test","switched");
 		PlaysDetailActivity.mAudiolayout.setVisibility(View.GONE);
 		mPlayDetailView= (SelectionWebView) vg.findViewById(R.id.s_plays_detail_webview);
 		((ViewPager) collection).addView(vg,0);
 		mChilds[position] = vg;
-		progress =(LinearLayout) vg.findViewById(R.id.progress);
-		Log.v("JavaScript","Turning on Javascript");
-		//mPlayDetailView.getSettings().setJavaScriptEnabled(true);
+		
 		mPlayDetailView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
 		mPlayDetailView.clearCache(true);
 		mPlayDetailView.setVerticalScrollBarEnabled(true);
-		//mPlayDetailView.setBackgroundColor(Color.TRANSPARENT);
+	
 		mPlayDetailView.setBackgroundColor(Color.WHITE);
 		mPosition=((ViewPager) collection).getCurrentItem();
 		webposition=position;
@@ -162,18 +134,14 @@ public class SheetMusicPagerAdapter extends PagerAdapter{
 			pd = ProgressDialog.show(mContext, "Loading", "please wait...");
 			mPlayDetailView.setTag("web");
 		}
-		int SheetMusicPos = mPosition+1;
-	//	mPlaysId = mVersionDetailList.get(position).getVersionID();
-		System.out.println("NEW POSITION: "+SheetMusicPos+" "+position+" "+mPosition);
+		
+	
 		String filePath = "file:///"+FilePath.getAbsolutePath() + File.separator+ CONTENT_LOCATION + File.separator +this.pages.get(position).getSheetMusicHTML();
-		System.out.println(filePath);
 		mPlayDetailView.loadUrl(filePath);
 		
 		mPlayDetailView.setWebChromeClient(new WebChromeClient() {
 			  public void onConsoleMessage(String message, int lineNumber, String sourceID) {
-			    Log.d("MyApplication", message + " -- From line "
-			                         + lineNumber + " of "
-			                         + sourceID);
+			   
 			  }
 			});
 		mPlayDetailView.setWebViewClient(new myclient());
@@ -183,8 +151,6 @@ public class SheetMusicPagerAdapter extends PagerAdapter{
 
 	private class myclient extends WebViewClient{
 
-		private Dialog mNoteSelectDialog;
-		private String mNoteId;
 
 		@Override
 		public void onPageStarted(WebView view, String url, Bitmap favicon) {
@@ -194,15 +160,12 @@ public class SheetMusicPagerAdapter extends PagerAdapter{
 		@Override
 		public void onPageFinished(WebView view, String url) {
 			super.onPageFinished(view, url);
-			
-			Log.v("OnPageFinished",url);
 
 			if(url.contains("#")){
 				VersionHtmlId=null;
 			}
 			if(VersionHtmlId!=null )
-			{  
-				Log.v("OnPageFinished",VersionHtmlId);
+			{
 				
 				view.loadUrl("javascript:scrollToElement('" + VersionHtmlId.trim() + "')");
 				
@@ -236,13 +199,10 @@ public class SheetMusicPagerAdapter extends PagerAdapter{
 			aflag= 0;
 			if(url.contains("nypl_audio")){
 				audioid= url.substring(url.indexOf("nypl_audio-")+11);
-				System.out.println("URL in URL OVERRIDE: "+url);
-				System.out.println("AUDIO ID in URL OVERRIDE: "+audioid);
-			Log.v("ViewPageAdapter",mContext+" "+audioid+" "+mPlaysId);
 			AudioDatalist = AudioDAO.getAudioData(mContext, audioid,mPlaysId);
 
-//System.out.println("AudioDatalist.get(0).getAudioPath():::::::::::::::::::::::::::::::::::::::::::"+AudioDatalist.get(0).getAudioPath());
-			File extStore = Environment.getExternalStorageDirectory();
+//
+			
 			if(AudioDatalist.get(0).getAudioPath()!=null ){
 			//if(url.contains(".mp3") || url.contains("/audio") || url.contains("/media") || url.contains(".m4a")  || url.contains(".aac")  || url.contains(".f4a")){
 				AudioDatalist = AudioDAO.getAudioData(mContext, audioid,mPlaysId);
@@ -251,8 +211,6 @@ public class SheetMusicPagerAdapter extends PagerAdapter{
 					///mp.reset();
 				}
 				PlaysDetailActivity.mAudiolayout.setVisibility(View.GONE);
-				
-				System.out.println("Attempting to load "+AudioDatalist.get(0).getAudioPath());
 				
 				url = AudioDatalist.get(0).getAudioPath().replace("file://", "").replace("%20", " ").trim();
 				File file = new File(url);
@@ -319,8 +277,7 @@ public class SheetMusicPagerAdapter extends PagerAdapter{
 		});
 		set.addAnimation(animation);
 
-		LayoutAnimationController controller = new LayoutAnimationController(
-				set, 0.25f);
+	
 
 		return animation;
 	}
@@ -351,21 +308,16 @@ public class SheetMusicPagerAdapter extends PagerAdapter{
 			@Override
 			public void onAnimationEnd(Animation animation) {
 				// TODO Auto-generated method stub
-				Log.d("LA","sliding down ended");
 
 			}
 		});
 		set.addAnimation(animation);
 
-		LayoutAnimationController controller = new LayoutAnimationController(
-				set, 0.25f);
-
-
+		
 		return animation;
 	}
 
 	public static void playAudio(String id){
-		System.out.println("id in playaudio "+id);
 		mp=new MediaPlayer();
 		if(mp!=null){
 			mp.pause();
@@ -539,10 +491,7 @@ public class SheetMusicPagerAdapter extends PagerAdapter{
 	 * @param songIndex - index of song
 	 * */
 	public static void  playSong(String songIndex){
-		// Play song
-
-
-		String songTitle = null ;
+	
 		try {
 			
 			mp.reset();
@@ -562,8 +511,7 @@ public class SheetMusicPagerAdapter extends PagerAdapter{
 				mp.setDataSource(songIndex.trim());
 			}
 
-			songTitle=songIndex;
-			//}
+
 		
 			mp.prepare();
 			if(mp.getDuration()>Integer.parseInt(AudioDatalist.get(0).getClipFrom())*1000){
@@ -711,7 +659,6 @@ public class SheetMusicPagerAdapter extends PagerAdapter{
 
 
 	public static void playAttachedAudio(final String url ){
-		System.out.println("PLAY ATTACHED AUDIO");
 		PlaysDetailActivity.mAudiolayout.setVisibility(View.GONE);
 		mAudioDialog=new Dialog(mContext,android.R.style.Theme_Translucent);
 		mAudioDialog.getWindow();
@@ -748,10 +695,8 @@ public class SheetMusicPagerAdapter extends PagerAdapter{
 	public static void updateAudio(String savedUri){
 		String URLID;
 		String clip_id=AudioDatalist.get(0).getClipID().toString();
-		System.out.println("Update with clip_id "+clip_id);
 		if(savedUri.contains("external"))
 		{
-			System.out.println("ID::::::::::::::::::::::in activity:::::::::::::::::::::::::"+savedUri);
 		 Uri partialUri = Uri.parse("content://media"+savedUri);
 		 Cursor cursor = mContext.getContentResolver().query(partialUri, new String[] { android.provider.MediaStore.Audio.AudioColumns.DATA }, null, null, null);//("content://media/external/audio/media/4743.mp3", new String[] { android.provider.MediaStore.Audio.AudioColumns.DATA }, null, null, null);
          cursor.moveToFirst();   
@@ -760,19 +705,9 @@ public class SheetMusicPagerAdapter extends PagerAdapter{
 		}else{
 			URLID = savedUri;
 		}
-		/*try{
-		URLID=URLEncoder.encode(URLID, "ISO-8859-1");
-		}
-		catch (Exception e){
-			System.out.println("Encode fail");
-		}*/
-		System.out.println("URLID::::::::::::::::::::::::::::::::::::"+URLID);
+	
 		ContentValues cv =new ContentValues();
 		cv.put(AudioDAO.COLUMN_NAME_AUDIO_PATH, URLID);
-		//int rowUpdated=mContext.getContentResolver().update(Uri.parse(MoverContentProvider.CONTENT_URI+"/"+MoverContentProvider.AUDIO_PATH), cv, AudioDAO.COLUMN_NAME_AUDIO_CLIP_ID+"='"+clip_id+"' and ("+ AudioDAO.COLUMN_NAME_AUDIO_VERSION_ID + "='" + Version +"' and "+ AudioDAO.COLUMN_NAME_AUDIO_PLAY_ID + "='" + mPlaysId+"')" , null);
-		int rowUpdated=mContext.getContentResolver().update(Uri.parse(LibrettoContentProvider.CONTENT_URI+"/"+LibrettoContentProvider.AUDIO_PATH), cv, AudioDAO.COLUMN_NAME_AUDIO_CLIP_ID+"='"+clip_id+"' and "+ AudioDAO.COLUMN_NAME_AUDIO_PLAY_ID + "='" + mPlaysId+"'" , null);
-		
-		System.out.println("rowUpdated::::::::::::::::::::::::::::::::::"+rowUpdated);
 		
 		
 	
@@ -784,7 +719,6 @@ public class SheetMusicPagerAdapter extends PagerAdapter{
 		intent.setAction(Intent.ACTION_GET_CONTENT);
 		intent.addCategory(Intent.CATEGORY_OPENABLE);
 		((FragmentActivity) mContext).startActivityForResult(intent, REQUEST_CODE);
-		System.out.println("REQUEST CODE: "+REQUEST_CODE);
 		if (mEditAudioDialog!=null){
 		mEditAudioDialog.cancel();}
 		//mAudioDialog.cancel();
@@ -862,7 +796,6 @@ public class SheetMusicPagerAdapter extends PagerAdapter{
 			public void onClick(View v) {
 				String clip_id=AudioDatalist.get(0).getClipID().toString();	
 				String filePath = "file:///"+FilePath.getAbsolutePath() + File.separator+ CONTENT_LOCATION + File.separator +"Audio"+File.separator+clip_id+".mp3";
-				System.out.println("Restoring to: ");
 				updateAudio(filePath);
 				mEditAudioDialog.cancel();
 				//Toast.makeText(mContext, "Audio Successfully Deleted.", Toast.LENGTH_LONG).show();
@@ -894,7 +827,6 @@ public class SheetMusicPagerAdapter extends PagerAdapter{
 			FileOutputStream fos;
 			byte[] data = new String(html).getBytes();
 			try {
-				System.out.println("data:::::::"+data);
 				fos = new FileOutputStream(xml_file_path);
 				fos.write(data);
 				fos.flush();

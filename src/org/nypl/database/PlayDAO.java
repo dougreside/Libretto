@@ -5,15 +5,12 @@ import java.util.HashMap;
 
 import org.nypl.LibrettoContentProvider;
 import org.nypl.dataholder.PlaysBean;
-import org.nypl.dataholder.VersionBean;
 
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
-import android.util.Log;
 
 
 public class PlayDAO {
@@ -54,7 +51,6 @@ public class PlayDAO {
 		
 		COLUMN_INDEX_PLAY_ID = cursor.getColumnIndex(COLUMN_NAME_PLAY_ID);
 		COLUMN_INDEX_PLAY_SCROLL_POSITION = cursor.getColumnIndex(COLUMN_NAME_SCROLL_POSITION);
-		System.out.println("THE COLUMN # IS: "+COLUMN_INDEX_PLAY_SCROLL_POSITION);
 		COLUMN_INDEX_PLAY_LONG_ID = cursor.getColumnIndex(COLUMN_NAME_PLAY_LONG_ID);
 		COLUMN_INDEX_PLAY_ID1 = cursor.getColumnIndex(COLUMN_NAME_PLAY_ID1);
 		COLUMN_INDEX_PLAY_NAME = cursor.getColumnIndex(COLUMN_NAME_PLAY_NAME);
@@ -110,7 +106,6 @@ public class PlayDAO {
 			alphabet=Character.toString(c);
 			Cursor cursor =ctx.getContentResolver().query(Uri.parse(LibrettoContentProvider.CONTENT_URI+"/"+LibrettoContentProvider.PLAY_BOOKMARK_PATH), null, COLUMN_NAME_PLAY_NAME +" LIKE "+"'"+alphabet + "%"+"'"  ,null , null);
 			///.query(MoverContentProvider.CONTENT_URI+"/"+MoverContentProvider.PLAY_PATH, null, null, null, null);
-			Log.v("in playdiao cursor",""+cursor.getCount());
 			if(cursor != null && cursor.getCount()>0){
 				playsList = new ArrayList<PlaysBean>();
 				setColumns(cursor);
@@ -189,7 +184,6 @@ public class PlayDAO {
 	
 			Cursor cursor =ctx.getContentResolver().query(Uri.parse(LibrettoContentProvider.CONTENT_URI+"/"+LibrettoContentProvider.SET_BOOKMARK_PATH), null, VersionId  ,null , null);
 			///.query(MoverContentProvider.CONTENT_URI+"/"+MoverContentProvider.PLAY_PATH, null, null, null, null);
-			Log.v("in playdiao cursor",""+cursor.getCount());
 			if(cursor != null && cursor.getCount()>0){
 				
 				setColumns(cursor);
@@ -236,7 +230,6 @@ public class PlayDAO {
 			alphabet=Character.toString(c);
 	Cursor cursor =ctx.getContentResolver().query(Uri.parse(LibrettoContentProvider.CONTENT_URI+"/"+LibrettoContentProvider.PLAY_PATH), null, COLUMN_NAME_PLAY_NAME +" LIKE ?" , new String[]{alphabet + "%"}, null);
 	///.query(MoverContentProvider.CONTENT_URI+"/"+MoverContentProvider.PLAY_PATH, null, null, null, null);
-	Log.v("in playdiao cursor",""+cursor.getCount());
 		if(cursor != null && cursor.getCount()>0){
 			playsList = new ArrayList<PlaysBean>();
 			setColumns(cursor);
@@ -269,7 +262,6 @@ public class PlayDAO {
 	
 	public static ArrayList<String> getKeyList()
 	{
-		Log.v("keyList:::::::::::::::",""+keyList);
 		return keyList;
 
 	}
@@ -283,7 +275,6 @@ public class PlayDAO {
 			alphabet=search.toString();
 	Cursor cursor =ctx.getContentResolver().query(Uri.parse(LibrettoContentProvider.CONTENT_URI+"/"+LibrettoContentProvider.PLAY_PATH), null, COLUMN_NAME_PLAY_NAME +" LIKE ?" , new String[]{"%"+alphabet + "%"}, null);
 	///.query(MoverContentProvider.CONTENT_URI+"/"+MoverContentProvider.PLAY_PATH, null, null, null, null);
-	Log.v("in playdiao cursor",""+cursor.getCount());
 		if(cursor != null && cursor.getCount()>0){
 			
 			setColumns(cursor);
@@ -318,7 +309,6 @@ public class PlayDAO {
 			
 	Cursor cursor =ctx.getContentResolver().query(Uri.parse(LibrettoContentProvider.CONTENT_URI+"/"+LibrettoContentProvider.PLAY_PATH), null, COLUMN_NAME_PLAY_ID +"=\""+PlayId+"\"",null, null);
 	///.query(MoverContentProvider.CONTENT_URI+"/"+MoverContentProvider.PLAY_PATH, null, null, null, null);
-	Log.v("in playdiao cursor",""+cursor.getCount());
 		if(cursor != null && cursor.getCount()>0){
 			
 			setColumns(cursor);
@@ -355,16 +345,11 @@ public class PlayDAO {
 	public static ArrayList<PlaysBean> getPlayByID(Context ctx,String PlayId){
 
 		ArrayList<PlaysBean> list = new ArrayList<PlaysBean>();
-		
-		System.out.println("CHECKING FOR PLAY BY ID "+PlayId);	
-		System.out.println(LibrettoContentProvider.CONTENT_URI+"/"+LibrettoContentProvider.PLAY_PATH);
 		Uri uri = Uri.withAppendedPath(LibrettoContentProvider.CONTENT_URI,
 				LibrettoContentProvider.PLAY_PATH);
 		ContentResolver cr = ctx.getContentResolver();
 		Cursor cursor =cr.query(uri, null, COLUMN_NAME_PLAY_LONG_ID +"=\""+PlayId+"\"",null, null);
 	///.query(MoverContentProvider.CONTENT_URI+"/"+MoverContentProvider.PLAY_PATH, null, null, null, null);
-  System.out.println("Howdy");
-	System.out.println("cursor: "+cursor.getCount());
    
 		if(cursor != null && cursor.getCount()>0){
 			
@@ -397,7 +382,6 @@ public class PlayDAO {
 		ContentValues cv =new ContentValues();
 		cv.put(PlayDAO.COLUMN_NAME_SCROLL_POSITION, sp);
 		int rowUpdated = cr.update(Uri.parse(LibrettoContentProvider.CONTENT_URI+"/"+LibrettoContentProvider.PLAY_PATH), cv, COLUMN_NAME_PLAY_LONG_ID + "=\"" + playid+"\"" , null);
-		System.out.println("UP UP UP IPDATE: "+rowUpdated);
 	
 	    	 
 		return rowUpdated;

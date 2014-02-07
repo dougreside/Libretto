@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import org.nypl.R;
 import org.nypl.dataholder.ChaptersBean;
-import org.nypl.dataholder.VersionBean;
 
 import android.view.LayoutInflater;
 import android.view.View;

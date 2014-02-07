@@ -2,20 +2,14 @@ package org.nypl.adapter;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
 import java.util.ArrayList;
 
 import org.nypl.R;
-import org.nypl.database.VersionDAO;
 import org.nypl.dataholder.PlayNoteBean;
-import org.nypl.dataholder.VersionBean;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,10 +56,6 @@ public class AnnotateListAdapter extends BaseAdapter{
 		//if (convertView == null) 
 			convertView = LayoutInflater.from(mContext).inflate(R.layout.e_annotate_list_layout, null);
 			final PlayNoteBean annotatelist = mAnnotateList.get(position);
-			Log.v("annotatelist",""+annotatelist);
-			System.out.println("annotatelist::::::::::::::::::::1111111"+annotatelist.getNotes().toString());
-			Log.v("annotatelist.getNotes()",""+annotatelist.getNotes().toString());
-			System.out.println("annotatelist.getNotes():::::"+annotatelist.getNotes().toString());
 		
 			mCoverImage =(ImageView) convertView.findViewById(R.id.e_list_layout_play_image);
 			TextView  mPlayName=(TextView) convertView.findViewById(R.id.e_list_layout_play_name);
@@ -97,18 +87,7 @@ public class AnnotateListAdapter extends BaseAdapter{
 	}
 	
 	
-	private class SetCover extends AsyncTask<String, Void, String> {
-			 
-			  @Override
-			  protected String doInBackground(String... params) {
-				  ImageView im= new ImageView(mContext);
-					im=mCoverImage;
-					Bitmap bit=BitmapFactory.decodeStream(bitmap);
-					Bitmap scaled = Bitmap.createScaledBitmap(bit, mListCoverWidth, mListCoverHeight, true);
-					im.setImageBitmap(scaled);
-			    return null;
-			  }
-	}
+	
 
 	public void setCoverImage(final InputStream bitmap,final ImageView mCoverImage){
 		new Thread(){

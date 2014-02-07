@@ -1,8 +1,6 @@
 package org.nypl;
 
-import java.io.File;
 import java.util.ArrayList;
-
 
 import org.nypl.adapter.SheetMusicPagerAdapter;
 import org.nypl.database.SheetMusicDAO;
@@ -10,7 +8,6 @@ import org.nypl.dataholder.SheetMusicBean;
 import org.nypl.utils.CustomTypefaceSpan;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -18,7 +15,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
-
 import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
@@ -29,15 +25,11 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ForegroundColorSpan;
-import android.util.Log;
 import android.view.View;
-
 import android.webkit.WebView;
-
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -87,10 +79,7 @@ public class SheetMusicActivity extends FragmentActivity {
 
 		BitmapFactory.Options options = new BitmapFactory.Options();
 		options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-		// ((ImageView)findViewById(R.id.s_background_img)).setBackgroundDrawable(new
-		// BitmapDrawable(BitmapFactory.decodeResource(getResources(),
-		// R.drawable.bg_script, options)));
-		// setCover();
+
 
 		Typeface lato = Typeface.createFromAsset(getAssets(),
 				"fonts/Lato-Reg.ttf");
@@ -106,14 +95,9 @@ public class SheetMusicActivity extends FragmentActivity {
 		CONTENT_LOCATION = extras.getString("content_location");
 		
 		// mPosition = 1;
-		System.out.println(SheetMusicId);
 		SheetMusicPages = SheetMusicDAO.getPagesForID(SheetMusicActivity.this,
 				SheetMusicId);
-		System.out.println("There are: " + SheetMusicPages.size());
-		for (int i=0;i<SheetMusicPages.size();i++){
-		System.out.println("Page "+i+": "
-				+ SheetMusicPages.get(i).getSheetMusicHTML());
-		}
+
 		mMusicPagerAdapter = new SheetMusicPagerAdapter(SheetMusicPages,
 				SheetMusicActivity.this, CONTENT_LOCATION);
 		SheetMusicName = SheetMusicPages.get(0).getSheetMusicName();
@@ -134,7 +118,6 @@ public class SheetMusicActivity extends FragmentActivity {
 			public void onClick(View view) {
 				// This will get "Lorem ipsum dolor sit amet", but I just want
 				// "dolor"
-				System.out.println("Home");
 				finish();
 			}
 		};
@@ -157,8 +140,6 @@ public class SheetMusicActivity extends FragmentActivity {
 		mPlayerCancel = (ImageView) findViewById(R.id.player_cancel);
 		mPlayerEditAudio = (ImageView) findViewById(R.id.player_edit_audio);
 		songTitleLabel = (TextView) findViewById(R.id.songTitle);
-
-		System.out.println("After ViewPageAdapter");
 		mSheetMusicPager.setAdapter(mMusicPagerAdapter);
 
 		mSheetMusicPager.setCurrentItem(mPosition);
@@ -235,8 +216,6 @@ public class SheetMusicActivity extends FragmentActivity {
 
 	@Override
 	protected void onResume() {
-		Log.i(TAG, "" + mMusicPagerAdapter);
-		Log.i(TAG, "" + mMusicPagerAdapter.getChildAtIndex(0));
 		new Handler() {
 			public void handleMessage(android.os.Message msg) {
 				mFocusedPage = (WebView) mMusicPagerAdapter.getChildAtIndex(

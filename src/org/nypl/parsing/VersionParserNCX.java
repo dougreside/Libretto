@@ -53,15 +53,15 @@ public class VersionParserNCX {
 
 	public static class RssHandler extends DefaultHandler {
 		private ArrayList<VersionBean> versionItemList;
-		private ArrayList<PlaysBean> playsItemList;
+
 		private ArrayList<ChaptersBean> chaptersItemList;
 		private VersionBean currentVersion;
 		private ChaptersBean currentChapter;
 		private PlaysBean currentPlay = new PlaysBean();
 		private StringBuilder builder;
-		private String item_id;
+
 		private String version_id;
-		private String version_name;
+
 		private String version_html_name;
 		private String chapterID;
 		private String chapterName;
@@ -92,15 +92,10 @@ public class VersionParserNCX {
 		public void endElement(String uri, String localName, String name)
 				throws SAXException {
 			super.endElement(uri, localName, name);
-			System.out.println("end: " + localName);
 			// if (this.currentItem != null){
-			System.out.println("Do do do " + localName);
 			if ((localName.equalsIgnoreCase(NAVPOINT))
 					&& (this.currentVersion != null)) {
 				//String versionname = builder.toString().trim();
-				System.out.println("*******" + version_id);
-				System.out.println("*******" + versionName);
-				System.out.println("*******" + version_html_name);
 				// Same for all chapters
 				
 				currentVersion.setVersionPlayID(playidfinal);
@@ -119,16 +114,13 @@ public class VersionParserNCX {
 				
 				versionItemList.add(currentVersion);
 				chaptersItemList.add(currentChapter);
-				System.out.println("Inserting version");
 				if (versionDepth<2){
 				if (db1 != null) {
 					currentChapter.setHTMLFile(version_html_name);
-					System.out.println("db1 not null");
 					CsvReader.insertVersionTable(db1, context1, version_id,
 							playidfinal, versionName);
 				} else {
-					System.out.println("DB1 null but playidfinal is "
-							+ playidfinal);
+						
 					ContentValues cv = new ContentValues();
 					cv.put(VersionDAO.COLUMN_NAME_VERSION_UUID, version_id);
 					cv.put(VersionDAO.COLUMN_NAME_VERSION_PLAY_ID, playidfinal);
@@ -148,12 +140,10 @@ public class VersionParserNCX {
 				}
 					
 					if (db1 != null) {
-						System.out.println("db1 not null");
 						CsvReader.insertChapterTable(db1, context1, version_id,
 								 chapterHTML, chapterName, chapterID, playOrder);
 					} else {
-						System.out.println("DB1 null but playidfinal is "
-								+ playidfinal);
+							
 						ContentValues cv = new ContentValues();
 						cv.put(ChaptersDAO.COLUMN_NAME_VERSION_ID, version_id);
 						cv.put(ChaptersDAO.COLUMN_NAME_HTML_FILE, chapterHTML);
@@ -173,11 +163,9 @@ public class VersionParserNCX {
 
 			else if (localName.equalsIgnoreCase("text")) {
 				if (titleActive) {
-					System.out.println("Setting title");
 					currentPlay.setPlayName(builder.toString().trim());
 					titleActive = false;
 				} else if (authorActive) {
-					System.out.println("Setting author");
 					currentPlay.setPlayAuthors(builder.toString().trim());
 					authorActive = false;
 				}
@@ -252,17 +240,13 @@ public class VersionParserNCX {
 										cv);
 
 					}
-					System.out.println("Inserted");
 					PlayJsonParser.addPlayToJson(ProjectFolder + File.separator
 							+ "playjsonformat.json", playidfinal,
 							currentPlay.getPlayName(), "cover.jpeg", "",
 							currentPlay.getPlayAuthors(), "");
 				}
-				System.out.println("IS PLAY FOLDER NAMED RIGHT?");
 				if (PlayFolder.exists()) {
-					System.out.println(CONTENT_LOCATION);
-					System.out.println(ProjectFolder + File.separator
-							+ playidfinal);
+					
 					PlayFolder.renameTo(new File(ProjectFolder + File.separator
 							+ playidfinal));
 				}

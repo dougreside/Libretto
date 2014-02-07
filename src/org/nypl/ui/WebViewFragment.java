@@ -11,9 +11,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -54,9 +52,7 @@ public class WebViewFragment extends BaseFragment{
 		super.onActivityCreated(savedInstanceState);
 		View	view	=	getView();
 		mPlayDetailView= (WebView) view.findViewById(R.id.s_plays_detail_webview);
-		//pd = ProgressDialog.show(mContext, "Loading", "please wait...");
-		///progress =(LinearLayout) vg.findViewById(R.id.progress);
-		///progress.setVisibility(View.VISIBLE);
+		
 		mPlayDetailView.getSettings().setJavaScriptEnabled(true);
 		mPlayDetailView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
 		mPlayDetailView.setBackgroundColor(Color.TRANSPARENT);//getResources().getColor(android.R.color.transparent));
@@ -89,18 +85,10 @@ public class WebViewFragment extends BaseFragment{
 		@Override
 		public void onPageFinished(WebView view, String url) {
 			super.onPageFinished(view, url);
-			//	cancelCover();
-			///mDetailScriptWebView.loadUrl("file:///android_asset/"+versionDetailList.get(0).getVersionHTMlFile());
-
-			Log.v("url.....::::::::::::::::::", url);
-			System.out.println("Version::::::"+htmlVersionID);
-			//findViewById(R.id.progress).setVisibility(View.GONE);
-			if(htmlVersionID!=null )
+				if(htmlVersionID!=null )
 			{  
 				view.loadUrl("javascript:scrollToElement('" + htmlVersionID.trim() + "')");
-			}/*else{
-				view.loadUrl(url);
-			}*/
+			}
 
 		}
 		@Override
@@ -111,7 +99,6 @@ public class WebViewFragment extends BaseFragment{
 		}
 		@Override
 		public boolean shouldOverrideUrlLoading(WebView view, String url) {
-			Log.v("NYPL::::::::::::::::::", url);
 
 			if(url.contains("file:///android_asset/")){
 
@@ -129,8 +116,7 @@ public class WebViewFragment extends BaseFragment{
 			mVersionDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 			mVersionDialog.setContentView(R.layout.popup_plays_version);
 			ListView mVersionList=(ListView) mVersionDialog.findViewById(R.id.s_play_version_list);
-			///mNotes=null;
-			////mSearchNote= null; 
+		
 			mVersionList.setAdapter(new VersionListAdapter(mVersionDetailList));
 			mVersionList.setOnItemClickListener(new OnItemClickListener() {
 

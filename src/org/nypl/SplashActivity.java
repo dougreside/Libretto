@@ -60,11 +60,9 @@ public class SplashActivity extends Activity{
     }
    
 	public void onCreate(Bundle savedInstanceState) {
-		System.out.println("SPLASH!");
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 	       super.onCreate(savedInstanceState);
 	       setContentView(R.layout.s_splash);
-	       
 	       CONTENT_LOCATION = "Android/data/"+this.getPackageName()+File.separator+"contents";    
 	       final File mfreeChapterFolder = new File(FilePath.getAbsolutePath()+File.separator+CONTENT_LOCATION);
 	       
@@ -78,9 +76,13 @@ public class SplashActivity extends Activity{
 	       
 			if (haveNetworkConnection()){
 				
-			
+			try{
 	       final DownloadFile df = new DownloadFile();
 	       df.execute(this.getString(R.string.libraryURI),FilePath.getAbsolutePath()+File.separator+CONTENT_LOCATION+File.separator+"library.json");
+			}
+			catch (Exception e){
+				startUp();
+			}
 			}
 			else{
 				startUp();
@@ -94,7 +96,6 @@ public class SplashActivity extends Activity{
 	       
 	   
 	public void startUp(){
-
    	   	File playsjson = new File(FilePath.getAbsolutePath()+File.separator+CONTENT_LOCATION+File.separator+"playjsonformat.json");
    	    File samplePlay =  new File(FilePath.getAbsolutePath()+File.separator+CONTENT_LOCATION+File.separator+"A65A647B-A4A3-48E5-A7B4-C181277CD5DB");
    	    File logo = new File(FilePath.getAbsolutePath()+File.separator+CONTENT_LOCATION+File.separator+"ic_launcher.png");
@@ -111,7 +112,7 @@ public class SplashActivity extends Activity{
 		}
 
     
-                          System.out.println("starinup");  	   
+                         
                  // Intent intent = new Intent(SplashActivity.this, HomeActivity.class);
 		  							Intent intent = new Intent(SplashActivity.this, PlaysListActivity.class);
         
@@ -121,6 +122,7 @@ public class SplashActivity extends Activity{
 	}
 	
 	public void copyFromAssets(String fileName){
+		System.out.println("Copying file: "+fileName);
 		 AssetManager assetManager = getAssets();
 			InputStream inputStream = null;
 			try{
@@ -132,7 +134,7 @@ public class SplashActivity extends Activity{
 	        
 	            int count;
 	            while ((count = inputStream.read(data)) != -1) {
-	             //  System.out.println("count "+count);
+	             // 
 	                output.write(data, 0, count);
 	            }
 
@@ -142,18 +144,15 @@ public class SplashActivity extends Activity{
 	            
 			}
 			catch (Exception e){
-				System.out.println("Ow");
 			}
 	}
 
 	private class DownloadFile extends AsyncTask<String,Integer,String> {
 		@Override
 		protected void onPostExecute(String outstring) {
-				
-			System.out.println("Download Complete");
 			//new ExtractingTask("HTMLObject.zip", FilePath.getAbsolutePath()+File.separator+CONTENT_LOCATION+"/").execute();
 			 //CONTENT_LOCATION = "Android/data/"+getView().getContext().getPackageName()+File.separator+"contents";
-		   //  System.out.println("UNZIP THIS: "+result);	
+		   // 
 		     
 		    	// PlaysAddActivity.processZipFile(result,mCtx);
 
@@ -183,10 +182,10 @@ public class SplashActivity extends Activity{
 		 					"\"playUrl\":\"Null\"}";
 			     try{ 
 			    	 jsonString = readFile(outstring);
-			    	// System.out.println(jsonString);
+			    	//
 			     }
 			     catch(IOException e){
-			    	 System.out.println(e);
+			    	
 			    	 
 			     }
 			     JSONObject books;
@@ -217,14 +216,14 @@ public class SplashActivity extends Activity{
 			 			 
 			 		 }
 			 		 manifestString=manifestString+"]}";
-			 	   System.out.println(manifestString);
+			 	  
 			 	   PrintWriter out = new PrintWriter(playjsonformat);
 		           out.println(manifestString);
 		           out.flush();
 		           out.close();
 			     }
 			     catch (Exception e){
-			    	 System.out.println(e);		    	 
+			    	
 			     }
 			 
 			
@@ -242,7 +241,7 @@ public class SplashActivity extends Activity{
 	            connection.connect();
 	            // this will be useful so that you can show a typical 0-100% progress bar
 	            int fileLength = connection.getContentLength();
-	            System.out.println("Downloading to: "+outstring);
+	           
 	            // download the file
 	            InputStream input = new BufferedInputStream(url.openStream());
 	            OutputStream output = new FileOutputStream(outstring);
@@ -263,7 +262,6 @@ public class SplashActivity extends Activity{
 	    	
 	    }
 	    	catch (Exception e){
-	    		System.out.println(e);
 	    	}
 	}
    

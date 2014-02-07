@@ -1,17 +1,12 @@
 package org.nypl.ui;
 
-import org.nypl.CoverFlow;
-import org.nypl.HomeActivity;
-import org.nypl.NavigationActivity;
-import org.nypl.R;
-import org.nypl.adapter.CoverFlowAdapter;
 
+import org.nypl.R;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 public class HomeFragment extends BaseFragment{
 	

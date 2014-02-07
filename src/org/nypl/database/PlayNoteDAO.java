@@ -3,16 +3,13 @@ package org.nypl.database;
 import java.util.ArrayList;
 
 import org.nypl.LibrettoContentProvider;
-import org.nypl.dataholder.AnchorBean;
 import org.nypl.dataholder.PlayNoteBean;
-import org.nypl.dataholder.PlaysBean;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
-import android.util.Log;
 import android.widget.Toast;
 
 public class PlayNoteDAO {
@@ -92,7 +89,6 @@ public class PlayNoteDAO {
 
 		Cursor cursor =ctx.getContentResolver().query(Uri.parse(LibrettoContentProvider.CONTENT_URI+"/"+LibrettoContentProvider.PLAYNOTE_DETAIL_PATH), null,NoteId,null, null);
 		///.query(MoverContentProvider.CONTENT_URI+"/"+MoverContentProvider.PLAY_PATH, null, null, null, null);
-		Log.v("in playdiao cursor",""+cursor.getCount());
 		if(cursor != null && cursor.getCount()>0){
 
 			setColumns(cursor);
