@@ -72,6 +72,8 @@ public class PlaysListActivity extends FragmentActivity   {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+		
+		
 		super.onCreate(savedInstanceState);
 		CONTENT_LOCATION= "Android/data/"+this.getPackageName()+File.separator+"contents";
 		setContentView(R.layout.plays_activity);
@@ -192,7 +194,7 @@ public class PlaysListActivity extends FragmentActivity   {
              @Override 
              public boolean onItemLongClick(AdapterView<?> av, View v, int pos, long id) 
             { 
-                 Toast.makeText(PlaysListActivity.this, "LongClick", Toast.LENGTH_LONG).show();
+              //   Toast.makeText(PlaysListActivity.this, "LongClick", Toast.LENGTH_LONG).show();
                  return false;
             } 
        }); 
@@ -243,10 +245,11 @@ public class PlaysListActivity extends FragmentActivity   {
 				
 		   	   	}
 		   	   	else{
-		   	   	pd = ProgressDialog.show(ctx, "Installing libretto", "please wait...");
-	   			final UnzipEPUB unzipper = new UnzipEPUB(); 
-	   		    unzipper.execute(childPosition+"",uuid,mPlaysNameList.get(childPosition).getPlayName().toString(),mVersion);
-
+		   	   //	pd = ProgressDialog.show(ctx, "Installing libretto", "please wait...");
+	   			//final UnzipEPUB unzipper = new UnzipEPUB(); 
+	   		    //unzipper.execute(childPosition+"",uuid,mPlaysNameList.get(childPosition).getPlayName().toString(),mVersion);
+		   	     Toast.makeText(PlaysListActivity.this, "No Network Available.  Please try again later.", Toast.LENGTH_LONG).show();
+	                
 		   	   	}
 		   	   	
 		   	 return false;
@@ -296,13 +299,13 @@ public class PlaysListActivity extends FragmentActivity   {
 			  
 			  
 	    	File mFirstVersionFile = new File(FilePath.getAbsolutePath()+File.separator+CONTENT_LOCATION+File.separator+playId+".epub");
-	    	
+	    	System.out.println(mFirstVersionFile);
 	    	String[] i={"","","","",""};
 	  
 		
 		       String mFilename=playId+".epub";
 		       String mFilepath=FilePath.getAbsolutePath()+File.separator+CONTENT_LOCATION+File.separator+mFilename;
-		      
+		      System.out.println(mFilepath);
 		      
 		       ctx = findViewById(R.id.s_main_title).getContext();
 		 		
@@ -316,8 +319,9 @@ public class PlaysListActivity extends FragmentActivity   {
 					   	 mFirstVersionFile.mkdirs();
 					   	 inputStream = new FileInputStream(mFilepath);   
 					   	 String output = FilePath.getAbsolutePath()+File.separator+CONTENT_LOCATION+File.separator+playId+File.separator;
-						ZipExtracter.extract(inputStream, output);
-						
+						System.out.println(output);
+					   	 ZipExtracter.extract(inputStream, output);
+						System.out.println("back");
 						inputStream.close();
 						
 						

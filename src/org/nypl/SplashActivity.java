@@ -15,12 +15,15 @@ import java.util.Timer;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.nypl.database.CsvToSqliteImport;
+import org.nypl.database.SqliteDBHelper;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetManager;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -77,8 +80,10 @@ public class SplashActivity extends Activity{
 			if (haveNetworkConnection()){
 				
 			try{
+				System.out.println("Getting "+FilePath.getAbsolutePath()+File.separator+CONTENT_LOCATION+File.separator+"playjsonformat.json");
 	       final DownloadFile df = new DownloadFile();
-	       df.execute(this.getString(R.string.libraryURI),FilePath.getAbsolutePath()+File.separator+CONTENT_LOCATION+File.separator+"library.json");
+	       df.execute(this.getString(R.string.libraryURI),FilePath.getAbsolutePath()+File.separator+CONTENT_LOCATION+File.separator+"playjsonformat.json");
+			//startUp();
 			}
 			catch (Exception e){
 				startUp();
@@ -97,8 +102,13 @@ public class SplashActivity extends Activity{
 	   
 	public void startUp(){
    	   	File playsjson = new File(FilePath.getAbsolutePath()+File.separator+CONTENT_LOCATION+File.separator+"playjsonformat.json");
-   	    File samplePlay =  new File(FilePath.getAbsolutePath()+File.separator+CONTENT_LOCATION+File.separator+"A65A647B-A4A3-48E5-A7B4-C181277CD5DB");
+   	  //  File samplePlay =  new File(FilePath.getAbsolutePath()+File.separator+CONTENT_LOCATION+File.separator+"A65A647B-A4A3-48E5-A7B4-C181277CD5DB");
    	    File logo = new File(FilePath.getAbsolutePath()+File.separator+CONTENT_LOCATION+File.separator+"ic_launcher.png");
+   	  File about = new File(FilePath.getAbsolutePath()+File.separator+CONTENT_LOCATION+File.separator+"about.html");
+   	  
+   	  if(!about.exists()){
+     	    copyFromAssets("about.html");
+  		}
    	    if(!logo.exists()){
    	    copyFromAssets("ic_launcher.png");
 		}
@@ -106,9 +116,15 @@ public class SplashActivity extends Activity{
    	   	{
    	   	copyFromAssets("playjsonformat.json");
    	   	}
-		if(!samplePlay.exists()){
-			copyFromAssets("A65A647B-A4A3-48E5-A7B4-C181277CD5DB.epub");
-			copyFromAssets("A65A647B-A4A3-48E5-A7B4-C181277CD5DB.jpeg");
+   	 
+   	 try {
+   		 	SqliteDBHelper mDbHelper= new SqliteDBHelper(mCtx);
+   		 	SQLiteDatabase db = mDbHelper.getReadableDatabase();
+			CsvToSqliteImport.readFromCsvForPlayTable(db,mCtx);
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
     
@@ -129,7 +145,7 @@ public class SplashActivity extends Activity{
 	       inputStream = assetManager.open(fileName);
 			
 			 OutputStream output = new FileOutputStream(FilePath.getAbsolutePath()+File.separator+CONTENT_LOCATION+File.separator+fileName);
-
+System.out.println("Copying to "+output);
 	            byte data[] = new byte[1024];
 	        
 	            int count;
@@ -169,6 +185,7 @@ public class SplashActivity extends Activity{
 		     	String urlString = params[0];
 	    	     String outstring =   params[1];
 	        try {
+	        	System.out.println("OUTSTRING : "+outstring);
 	        	downloadContent(urlString,outstring);
 	            
 	            
@@ -216,14 +233,15 @@ public class SplashActivity extends Activity{
 			 			 
 			 		 }
 			 		 manifestString=manifestString+"]}";
-			 	  
+			 	  System.out.println(manifestString);
 			 	   PrintWriter out = new PrintWriter(playjsonformat);
+			 	   System.out.println(playjsonformat);
 		           out.println(manifestString);
 		           out.flush();
 		           out.close();
 			     }
 			     catch (Exception e){
-			    	
+			    	System.out.println(e);
 			     }
 			 
 			

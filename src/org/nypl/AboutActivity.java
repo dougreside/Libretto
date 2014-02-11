@@ -83,7 +83,8 @@ public class AboutActivity extends FragmentActivity {
 		super.onCreate(savedInstanceState);
           
 		setContentView(R.layout.s_plays_about_frag);
-		
+		 CONTENT_LOCATION = "Android/data/"+this.getPackageName()+File.separator+"contents";    
+	      
 		BitmapFactory.Options options = new BitmapFactory.Options();
 		options.inPreferredConfig = Bitmap.Config.ARGB_8888;
 	//	((ImageView)findViewById(R.id.s_background_img)).setBackgroundDrawable(new BitmapDrawable(BitmapFactory.decodeResource(getResources(), R.drawable.bg_script, options)));
@@ -105,7 +106,7 @@ public class AboutActivity extends FragmentActivity {
 		TextView titleBar = (TextView) findViewById(R.id.s_main_title);
 		WebView aboutWeb = (WebView) findViewById(R.id.s_about_webview);
 		//String titleLogo ="&#xe012;";
-		String titleText = "&#xe014; "+AboutText+" &#xe015;";
+		String titleText = "&#xe014; "+AboutText;
 		titleBar.setTypeface(lato);
 		titleBar.setMovementMethod(LinkMovementMethod.getInstance());
 		titleBar.setText(titleText);
@@ -128,15 +129,15 @@ public class AboutActivity extends FragmentActivity {
 		
 		s.setSpan (new CustomTypefaceSpan("", icomoon ), 0, 1,Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 		s.setSpan (new CustomTypefaceSpan("", lato ), 2, AboutText.length(),Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-		s.setSpan (new CustomTypefaceSpan("", icomoon ), AboutText.length()+2,AboutText.length()+4,Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+	//	s.setSpan (new CustomTypefaceSpan("", icomoon ), AboutText.length()+2,AboutText.length()+4,Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 		s.setSpan (clickHome,0,1,Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-		s.setSpan (clickNav,AboutText.length()+3,AboutText.length()+4,Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-	    s.setSpan(new ForegroundColorSpan(Color.parseColor("#7f2352")),0,AboutText.length()+4,Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+	//	s.setSpan (clickNav,AboutText.length()+3,AboutText.length()+4,Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+	    s.setSpan(new ForegroundColorSpan(Color.parseColor("#7f2352")),0,AboutText.length(),Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 	    
 		titleBar.setText(s);
-		copyFromAssets("about.html");
+		//copyFromAssets("about.html");
 		
-		String filePath = "file:///"+FilePath.getAbsolutePath() + File.separator+ CONTENT_LOCATION + File.separator+"about.html";
+		String filePath = "file://"+FilePath.getAbsolutePath() + File.separator+ CONTENT_LOCATION + File.separator+"about.html";
 		
 		aboutWeb.loadUrl(filePath);
 
@@ -192,31 +193,7 @@ public class AboutActivity extends FragmentActivity {
 	
 
 
-	public void copyFromAssets(String fileName){
-		 AssetManager assetManager = getAssets();
-			InputStream inputStream = null;
-			try{
-	       inputStream = assetManager.open(fileName);
-			
-			 OutputStream output = new FileOutputStream(FilePath.getAbsolutePath()+File.separator+CONTENT_LOCATION+File.separator+fileName);
-
-	            byte data[] = new byte[1024];
-	        
-	            int count;
-	            while ((count = inputStream.read(data)) != -1) {
-	             // 
-	                output.write(data, 0, count);
-	            }
-
-	            output.flush();
-	            output.close();
-	            inputStream.close();
-	            
-			}
-			catch (Exception e){
-			}
-	}
-
+	
 
 
 	

@@ -23,7 +23,7 @@ public class SqliteDBHelper extends SQLiteOpenHelper{
 		// TODO Auto-generated method stub
 		System.out.println("CREATING");
 		DatabaseTable.onCreate(db);
-		
+	
 			try {
 			System.out.println("LET THERE BE!");	
 			CsvToSqliteImport.readFromCsvForPlayTable(db,context);

@@ -138,77 +138,7 @@ public class PlayDAO {
 	
 	
 
-	public static  ArrayList<PlaysBean>  getAllVersionBookmark(Context ctx){
-
-		ArrayList<PlaysBean> list = new ArrayList<PlaysBean>();
-
-
 	
-			Cursor cursor =ctx.getContentResolver().query(Uri.parse(LibrettoContentProvider.CONTENT_URI+"/"+LibrettoContentProvider.PLAY_ALLBOOKMARK_PATH), null, null  ,null , null);
-			
-			if(cursor != null && cursor.getCount()>0){
-			
-				setColumns(cursor);
-				
-				for(int i=0;i<cursor.getCount();i++){
-					cursor.moveToPosition(i);
-					PlaysBean plays = new PlaysBean();
-					plays.setPlayID(cursor.getString(COLUMN_INDEX_PLAY_ID));
-					plays.setPlayID(cursor.getString(COLUMN_INDEX_PLAY_ID1));
-					plays.setPlayName(cursor.getString(COLUMN_INDEX_PLAY_NAME));
-					plays.setPlayImage(cursor.getString(COLUMN_INDEX_PLAY_IMAGE));
-					plays.setPlayUrl(cursor.getString(COLUMN_INDEX_PLAY_URL));
-					
-					plays.setPlayAuthors(cursor.getString(COLUMN_INDEX_PLAY_AUTHORS));
-				
-					plays.setPlayVersion(cursor.getString(COLUMN_INDEX_PLAY_VERSION));
-					plays.setPlayVersionID(cursor.getString(COLUMN_INDEX_PLAY_VERSION_ID));
-					plays.setScrollPosition(cursor.getString(COLUMN_INDEX_PLAY_SCROLL_POSITION));
-					
-					list.add(plays);
-				}
-				
-			}
-			cursor.close();
-		//}
-		return list;
-	}
-
-	
-	
-	
-	
-	public static ArrayList<PlaysBean> getBookmarkDetail(Context ctx,String VersionId){
-
-		ArrayList<PlaysBean> list = new ArrayList<PlaysBean>();
-	
-			Cursor cursor =ctx.getContentResolver().query(Uri.parse(LibrettoContentProvider.CONTENT_URI+"/"+LibrettoContentProvider.SET_BOOKMARK_PATH), null, VersionId  ,null , null);
-			///.query(MoverContentProvider.CONTENT_URI+"/"+MoverContentProvider.PLAY_PATH, null, null, null, null);
-			if(cursor != null && cursor.getCount()>0){
-				
-				setColumns(cursor);
-				
-				for(int i=0;i<cursor.getCount();i++){
-					cursor.moveToPosition(i);
-					PlaysBean plays = new PlaysBean();
-					plays.setPlayID(cursor.getString(COLUMN_INDEX_PLAY_ID));
-					plays.setPlayName(cursor.getString(COLUMN_INDEX_PLAY_NAME));
-					plays.setPlayImage(cursor.getString(COLUMN_INDEX_PLAY_IMAGE));
-					plays.setPlayUrl(cursor.getString(COLUMN_INDEX_PLAY_URL));
-					
-					plays.setPlayAuthors(cursor.getString(COLUMN_INDEX_PLAY_AUTHORS));
-					plays.setPlayVersion(cursor.getString(COLUMN_INDEX_PLAY_VERSION));
-					plays.setPlayVersionID(cursor.getString(COLUMN_INDEX_PLAY_VERSION_ID));
-					
-					list.add(plays);
-				}
-				
-			}
-			cursor.close();
-			return list;
-		}
-	
-
 	
 	
 	

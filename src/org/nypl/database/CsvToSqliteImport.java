@@ -18,6 +18,7 @@ import org.nypl.parsing.PlayJsonParser;
 import org.nypl.parsing.VersionParser;
 
 import android.content.Context;
+import android.content.res.AssetManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.ConnectivityManager;
@@ -41,12 +42,14 @@ public class CsvToSqliteImport {
 	private static ArrayList<AudioBean> playAudioData;
 	private static ArrayList<PlaysBean> PlayJsonData;
 	public static String stringFromStream = null;
-
+	public SQLiteDatabase appDb;
+	
 	public static void readFromCsvForPlayTable(SQLiteDatabase db, Context context) throws IOException
 	{
 		
 		CONTENT_LOCATION = "Android/data/"+context.getPackageName()+File.separator+"contents";
 		filePath = FilePath.getAbsolutePath() + File.separator+ CONTENT_LOCATION+ File.separator ;
+		 
 		File mPlayJsonFile = new File(FilePath.getAbsolutePath()+File.separator+CONTENT_LOCATION+File.separator+"playjsonformat.json");
 		try {
 
@@ -65,13 +68,23 @@ public class CsvToSqliteImport {
 			
 			e.printStackTrace();
 		}
-		
+		System.out.println(stringFromStream);
 		PlayJsonData = PlayJsonParser.parsePlayList(stringFromStream);
 		for(int i=0;i<PlayJsonData.size();i++){
+			String id = PlayJsonData.get(i).getPlayID();
+		//	System.out.println(id+" : "+PlayDAO.getPlayByID(context, id).size());
+			if (db.isDbLockedByCurrentThread())
+			{
+				CsvReader.insertPlayTable(db,context,PlayJsonData.get(i).getPlayID(), PlayJsonData.get(i).getPlayName(), PlayJsonData.get(i).getPlayImage(),  PlayJsonData.get(i).getPlayAuthors(),PlayJsonData.get(i).getPlayUrl());
+				
+			}else
+				if ((PlayDAO.getPlayByID(context, id)).size()==0){
+				
+			
 			
 		CsvReader.insertPlayTable(db,context,PlayJsonData.get(i).getPlayID(), PlayJsonData.get(i).getPlayName(), PlayJsonData.get(i).getPlayImage(),  PlayJsonData.get(i).getPlayAuthors(),PlayJsonData.get(i).getPlayUrl());
 		
-
+			}
 		}
 
 	}
@@ -150,7 +163,7 @@ public class CsvToSqliteImport {
 
 	}
 
-	
+
 	public static void readFromCsvForAudioTable(String playId, SQLiteDatabase db, Context context) throws IOException
 	{
 
