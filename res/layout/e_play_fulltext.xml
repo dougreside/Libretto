@@ -12,7 +12,7 @@
         android:layout_height="fill_parent" android:id="@+id/s_plays_detail_webview" /> -->
         
          <view 
-        class="org.nypl.SelectionWebView"
+        class="org.nypl.libretto.SelectionWebView"
 	    android:layout_width="match_parent" 
 	    android:layout_height="match_parent" 
 	    android:id="@+id/s_plays_detail_webview"/>

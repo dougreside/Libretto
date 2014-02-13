@@ -57,7 +57,7 @@
         android:layout_below="@+id/s_home_main_search_layout"
         android:layout_marginTop="10dp" >
 
-        <org.nypl.CoverFlow
+        <org.nypl.libretto.CoverFlow
             android:id="@+id/coverflow"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content" />

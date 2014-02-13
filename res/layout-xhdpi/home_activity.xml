@@ -8,7 +8,7 @@
                 android:id="@+id/s_home_fragment"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                class="org.nypl.ui.HomeFragment" />
+                class="org.nypl.libretto.ui.HomeFragment" />
 
 
 <LinearLayout  android:layout_width="fill_parent"
