@@ -9,22 +9,21 @@ import java.util.ArrayList;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.nypl.libretto.R;
 import org.nypl.libretto.LibrettoContentProvider;
 import org.nypl.libretto.PlaysDetailActivity;
+import org.nypl.libretto.R;
 import org.nypl.libretto.SelectionWebView;
 import org.nypl.libretto.SheetMusicActivity;
 import org.nypl.libretto.database.AudioDAO;
 import org.nypl.libretto.database.ChaptersDAO;
 import org.nypl.libretto.database.PlayDAO;
-import org.nypl.libretto.database.PlayNoteDAO;
 import org.nypl.libretto.dataholder.AudioBean;
 import org.nypl.libretto.dataholder.ChaptersBean;
-import org.nypl.libretto.dataholder.PlayNoteBean;
 import org.nypl.libretto.dataholder.PlaysBean;
 import org.nypl.libretto.dataholder.VersionBean;
 import org.nypl.libretto.utils.Utilities;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -49,22 +48,17 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationSet;
 import android.view.animation.LayoutAnimationController;
 import android.view.animation.TranslateAnimation;
-import android.view.inputmethod.InputMethodManager;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SeekBar;
@@ -72,6 +66,7 @@ import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
+@SuppressLint({ "HandlerLeak", "SetJavaScriptEnabled" })
 public class ViewPagerAdapter extends PagerAdapter{
 	
 	private int currentChapterPos=0;
@@ -151,45 +146,36 @@ public class ViewPagerAdapter extends PagerAdapter{
 	private static File FilePath = Environment.getExternalStorageDirectory();
 	public static String CONTENT_LOCATION ;
 	private static ArrayList<VersionBean> mVersionDetailList;
-	private static ArrayList<ChaptersBean> mChaptersList;
 	private static Context mContext;
 	private Dialog mVersionDialog;
 	public static SelectionWebView mPlayDetailView;
 	private String VersionHtmlId = null;
 	private ProgressDialog pd;
+	@SuppressWarnings("unused")
 	private LinearLayout progress;
-	private String mNotes;
 	private int mPosition;
+	@SuppressWarnings("unused")
 	private String path = Environment.getExternalStorageDirectory().toString();
 	
 
 	public static  MediaPlayer mp=new MediaPlayer();
 	public static Handler mHandler = new Handler();
-	private int seekForwardTime = 5000; // 5000 milliseconds
-	private int seekBackwardTime = 5000; // 5000 milliseconds
-
 	private static Utilities utils;
 	private static String mPlaysId;
 
 	public static Dialog mPlayNoteDialog;
 
-	private static EditText mNoteText;
 
-	private static Button mSaveBtn;
-
-	private static Button mCancelBtn;
 	private static String Version;
 	public static String mNoteID;
 
-	private static ArrayList<PlayNoteBean> playNoteList;
+
 
 	private static Dialog mAudioDialog;
 	public static SharedPreferences app_preferences;
-	private static String PKG;
 	public static int mPlayFlag=0;
 	public static String audioid = null;
 	public static int currentPosition1 =0;
-	private static Animation slideUpIn;
 	private static final int REQUEST_CODE = 1;
 	static int aflag = 0;
 	public int webposition ;
@@ -202,11 +188,11 @@ public class ViewPagerAdapter extends PagerAdapter{
 	public ViewPagerAdapter(ArrayList<VersionBean> versionDetailList,Context ctx,String Version,String content_location,String currentChapter) {
 		super();
 		this.currentChapterId=currentChapter;
-		this.mVersionDetailList = versionDetailList;
-		this.mContext=ctx;
-		mChilds = new View[this.mVersionDetailList.size()];
-		this.Version=Version;
-		this.CONTENT_LOCATION=content_location;
+		ViewPagerAdapter.mVersionDetailList = versionDetailList;
+		ViewPagerAdapter.mContext=ctx;
+		mChilds = new View[ViewPagerAdapter.mVersionDetailList.size()];
+		ViewPagerAdapter.Version=Version;
+		ViewPagerAdapter.CONTENT_LOCATION=content_location;
 	}
 
 	public View getChildAtIndex(int index){
@@ -272,8 +258,7 @@ public class ViewPagerAdapter extends PagerAdapter{
 
 	private class myclient extends WebViewClient{
 
-		private Dialog mNoteSelectDialog;
-		private String mNoteId;
+		
 
 		@Override
 		public void onPageStarted(WebView view, String url, Bitmap favicon) {
@@ -327,8 +312,7 @@ public class ViewPagerAdapter extends PagerAdapter{
 				audioid= url.substring(url.indexOf("nypl_audio-")+11);
 			AudioDatalist = AudioDAO.getAudioData(mContext, audioid,mPlaysId);
 
-//
-			File extStore = Environment.getExternalStorageDirectory();
+Environment.getExternalStorageDirectory();
 			if(AudioDatalist.get(0).getAudioPath()!=null ){
 			//if(url.contains(".mp3") || url.contains("/audio") || url.contains("/media") || url.contains(".m4a")  || url.contains(".aac")  || url.contains(".f4a")){
 				AudioDatalist = AudioDAO.getAudioData(mContext, audioid,mPlaysId);
@@ -359,51 +343,7 @@ public class ViewPagerAdapter extends PagerAdapter{
 				getAudio();
 			}
 			}
-		    else if(url.contains("highlight")){
-
-				mNoteId = url.replace("highlight:", "");
-
-
-				mNoteSelectDialog=new Dialog(mContext,android.R.style.Theme_Translucent);
-				mNoteSelectDialog.getWindow();
-				mNoteSelectDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-				mNoteSelectDialog.setContentView(R.layout.note_popup);
-				TextView mUpdateNote=(TextView) mNoteSelectDialog.findViewById(R.id.txt_update_note);
-				TextView mDeleteNote=(TextView) mNoteSelectDialog.findViewById(R.id.txt_delete_note);
-				TextView mCancelNote=(TextView) mNoteSelectDialog.findViewById(R.id.txt_cancel_note);
-				mUpdateNote.setOnClickListener(new OnClickListener() {
-
-					@Override
-					public void onClick(View v) {
-
-
-						saveNote(mNoteId);
-						mNoteSelectDialog.dismiss();
-					}
-				});
-				mDeleteNote.setOnClickListener(new OnClickListener() {
-
-					@Override
-					public void onClick(View v) {
-
-						mNoteSelectDialog.dismiss();
-						int rowUpdated=mContext.getContentResolver().delete(Uri.parse(LibrettoContentProvider.CONTENT_URI+"/"+LibrettoContentProvider.PLAYNOTE_NOTEID), PlayNoteDAO.COLUMN_NAME_NOTE_ID+ "=" + mNoteId, null);
-						view.loadUrl("javascript:deletetagValue("+mNoteId+");");
-						view.loadUrl("javascript:window.HTMLOUT.showHTML('<head>'+document.getElementsByTagName('html')[0].innerHTML+'</head>');");
-						Toast.makeText(mContext, "Note deleted successfully.", Toast.LENGTH_LONG).show();
-					}
-				});
-				mCancelNote.setOnClickListener(new OnClickListener() {
-
-					@Override
-					public void onClick(View v) {
-
-
-						mNoteSelectDialog.cancel();
-					}
-				});
-				mNoteSelectDialog.show();
-			}
+		   
 		    else if (url.contains("SheetMusic")){
 		    	String SheetMusicID = url.substring(url.lastIndexOf("/")+1,url.lastIndexOf("-"));
 		    	Intent i = new Intent(mContext,SheetMusicActivity.class);
@@ -458,7 +398,7 @@ public class ViewPagerAdapter extends PagerAdapter{
 		});
 		set.addAnimation(animation);
 
-		LayoutAnimationController controller = new LayoutAnimationController(
+		new LayoutAnimationController(
 				set, 0.25f);
 
 		return animation;
@@ -495,7 +435,7 @@ public class ViewPagerAdapter extends PagerAdapter{
 		});
 		set.addAnimation(animation);
 
-		LayoutAnimationController controller = new LayoutAnimationController(
+		new LayoutAnimationController(
 				set, 0.25f);
 
 
@@ -679,7 +619,6 @@ public class ViewPagerAdapter extends PagerAdapter{
 		// Play song
 
 
-		String songTitle = null ;
 		try {
 			
 			mp.reset();
@@ -699,9 +638,6 @@ public class ViewPagerAdapter extends PagerAdapter{
 				mp.setDataSource(songIndex.trim());
 			}
 
-			songTitle=songIndex;
-			//}
-		
 			mp.prepare();
 			if(mp.getDuration()>Integer.parseInt(AudioDatalist.get(0).getClipFrom())*1000){
 				PlaysDetailActivity.mAudiolayout.setVisibility(View.VISIBLE);
@@ -901,8 +837,7 @@ public class ViewPagerAdapter extends PagerAdapter{
 		}*/
 		ContentValues cv =new ContentValues();
 		cv.put(AudioDAO.COLUMN_NAME_AUDIO_PATH, URLID);
-		//int rowUpdated=mContext.getContentResolver().update(Uri.parse(MoverContentProvider.CONTENT_URI+"/"+MoverContentProvider.AUDIO_PATH), cv, AudioDAO.COLUMN_NAME_AUDIO_CLIP_ID+"='"+clip_id+"' and ("+ AudioDAO.COLUMN_NAME_AUDIO_VERSION_ID + "='" + Version +"' and "+ AudioDAO.COLUMN_NAME_AUDIO_PLAY_ID + "='" + mPlaysId+"')" , null);
-		int rowUpdated=mContext.getContentResolver().update(Uri.parse(LibrettoContentProvider.CONTENT_URI+"/"+LibrettoContentProvider.AUDIO_PATH), cv, AudioDAO.COLUMN_NAME_AUDIO_CLIP_ID+"='"+clip_id+"' and "+ AudioDAO.COLUMN_NAME_AUDIO_PLAY_ID + "='" + mPlaysId+"'" , null);
+		mContext.getContentResolver().update(Uri.parse(LibrettoContentProvider.CONTENT_URI+"/"+LibrettoContentProvider.AUDIO_PATH), cv, AudioDAO.COLUMN_NAME_AUDIO_CLIP_ID+"='"+clip_id+"' and "+ AudioDAO.COLUMN_NAME_AUDIO_PLAY_ID + "='" + mPlaysId+"'" , null);
 		
 		
 	
@@ -1008,70 +943,6 @@ public class ViewPagerAdapter extends PagerAdapter{
 	@Override
 	public void startUpdate(View arg0) {}
 
-
-	public static void saveNote(final String mNoteId){
-		mPlayNoteDialog=new Dialog(mContext,R.style.FullHeightDialog);
-		mPlayNoteDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
-
-		mPlayNoteDialog.setContentView(R.layout.popup_notes);
-		mNoteText=(EditText) mPlayNoteDialog.findViewById(R.id.popup_note_txt);
-		mSaveBtn= (Button) mPlayNoteDialog.findViewById(R.id.btn_save);
-		mCancelBtn= (Button) mPlayNoteDialog.findViewById(R.id.btn_cancel);
-
-		playNoteList=PlayNoteDAO.getNoteDetail(mContext,mNoteId);
-		if(playNoteList.get(0).getNotes()!=null ){
-			mNoteText.setText(playNoteList.get(0).getNotes());
-			mNoteText.setSelection(playNoteList.get(0).getNotes().length());
-		}
-
-		if( playNoteList.get(0).getNotes().length()>0 && playNoteList.get(0).getNotes()!=null){
-			mSaveBtn.setText("Update");
-		}
-		mSaveBtn.setOnClickListener(new OnClickListener() {
-			private ImageView mPlayNote;
-			@Override
-			public void onClick(View v) {
-				String textString = mNoteText.getText().toString(); 
-				if (textString != null && textString.trim().length() ==0)
-				{
-					Toast.makeText(mContext, "Please enter note text", Toast.LENGTH_LONG).show();
-				} else
-				{
-					ContentValues cv =new ContentValues();
-					cv.put(PlayNoteDAO.COLUMN_NAME_NOTE_PLAY_NOTE, textString.trim());
-
-					int rowUpdated=mContext.getContentResolver().update(Uri.parse(LibrettoContentProvider.CONTENT_URI+"/"+LibrettoContentProvider.PLAYNOTE_NOTEID), cv, PlayNoteDAO.COLUMN_NAME_NOTE_PLAY_ID + "=" + playNoteList.get(0).getPlayID()+" "+ "and"+ " " + PlayNoteDAO.COLUMN_NAME_NOTE_ID+ "=" + mNoteId, null);
-					mPlayNoteDialog.cancel();
-					if(rowUpdated>0){
-
-						if(playNoteList.get(0).getNotes().length()>0 &&  playNoteList.get(0).getNotes()!=null){
-							Toast.makeText(mContext, "Note updated successfully.", Toast.LENGTH_LONG).show();
-							//PlaysDetailActivity.mPlayNote.setImageResource(drawable.img_notes);
-						}else{
-							//PlaysDetailActivity.mPlayNote.setImageResource(drawable.img_notes);
-							Toast.makeText(mContext, "Note saved successfully.", Toast.LENGTH_LONG).show();
-						}
-					}
-				}
-
-			}
-		});
-		mCancelBtn.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				mPlayNoteDialog.cancel();
-			}
-		});
-		InputMethodManager inputMethodManager=(InputMethodManager)mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
-		if (inputMethodManager != null){
-			mPlayNoteDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-		} 
-		mPlayNoteDialog.show();
-
-	}
-
 	public static  void editAudio(){
 
 		PlaysDetailActivity.mAudiolayout.setVisibility(View.GONE);
@@ -1119,7 +990,7 @@ public class ViewPagerAdapter extends PagerAdapter{
 	public class MyJavaScriptInterface   
 	{  
 
-		@SuppressWarnings("unused")  
+	
 		public void showHTML(String html)  
 		{  
 			File cacheDir;
@@ -1146,7 +1017,7 @@ public class ViewPagerAdapter extends PagerAdapter{
 		}  
 
 
-		@SuppressWarnings("unused")  
+
 		public void showHTML1(String html)  
 		{  
 			File cacheDir;

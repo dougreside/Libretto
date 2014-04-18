@@ -3,6 +3,10 @@ package org.nypl.libretto.dataholder;
 import java.io.Serializable;
 
 public class VersionBean implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String versionID;
 	private String versionPlayID;
 	private String versionName;

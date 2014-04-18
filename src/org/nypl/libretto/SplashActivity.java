@@ -15,7 +15,6 @@ import java.util.Timer;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.nypl.libretto.R;
 import org.nypl.libretto.database.CsvToSqliteImport;
 import org.nypl.libretto.database.SqliteDBHelper;
 
@@ -76,13 +75,14 @@ public class SplashActivity extends Activity{
 	   	   	{
 	   	   		new File(FilePath.getAbsolutePath()+File.separator+CONTENT_LOCATION).mkdirs();
 	   	   	}
-	      
+	       System.out.println("HAVE NETWORK: "+haveNetworkConnection());
 	       
 			if (haveNetworkConnection()){
 				
 			try{
-				//System.out.println("Getting "+FilePath.getAbsolutePath()+File.separator+CONTENT_LOCATION+File.separator+"playjsonformat.json");
+				System.out.println("Getting "+FilePath.getAbsolutePath()+File.separator+CONTENT_LOCATION+File.separator+"playjsonformat.json");
 	       final DownloadFile df = new DownloadFile();
+	       System.out.println(this.getString(R.string.libraryURI));
 	       df.execute(this.getString(R.string.libraryURI),FilePath.getAbsolutePath()+File.separator+CONTENT_LOCATION+File.separator+"playjsonformat.json");
 			//startUp();
 			}
@@ -139,14 +139,14 @@ public class SplashActivity extends Activity{
 	}
 	
 	public void copyFromAssets(String fileName){
-		//System.out.println("Copying file: "+fileName);
+		System.out.println("Copying file: "+fileName);
 		 AssetManager assetManager = getAssets();
 			InputStream inputStream = null;
 			try{
 	       inputStream = assetManager.open(fileName);
 			
 			 OutputStream output = new FileOutputStream(FilePath.getAbsolutePath()+File.separator+CONTENT_LOCATION+File.separator+fileName);
-//System.out.println("Copying to "+output);
+System.out.println("Copying to "+output);
 	            byte data[] = new byte[1024];
 	        
 	            int count;
@@ -167,12 +167,7 @@ public class SplashActivity extends Activity{
 	private class DownloadFile extends AsyncTask<String,Integer,String> {
 		@Override
 		protected void onPostExecute(String outstring) {
-			//new ExtractingTask("HTMLObject.zip", FilePath.getAbsolutePath()+File.separator+CONTENT_LOCATION+"/").execute();
-			 //CONTENT_LOCATION = "Android/data/"+getView().getContext().getPackageName()+File.separator+"contents";
-		   // 
-		     
-		    	// PlaysAddActivity.processZipFile(result,mCtx);
-
+			
 	
 			
 		     startUp();
@@ -186,7 +181,7 @@ public class SplashActivity extends Activity{
 		     	String urlString = params[0];
 	    	     String outstring =   params[1];
 	        try {
-	        	//System.out.println("OUTSTRING : "+outstring);
+	        	System.out.println("OUTSTRING : "+outstring);
 	        	downloadContent(urlString,outstring);
 	            
 	            
@@ -234,15 +229,15 @@ public class SplashActivity extends Activity{
 			 			 
 			 		 }
 			 		 manifestString=manifestString+"]}";
-			 	  //System.out.println(manifestString);
+			 	  System.out.println(manifestString);
 			 	   PrintWriter out = new PrintWriter(playjsonformat);
-			 	   //System.out.println(playjsonformat);
+			 	   System.out.println(playjsonformat);
 		           out.println(manifestString);
 		           out.flush();
 		           out.close();
 			     }
 			     catch (Exception e){
-			    	//System.out.println(e);
+			    	System.out.println(e);
 			     }
 			 
 			
@@ -255,6 +250,7 @@ public class SplashActivity extends Activity{
 	    }
 	    public void downloadContent(String urlString,String outstring){
 	    	try{
+	    	System.out.println("TRYING "+urlString);
 	    	URL url = new URL(urlString);
 	    	 URLConnection connection = url.openConnection();
 	            connection.connect();
@@ -281,6 +277,7 @@ public class SplashActivity extends Activity{
 	    	
 	    }
 	    	catch (Exception e){
+	    		System.out.println(e);
 	    	}
 	}
    

@@ -2,7 +2,6 @@ package org.nypl.libretto;
 
 import java.io.File;
 import java.util.ArrayList;
-
 import org.nypl.libretto.R;
 import org.nypl.libretto.adapter.ChapterListAdapter;
 import org.nypl.libretto.adapter.VersionListAdapter;
@@ -12,7 +11,7 @@ import org.nypl.libretto.database.VersionDAO;
 import org.nypl.libretto.dataholder.ChaptersBean;
 import org.nypl.libretto.dataholder.VersionBean;
 import org.nypl.libretto.utils.CustomTypefaceSpan;
-
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
@@ -48,6 +47,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+@SuppressLint("HandlerLeak")
 public class PlaysDetailActivity extends FragmentActivity {
 
 	protected static final String TAG = "PlaysDetailActivity";
@@ -395,7 +395,7 @@ public class PlaysDetailActivity extends FragmentActivity {
 		int nextChapPos = mPlayPagerAdapter.getChapterPosFromId(chapId,nextVersionId);
 		ChaptersBean nextChapterBean= chaptersList.get(nextChapPos);
 		String filePath = "file:///"+Environment.getExternalStorageDirectory().getAbsolutePath()  + File.separator+ CONTENT_LOCATION + File.separator +nextChapterBean.getHTMLFile();
-		mPlayPagerAdapter.mPlayDetailView.loadUrl(filePath);
+		ViewPagerAdapter.mPlayDetailView.loadUrl(filePath);
 		}
 	}
 	private void getChapters(){

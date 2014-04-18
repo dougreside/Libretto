@@ -28,6 +28,7 @@ import org.nypl.libretto.dataholder.PlaysBean;
 import org.nypl.libretto.parsing.VersionParser;
 import org.nypl.libretto.utils.CustomTypefaceSpan;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -61,6 +62,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+@SuppressLint("HandlerLeak")
 public class PlaysListActivity extends FragmentActivity   {
 	private ExpandableListView mPlayList;
 	private HashMap<String, Object>  mPlaysList;
@@ -209,6 +211,7 @@ public class PlaysListActivity extends FragmentActivity   {
 
 			private String mVersion = null;
 
+			@SuppressWarnings("unchecked")
 			@Override
 			public boolean onChildClick(ExpandableListView parent, View v,
 					int groupPosition, int childPosition, long id) {
@@ -318,7 +321,8 @@ public class PlaysListActivity extends FragmentActivity   {
 					
 			 }	
 			  
-		        public void onDismiss(DialogInterface dialog) {
+		        @SuppressWarnings("unused")
+				public void onDismiss(DialogInterface dialog) {
 					this.cancel(true);
 		        }
 		@Override
@@ -343,7 +347,7 @@ public class PlaysListActivity extends FragmentActivity   {
 			else{
 				Toast.makeText(ctx, "Installation failed, please try again.", Toast.LENGTH_LONG).show();
 				File f = new File(result);
-				boolean deleted = f.delete();
+				f.delete();
 			}
 			super.onPostExecute(result);
 	    	
@@ -361,11 +365,7 @@ public class PlaysListActivity extends FragmentActivity   {
 			  
 			  
 	    	File mFirstVersionFile = new File(FilePath.getAbsolutePath()+File.separator+CONTENT_LOCATION+File.separator+playId+".epub");
-	    	//System.out.println(mFirstVersionFile);
-	    	String[] i={"","","","",""};
-	  
-		
-		       String mFilename=playId+".epub";
+	    	String mFilename=playId+".epub";
 		       String mFilepath=FilePath.getAbsolutePath()+File.separator+CONTENT_LOCATION+File.separator+mFilename;
 		      //System.out.println(mFilepath);
 		      
@@ -380,7 +380,8 @@ public class PlaysListActivity extends FragmentActivity   {
 
 					   	 mFirstVersionFile.mkdirs();
 					   	 fInputStream = new FileInputStream(mFilepath); 
-					   	 ZipFile zip = new ZipFile(mFilepath);
+				
+						ZipFile zip = new ZipFile(mFilepath);
 					   	 pd.setIndeterminate(false);
 					   	 pd.setMax(zip.size());
 					     
@@ -394,9 +395,6 @@ public class PlaysListActivity extends FragmentActivity   {
 						
 							
 							
-							//AssetFileDescriptor mydisc = getAssets().openFd(input);
-				//Size of the zip package
-							int size = 0;
 							int increment = 0;
 						//	dialog.setMax((int) size);
 
@@ -586,6 +584,7 @@ public class PlaysListActivity extends FragmentActivity   {
 	}
 
 
+	@SuppressWarnings("unchecked")
 	private boolean deletePlay(int index,View v){
 		mPlaysNameList=	(ArrayList<PlaysBean>)mPlaysList.get(mkeyList.get(index));
 		String delID = mPlaysNameList.get(index).getPlayID().toString();
@@ -650,9 +649,10 @@ public class PlaysListActivity extends FragmentActivity   {
 			protected void onCancelled(String outstring) {
 				Toast.makeText(ctx, "Installation failed, please try again.", Toast.LENGTH_LONG).show();
 				File f = new File(outstring);
-				boolean deleted = f.delete();
+				f.delete();
 		 }
-		  public void onDismiss(DialogInterface dialog) {
+		  @SuppressWarnings("unused")
+		public void onDismiss(DialogInterface dialog) {
 				this.cancel(true);
 	        }
 		@Override
@@ -675,7 +675,7 @@ public class PlaysListActivity extends FragmentActivity   {
 			else{
 				Toast.makeText(ctx, "Installation failed, please try again.", Toast.LENGTH_LONG).show();
 				File f = new File(outstring);
-				boolean deleted = f.delete();
+				f.delete();
 			}
    		    super.onPostExecute(outstring);
 	    	
@@ -739,6 +739,7 @@ public class PlaysListActivity extends FragmentActivity   {
 	    	}
 	}
    
+	@SuppressWarnings("unused")
 	String readFile(String fileName) throws IOException {
 	    BufferedReader br = new BufferedReader(new FileReader(fileName));
 	    try {

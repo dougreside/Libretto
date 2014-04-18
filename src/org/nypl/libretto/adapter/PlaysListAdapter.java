@@ -15,14 +15,12 @@ import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Environment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.content.ContextWrapper;
 
 public class PlaysListAdapter extends BaseExpandableListAdapter{
 
@@ -32,6 +30,7 @@ public class PlaysListAdapter extends BaseExpandableListAdapter{
 	private ArrayList<PlaysBean> mPlaysNameList;
 	private int mListCoverWidth;
 	private int mListCoverHeight;
+	@SuppressWarnings("unused")
 	private int mFlag = 0;
 	private static File FilePath = Environment.getExternalStorageDirectory();
 	private static String CONTENT_LOCATION;
@@ -60,13 +59,12 @@ public class PlaysListAdapter extends BaseExpandableListAdapter{
 		return 0;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public View getChildView(int groupPosition, int childPosition,	boolean isLastChild, View convertView, ViewGroup parent) {
 		mListCoverWidth  = (int)mContext.getResources().getDimension(R.dimen.list_cover_image_width);
 		mListCoverHeight = (int)mContext.getResources().getDimension(R.dimen.list_cover_image_height);
-		ImageView mPlayImage = null;
-		TextView mPlayName = null ;
-		TextView mPlayAuthorName = null  ;
+
 		InputStream bitmap =null;
 		ViewHolder holder  = null;
 		if(convertView==null){
@@ -134,6 +132,7 @@ public class PlaysListAdapter extends BaseExpandableListAdapter{
 
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public int getChildrenCount(int groupPosition) {
 		mPlaysNameList=(ArrayList<PlaysBean>) mPlaysList.get(mKeyList.get(groupPosition));

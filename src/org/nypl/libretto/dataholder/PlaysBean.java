@@ -11,9 +11,7 @@ public class PlaysBean implements Serializable{
 	private String playID;
 	private String playName;
 	private String playImage;
-	private String playCaption;
 	private String playAuthors;
-	private String playAuthorsInfo;
 	private String versionName;
 	private String versionBookmark;
 	private String versionID;

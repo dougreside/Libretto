@@ -1,9 +1,6 @@
 package org.nypl.libretto;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
 
 import org.nypl.libretto.R;
@@ -18,7 +15,7 @@ import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.AssetManager;
+
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -120,14 +117,6 @@ public class AboutActivity extends FragmentActivity {
 		        finish();
 		    }
 		};
-		NonUnderlineLink clickNav = new NonUnderlineLink() {
-		    @Override
-		    public void onClick(View view) {
-		        // This will get "Lorem ipsum dolor sit amet", but I just want "dolor"
-		    
-		    }
-		};
-		
 		s.setSpan (new CustomTypefaceSpan("", icomoon ), 0, 1,Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 		s.setSpan (new CustomTypefaceSpan("", lato ), 2, AboutText.length(),Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 	//	s.setSpan (new CustomTypefaceSpan("", icomoon ), AboutText.length()+2,AboutText.length()+4,Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);

@@ -89,7 +89,7 @@ public class SearchPlayAdapter extends BaseAdapter {
 		holder.txt1.setText(playlist.getPlayName().toString());
 		holder.txt2.setText(playlist.getPlayAuthors().toString());
 		 if(mFlag==1){
-			    holder.txt3.setVisibility(convertView.VISIBLE);
+			    holder.txt3.setVisibility(View.VISIBLE);
 	        	holder.txt3.setText(playlist.getPlayVersion().toString());
 	        }
 		return convertView;

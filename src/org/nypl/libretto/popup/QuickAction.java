@@ -1,31 +1,26 @@
 package org.nypl.libretto.popup;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.nypl.libretto.R;
+
 import android.content.Context;
-
 import android.graphics.Rect;
-import android.graphics.Region;
 import android.graphics.drawable.Drawable;
-
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.ScrollView;
-import android.widget.RelativeLayout;
-import android.widget.PopupWindow.OnDismissListener;
-
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
-import android.view.ViewGroup.LayoutParams;
 import android.view.ViewGroup;
-
-import java.util.List;
-import java.util.ArrayList;
-
-import org.nypl.libretto.R;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.ImageView;
+import android.widget.PopupWindow.OnDismissListener;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
+import android.widget.TextView;
 
 /**
  * QuickAction dialog, shows action list as icon and text like the one in Gallery3D app. Currently supports vertical 
@@ -232,7 +227,8 @@ public class QuickAction extends PopupWindows implements OnDismissListener {
 		if (mOrientation == HORIZONTAL && mChildPos != 0) {
             View separator = mInflater.inflate(R.layout.horiz_separator, null);
             
-            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.FILL_PARENT);
+            @SuppressWarnings("deprecation")
+			RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.FILL_PARENT);
             
             separator.setLayoutParams(params);
             separator.setPadding(5, 0, 5, 0);
@@ -253,6 +249,7 @@ public class QuickAction extends PopupWindows implements OnDismissListener {
 	 * @param parent
 	 * @param rect
 	 */
+	@SuppressWarnings({ "deprecation", "unused" })
 	public void show(View parent, Rect rect){
 		
 		preShow();
@@ -344,6 +341,7 @@ public class QuickAction extends PopupWindows implements OnDismissListener {
 	 * Show quickaction popup. Popup is automatically positioned, on top or bottom of anchor view.
 	 * 
 	 */
+	@SuppressWarnings("deprecation")
 	public void show (View anchor) {
 		preShow();
 		

@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-
 import org.nypl.libretto.R;
 import org.nypl.libretto.PlaysDetailActivity;
 import org.nypl.libretto.SelectionWebView;
@@ -14,7 +13,7 @@ import org.nypl.libretto.dataholder.AudioBean;
 import org.nypl.libretto.dataholder.ChaptersBean;
 import org.nypl.libretto.dataholder.SheetMusicBean;
 import org.nypl.libretto.utils.Utilities;
-
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.ContentValues;
@@ -50,6 +49,7 @@ import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
+@SuppressLint("HandlerLeak")
 public class SheetMusicPagerAdapter extends PagerAdapter{
 	
 
@@ -97,10 +97,10 @@ public class SheetMusicPagerAdapter extends PagerAdapter{
 	}
 	public SheetMusicPagerAdapter(ArrayList<SheetMusicBean> smpages,Context ctx,String content_location) {
 		super();
-		this.pages = smpages;
-		this.mContext=ctx;
-		mChilds = new View[this.pages.size()];
-		this.CONTENT_LOCATION=content_location;
+		SheetMusicPagerAdapter.pages = smpages;
+		SheetMusicPagerAdapter.mContext=ctx;
+		mChilds = new View[SheetMusicPagerAdapter.pages.size()];
+		SheetMusicPagerAdapter.CONTENT_LOCATION=content_location;
 	}
 
 	public View getChildAtIndex(int index){
@@ -136,7 +136,7 @@ public class SheetMusicPagerAdapter extends PagerAdapter{
 		}
 		
 	
-		String filePath = "file:///"+FilePath.getAbsolutePath() + File.separator+ CONTENT_LOCATION + File.separator +this.pages.get(position).getSheetMusicHTML();
+		String filePath = "file:///"+FilePath.getAbsolutePath() + File.separator+ CONTENT_LOCATION + File.separator +SheetMusicPagerAdapter.pages.get(position).getSheetMusicHTML();
 		mPlayDetailView.loadUrl(filePath);
 		
 		mPlayDetailView.setWebChromeClient(new WebChromeClient() {
@@ -694,7 +694,6 @@ public class SheetMusicPagerAdapter extends PagerAdapter{
 
 	public static void updateAudio(String savedUri){
 		String URLID;
-		String clip_id=AudioDatalist.get(0).getClipID().toString();
 		if(savedUri.contains("external"))
 		{
 		 Uri partialUri = Uri.parse("content://media"+savedUri);
@@ -816,7 +815,6 @@ public class SheetMusicPagerAdapter extends PagerAdapter{
 	public class MyJavaScriptInterface   
 	{  
 
-		@SuppressWarnings("unused")  
 		public void showHTML(String html)  
 		{  
 			File cacheDir;
@@ -843,7 +841,6 @@ public class SheetMusicPagerAdapter extends PagerAdapter{
 		}  
 
 
-		@SuppressWarnings("unused")  
 		public void showHTML1(String html)  
 		{  
 			File cacheDir;

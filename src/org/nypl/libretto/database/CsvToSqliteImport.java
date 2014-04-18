@@ -18,7 +18,7 @@ import org.nypl.libretto.parsing.PlayJsonParser;
 import org.nypl.libretto.parsing.VersionParser;
 
 import android.content.Context;
-import android.content.res.AssetManager;
+
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.ConnectivityManager;

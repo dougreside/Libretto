@@ -5,6 +5,10 @@ import java.io.Serializable;
 public class AnchorBean implements Serializable{
 
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String anchorID;
 	private String playId;
 	private String playVersionId;

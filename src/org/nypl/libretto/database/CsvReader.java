@@ -67,15 +67,6 @@ public class CsvReader {
 			db.insert(AnchorDOA.TABLE_NAME , null, values);
 
 	}
-	public static void insertMediaTable(SQLiteDatabase db, Context context,
-		String mediaid,String media_name) {
-		
-		ContentValues values = new ContentValues();
-		values.put(DatabaseTable.TABLE_MEDIA_ID, mediaid);
-		values.put(DatabaseTable.TABLE_MEDIA_NAME, media_name);
-		db.insert(MediaDOA.TABLE_NAME , null, values);
-		
-	}
 	
 	
 	public static void insertAudioTable(SQLiteDatabase db, Context context,String Playid,String clipid,String clipfrom, String clipto, String clipversionid,String audioPath) {
