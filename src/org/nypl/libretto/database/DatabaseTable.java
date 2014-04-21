@@ -21,8 +21,6 @@ public class DatabaseTable {
 	public static final String TABLE_NAME ="PLAY";
 	public static final String TABLE_NAME2 ="VERSION";
 	public static final String TABLE_NAME3 ="ANCHOR";
-	public static final String TABLE_NAME4 ="MEDIA";
-	public static final String TABLE_NAME5 ="PLAY_NOTE";
 	public static final String TABLE_NAME6="AUDIO";
 	public static final String TABLE_NAME7="CHAPTERS";
 	public static final String TABLE_NAME8="SHEETMUSIC";
@@ -69,7 +67,7 @@ public class DatabaseTable {
 	public static final String TABLE_CHAPTER_HTML_FILE = "HTML_FILE";
 
 	/**
-	 * COlumn Related to Anchor table
+	 * Column Related to Anchor table
 	 */
 	
 	public static final  String TABLE_ANCHOR_ID = "_id";
@@ -77,29 +75,10 @@ public class DatabaseTable {
 	public static final String TABLE_ANCHOR_VERSION_PLAY_ID = "PLAY_VERSION_ID";
 	public static final String TABLE_ANCHOR_HTML_ID = "ANCHOR_HTML_ID";
 	public static final String TABLE_ANCHOR_HTML_FILE = "ANCHOR_HTML_FILE";
-	/**
-	 * COlumn Related to Media table
-	 */
-	
-	public static final  String TABLE_MEDIA_ID = "_id";
-	public static final  String TABLE_MEDIA_NAME = "MEDIA_NAME";
 
 	
 	/**
-	 * COlumn Related to PLAY_NOTE table
-	 */
-	
-	public static final  String TABLE_PLAY_NOTE_UNIQUE_ID = "_id";
-	public static final  String TABLE_PLAY_NOTES = "NOTES";
-	public static final  String TABLE_PLAY_NOTE_ID = "NOTE_ID";
-	public static final  String TABLE_PLAY_NOTE_TEXT = "NOTE_TEXT";
-	public static final  String TABLE_PLAY_NOTE_PLAY_ID = "PLAY_ID";
-	public static final  String TABLE_PLAY_NOTE_VERSION_ID = "VERSION_ID";
-	public static final  String TABLE_PLAY_NOTE_VERSION_NAME = "VERSION_NAME";
-
-	
-	/**
-	 * COlumn Related to Audio table
+	 * Column Related to Audio table
 	 */
 	
 	public static final  String TABLE_AUDIO_UNIQUE_ID = "_id";
@@ -144,12 +123,8 @@ public class DatabaseTable {
 		+ TABLE_ID + " integer primary key autoincrement, " 
 		+ TABLE_VERSION_ID + " text not null, " 
 		+ TABLE_VERSION_PLAY_ID + " text not null ," 
-	//	+ TABLE_VERSION_HTML_FILE + " text not null ," 
 		+ TABLE_VERSION_NAME + " text " 
-	//	+ TABLE_VERSION_CHAPTER_NAME + " text  ," 
-	//	+ TABLE_VERSION_CHAPTER_ID + " text ," 
-	//	+ TABLE_VERSION_CHAPTER_PLAYORDER + " text  " 
-		//+ TABLE_VERSION_AUDIO_NAME + " text  " 
+
 		+ ");";
 
 	
@@ -175,28 +150,11 @@ public class DatabaseTable {
 		+ TABLE_ANCHOR_HTML_ID + " text not null " 
 		+ ");";
 	
-	private static final String DATABASE_CREATE4 = "create table " 
-		+ TABLE_NAME4
-		+ "(" 
-		+ TABLE_MEDIA_ID + " text not null ," 
-		+ TABLE_MEDIA_NAME + " text not null " 
-		+ ");";
-	
+
 
 			
 	
-	
-	private static final String DATABASE_CREATE5 = "create table " 
-		+ TABLE_NAME5
-		+ "(" 
-		+ TABLE_PLAY_NOTE_UNIQUE_ID + " integer primary key autoincrement, " 
-		+ TABLE_PLAY_NOTE_ID + " text not null , " 
-		+ TABLE_PLAY_NOTES + " text not null , " 
-		+ TABLE_PLAY_NOTE_TEXT + " text not null , " 
-		+ TABLE_PLAY_NOTE_PLAY_ID + " text not null , " 
-		+ TABLE_PLAY_NOTE_VERSION_ID + " text not null , " 
-		+ TABLE_PLAY_NOTE_VERSION_NAME + " text not null  " 
-		+ ");";
+
   
 
 	 
@@ -220,18 +178,11 @@ public class DatabaseTable {
 		database.execSQL(DATABASE_CREATE2);
 		database.execSQL(DATABASE_CREATE6);
 		database.execSQL(DATABASE_CREATE3);
-		database.execSQL(DATABASE_CREATE4);
-		database.execSQL(DATABASE_CREATE5);
+
 		database.execSQL(DATABASE_CREATE7);
 		database.execSQL(DATABASE_CREATE8);
 	}
 
-	//		public static void onUpgrade(SQLiteDatabase database, int oldVersion,
-	//				int newVersion) {
-	//			
-	//			database.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
-	//			onCreate(database);
-	//		}
-
+	
 
 }
